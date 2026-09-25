@@ -10,38 +10,14 @@
 <meta name="theme-color" content="#0B121C">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
-
-:root{
-  --bg: #0B121C;
-  --bg-deep: #060A11;
-  --panel: #131C29;
-  --panel-line: #1E2A3A;
-  --gold: #C9A227;
-  --gold-bright: #E8C563;
-  --text: #E8DCC4;
-  --text-dim: #94A1AF;
-  --forge-bg: #0E0B08;
-  --ember: #E08B2B;
-  --ember-bright: #F5A94D;
-  --r-common: #4CAF6D;
-  --r-blue: #4A90D9;
-  --r-purple: #9B6BE8;
-  --r-yellow: #E0B93E;
-  --r-white: #F5F0E6;
-  --r-red: #C0453A;
-}
-
+:root{--bg:#0B121C;--bg-deep:#060A11;--panel:#131C29;--panel-line:#1E2A3A;--gold:#C9A227;--gold-bright:#E8C563;--text:#E8DCC4;--text-dim:#94A1AF;--forge-bg:#0E0B08;--ember:#E08B2B;--ember-bright:#F5A94D;--r-common:#4CAF6D;--r-blue:#4A90D9;--r-purple:#9B6BE8;--r-yellow:#E0B93E;--r-white:#F5F0E6;--r-red:#C0453A;--ambient-x:50%;--ambient-y:35%;}
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg); color:var(--text); font-family:'Spectral', serif; line-height:1.5; overflow-x:hidden; position:relative;}
-body::before{
-  content:''; position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.05; mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:120px 120px;
-}
+body{background:radial-gradient(circle at var(--ambient-x) var(--ambient-y), #18263a 0%, var(--bg) 34%, var(--bg-deep) 100%); background-attachment:fixed; color:var(--text); font-family:'Spectral', serif; line-height:1.5; overflow-x:hidden; position:relative;}
+body::after{content:''; position:fixed; inset:-25%; z-index:0; pointer-events:none; opacity:0.42; background:radial-gradient(ellipse at 18% 22%, rgba(63,143,91,0.14), transparent 34%), radial-gradient(ellipse at 82% 18%, rgba(124,77,173,0.13), transparent 32%), radial-gradient(ellipse at 62% 86%, rgba(200,107,42,0.11), transparent 35%); filter:blur(18px); animation:ambientDrift 22s ease-in-out infinite alternate;}
+body::before{content:''; position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.07; mix-blend-mode:overlay; background-image:radial-gradient(rgba(232,197,99,0.3) 0.7px, transparent 0.7px); background-size:5px 5px;}
 h1,h2,h3,.crest{font-family:'Cinzel', serif; letter-spacing:0.04em;}
 ::selection{background:var(--gold); color:#0B121C;}
-
 header{
   position:fixed; top:0; left:0; right:0; z-index:100;
   display:flex; align-items:center; justify-content:space-between;
@@ -100,11 +76,16 @@ header{
 }
 
 .view{display:none;}
-.view.active{display:block; animation:viewFadeIn 0.4s ease;}
+.view.active{display:block; animation:viewFadeIn 0.65s cubic-bezier(.22,.75,.25,1);}
 @keyframes viewFadeIn{
-  from{opacity:0; transform:translateY(8px);}
+  from{opacity:0; transform:translateY(18px); filter:blur(3px);}
   to{opacity:1; transform:translateY(0);}
 }
+@keyframes ambientDrift{0%{transform:translate3d(-3%,-2%,0) rotate(0deg) scale(1);}50%{transform:translate3d(3%,2%,0) rotate(2deg) scale(1.05);}100%{transform:translate3d(-1%,4%,0) rotate(-2deg) scale(1.02);}}
+@keyframes sectionReveal{from{opacity:0; transform:translateY(14px);}to{opacity:1; transform:translateY(0);}}
+.view.active section.block > *:not(.deco-icon), .view.active .forge-section > *:not(.deco-icon){animation:sectionReveal 0.7s both;}
+.view.active section.block > *:nth-child(2), .view.active .forge-section > *:nth-child(2){animation-delay:0.08s;}
+.view.active section.block > *:nth-child(3), .view.active .forge-section > *:nth-child(3){animation-delay:0.16s;}
 
 .hero{position:relative; min-height:78vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:6rem 1.5rem 3rem; background-color:var(--bg-deep);}
 .hero::before{
@@ -170,6 +151,81 @@ section.block{padding:3.2rem 1.5rem; max-width:1080px; margin:0 auto;}
 .char-picker-tile h4{font-family:'Cinzel'; font-size:0.9rem; color:var(--gold-bright);}
 
 .mi-personaje-panel{max-width:720px; margin:0 auto;}
+.mi-room{max-width:820px; margin:0 auto; padding:1.4rem; border:1px solid var(--room-line,var(--panel-line)); border-radius:8px; background:linear-gradient(145deg, color-mix(in srgb, var(--room-color) 16%, var(--panel)), var(--panel) 58%); box-shadow:0 24px 60px rgba(0,0,0,0.38);}
+.mi-room.has-room-image{background-image:linear-gradient(145deg, rgba(11,18,28,0.72), rgba(11,18,28,0.94)), var(--room-image), linear-gradient(145deg, color-mix(in srgb, var(--room-color) 16%, var(--panel)), var(--panel) 58%); background-size:cover; background-position:center;}
+.mi-room-head{display:flex; align-items:center; gap:1rem; padding:0.4rem 0 1.4rem; border-bottom:1px solid var(--room-line,var(--panel-line));}
+.mi-room-head .mi-art{width:92px; height:92px; border-radius:8px; flex-shrink:0; background-size:cover; background-position:center top; border:2px solid var(--room-color,var(--gold));}
+.mi-room-head h2{color:var(--gold-bright); font-size:1.55rem;}
+.mi-room-head .mi-sub{font-family:'Inter'; font-size:0.74rem; color:var(--text-dim); margin-top:0.3rem;}
+.mi-room-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin-top:1rem;}
+.mi-room-box{background:rgba(6,10,17,0.38); border:1px solid var(--room-line,var(--panel-line)); border-radius:6px; padding:1.1rem;}
+.mi-room-box.full{grid-column:1 / -1;}
+.mi-room-box h3{font-size:1rem; color:var(--gold-bright); margin-bottom:0.3rem;}
+.mi-room-box .room-hint{font-family:'Inter'; font-size:0.69rem; color:var(--text-dim); opacity:0.8; margin-bottom:0.8rem;}
+.mi-room-box textarea{width:100%; min-height:150px; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:6px; color:var(--text); font-family:'Spectral'; font-size:0.9rem; padding:0.8rem; resize:vertical; overflow-y:hidden;}
+.mi-room-box textarea:focus{outline:none; border-color:var(--room-color,var(--gold));}
+.mi-room-box .mochila-resources{display:flex; align-items:center; gap:0.55rem; margin-bottom:0.7rem; flex-wrap:wrap;}
+.mochila-resources .resource-label{font-family:'Inter'; font-size:0.66rem; color:var(--text-dim); margin-right:0.1rem;}
+.mochila-resources input{width:76px; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:4px; color:var(--gold-bright); font-family:'Inter'; font-size:0.78rem; padding:0.35rem 0.45rem;}
+.mochila-resources input:focus{outline:none; border-color:var(--room-color,var(--gold));}
+.mi-room-box .room-writing{position:relative; margin-top:0.7rem; padding-left:1.35rem;}
+.room-writing::before{content:''; position:absolute; left:0.25rem; top:0.35rem; bottom:-0.7rem; width:1px; background:var(--room-line,var(--panel-line));}
+.room-writing:last-of-type::before{bottom:0.8rem;}
+.room-writing::after{content:''; position:absolute; left:0.08rem; top:0.28rem; width:0.38rem; height:0.38rem; border-radius:50%; background:var(--room-color,var(--gold)); box-shadow:0 0 0 3px var(--bg-deep);}
+.room-writing textarea{min-height:90px;}
+.room-add{margin-top:0.7rem; background:transparent; border:1px solid var(--room-line,var(--panel-line)); border-radius:4px; color:var(--gold-bright); padding:0.45rem 0.7rem; font-family:'Inter'; font-size:0.7rem; cursor:pointer;}
+.room-add:hover{border-color:var(--room-color,var(--gold));}
+.secret-missions{border-top:3px solid var(--tier-color,var(--r-purple));}
+.secret-missions .mission-entry{margin-top:0.9rem; padding-top:0.8rem; border-top:1px solid var(--panel-line);}
+.secret-missions .mission-entry:first-of-type{margin-top:0; padding-top:0; border-top:none;}
+.secret-missions .mission-entry h4{font-family:'Cinzel'; font-size:0.88rem; color:var(--text);}
+.secret-missions .mission-entry .m-meta{font-family:'Inter'; font-size:0.68rem; color:var(--r-purple); margin-top:0.15rem;}
+.secret-missions .mission-entry textarea{min-height:75px; margin-top:0.45rem;}
+.recruit-progress{margin-top:0.9rem;}
+.recruit-progress-top{display:flex; justify-content:space-between; font-family:'Inter'; font-size:0.7rem; color:var(--text-dim);}
+.recruit-progress-top input[type=number]{width:3.2rem; margin:0 0.25rem 0 0.5rem; padding:0.22rem 0.3rem; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:4px; color:var(--gold-bright); font-family:'Inter'; font-size:0.72rem; text-align:center;}
+.recruit-progress-top input[type=number]:focus{outline:none; border-color:var(--room-color,var(--gold));}
+.recruit-progress-track{height:8px; margin-top:0.4rem; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:999px; overflow:hidden;}
+.recruit-progress-fill{height:100%; width:0; background:linear-gradient(90deg,var(--r-purple),var(--gold-bright)); transition:width 0.25s ease;}
+.recruit-reward{font-family:'Inter'; font-size:0.72rem; color:var(--gold-bright); margin-top:0.65rem;}
+.karma-panel{margin-top:1.1rem; padding:1rem 0.8rem 0.8rem; background:rgba(6,10,17,0.32); border:1px solid var(--panel-line); border-radius:6px;}
+.karma-panel .karma-label{display:flex; justify-content:space-between; align-items:baseline; font-family:'Inter'; font-size:0.72rem; color:var(--text-dim);}
+.karma-panel .karma-value{font-family:'Cinzel'; font-size:1rem; color:var(--gold-bright);}
+.karma-track{position:relative; height:52px; margin:0.45rem 0 0.2rem;}
+.karma-track::before{content:''; position:absolute; left:0; right:0; top:21px; height:8px; border-radius:999px; background:linear-gradient(90deg,#E0B93E 0%,#C99632 44%,var(--gold-bright) 50%,#D8752B 56%,#E08B2B 100%);}
+.karma-track::after{content:''; position:absolute; left:50%; top:12px; bottom:5px; width:1px; background:var(--gold-bright); opacity:0.8;}
+.karma-track input{position:absolute; inset:0; width:100%; height:42px; margin:0; opacity:0; cursor:pointer; z-index:3;}
+.karma-thumb{position:absolute; top:15px; left:50%; width:20px; height:20px; margin-left:-10px; border-radius:50%; background:var(--gold-bright); border:2px solid var(--bg-deep); box-shadow:0 0 0 2px var(--gold); pointer-events:none; z-index:2; transition:left 0.15s ease;}
+.karma-markers{position:relative; height:1rem; font-family:'Inter'; font-size:0.62rem; color:var(--text-dim);}
+.karma-markers span{position:absolute; transform:translateX(-50%);}
+.karma-markers span:nth-child(1){left:0%; transform:none;}
+.karma-markers span:nth-child(2){left:25%;}
+.karma-markers span:nth-child(3){left:37.5%;}
+.karma-markers span:nth-child(4){left:42.5%;}
+.karma-markers span:nth-child(5){left:50%; color:var(--gold-bright);}
+.karma-markers span:nth-child(6){left:57.5%;}
+.karma-markers span:nth-child(7){left:62.5%;}
+.karma-markers span:nth-child(8){left:75%;}
+.karma-markers span:nth-child(9){left:100%; transform:translateX(-100%);}
+.mi-counter-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.7rem;}
+.mi-counter label{display:block; font-family:'Inter'; font-size:0.68rem; color:var(--text-dim); margin-bottom:0.25rem;}
+.mi-counter input{width:100%; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:5px; color:var(--gold-bright); font-family:'Inter'; font-size:1.1rem; padding:0.55rem;}
+.mi-counter input:focus{outline:none; border-color:var(--room-color,var(--gold));}
+.mi-upload{font-family:'Inter'; font-size:0.72rem; color:var(--text-dim);}
+.mi-upload input{display:block; width:100%; margin-top:0.55rem; color:var(--text-dim);}
+.mi-image-box{grid-column:1 / -1; max-width:280px; justify-self:end;}
+.mi-upload-preview{display:block; width:100%; max-height:130px; object-fit:contain; object-position:center; margin-top:0.7rem; border-radius:5px; border:1px solid var(--panel-line); background:var(--bg-deep);}
+.mi-save-status{font-family:'Inter'; font-size:0.7rem; color:var(--text-dim); text-align:right; min-height:1em; margin-top:0.6rem;}
+.mi-gate{max-width:390px; margin:0 auto; padding:2rem; text-align:center; background:var(--panel); border:1px solid var(--panel-line); border-radius:8px;}
+.mi-gate h2{color:var(--gold-bright); font-size:1.25rem;}
+.mi-gate p{font-family:'Spectral'; font-style:italic; color:var(--text-dim); margin:0.6rem 0 1.1rem;}
+.mi-gate input{width:100%; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:5px; color:var(--text); padding:0.7rem; font-family:'Inter';}
+.mi-gate input:focus{outline:none; border-color:var(--gold);}
+.mi-gate button{margin-top:0.8rem; width:100%; background:var(--gold); border:none; border-radius:5px; color:#0B121C; padding:0.7rem; font-family:'Inter'; font-weight:600; cursor:pointer;}
+.mi-gate .mi-gate-back{margin-top:0.65rem; background:transparent; border:1px solid var(--panel-line); color:var(--text-dim); font-weight:400;}
+.mi-gate .mi-gate-back:hover{border-color:var(--gold); color:var(--gold-bright);}
+.mi-gate-error{font-family:'Inter'; font-size:0.72rem; color:#D8796E; min-height:1.1em; margin-top:0.6rem;}
+@media(max-width:620px){.mi-room-grid{grid-template-columns:1fr;}.mi-room-box.full{grid-column:auto;}.mi-room-head .mi-art{width:72px;height:72px;}}
 .mi-header{display:flex; gap:1.2rem; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap;}
 .mi-header .mi-art{width:88px; height:88px; border-radius:8px; background-size:cover; background-position:center top; border:2px solid var(--gold); flex-shrink:0;}
 .mi-header h2{font-family:'Cinzel'; color:var(--gold-bright); font-size:1.5rem;}
@@ -180,7 +236,7 @@ section.block{padding:3.2rem 1.5rem; max-width:1080px; margin:0 auto;}
 .mochila-box{background:var(--panel); border:1px solid var(--panel-line); border-radius:8px; padding:1.4rem;}
 .mochila-box h3{font-family:'Cinzel'; color:var(--gold-bright); font-size:1rem; margin-bottom:0.3rem;}
 .mochila-box .mochila-hint{font-family:'Inter'; font-size:0.7rem; color:var(--text-dim); opacity:0.75; margin-bottom:0.9rem;}
-.mochila-box textarea{width:100%; min-height:260px; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:6px; color:var(--text); font-family:'Spectral'; font-size:0.95rem; padding:0.9rem; resize:vertical;}
+.mochila-box textarea{width:100%; min-height:260px; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:6px; color:var(--text); font-family:'Spectral'; font-size:0.95rem; padding:0.9rem; resize:vertical; overflow-y:hidden;}
 .mochila-box textarea:focus{outline:none; border-color:var(--gold);}
 .mochila-status{font-family:'Inter'; font-size:0.7rem; color:var(--text-dim); margin-top:0.6rem; text-align:right; min-height:1em;}
 
@@ -221,6 +277,67 @@ section.block{padding:3.2rem 1.5rem; max-width:1080px; margin:0 auto;}
 .mission-entry h4{font-family:'Cinzel'; font-size:0.88rem; color:var(--text);}
 .mission-entry .m-meta{font-family:'Inter'; font-size:0.68rem; color:var(--tier-color,var(--text-dim)); opacity:0.85; margin-top:0.15rem;}
 .mission-entry .m-desc{font-family:'Spectral'; font-size:0.82rem; color:var(--text-dim); margin-top:0.4rem;}
+.mission-entry.clickable{cursor:pointer; transition:transform 0.2s, border-color 0.2s;}
+.mission-entry.clickable:hover{transform:translateX(4px); border-color:var(--gold);}
+.mission-modal-backdrop{position:fixed; inset:0; background:rgba(6,10,17,0.84); z-index:220; display:none; align-items:center; justify-content:center; padding:1.5rem;}
+.mission-modal-backdrop.active{display:flex;}
+.mission-modal{position:relative; width:min(560px,100%); max-height:88vh; overflow-y:auto; padding:2rem; background:var(--panel); border:1px solid var(--gold); border-radius:8px; box-shadow:0 24px 70px rgba(0,0,0,0.65);}
+.mission-modal h3{font-size:1.5rem; color:var(--gold-bright); margin-bottom:0.3rem;}
+.mission-modal .mission-modal-sub{font-family:'Inter'; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin-bottom:1.1rem;}
+.mission-modal p{font-family:'Spectral'; color:var(--text-dim); font-size:0.98rem;}
+.mission-modal .close-x{position:absolute; top:0.8rem; right:1rem; cursor:pointer; color:var(--text-dim); font-size:1.2rem; background:none; border:none;}
+.mission-modal .close-x:hover{color:var(--gold-bright);}
+.vin-puzzle-link{display:inline-block; margin-top:0.7rem; padding:0; background:none; border:none; color:var(--gold-bright); font-family:'Cinzel'; font-size:0.86rem; text-decoration:underline; cursor:pointer;}
+.vin-puzzle-link:hover{color:var(--text);}
+.vin-puzzle-modal{width:min(760px,100%); text-align:center;}
+.vin-puzzle-modal img{display:block; width:100%; max-height:72vh; object-fit:contain; margin-top:1rem; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:5px;}
+.guild-title{text-align:center; color:var(--gold-bright); font-size:1.8rem; margin-bottom:2rem;}
+.guild-group-title{font-family:'Cinzel'; color:var(--text); font-size:1.25rem; margin:2.4rem 0 1rem; text-align:center;}
+.guild-roster{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem;}
+.guild-member{background:var(--panel); border:1px solid var(--panel-line); border-top:3px solid var(--member-color,var(--gold)); border-radius:8px; padding:1.1rem;}
+.guild-member h3{font-size:1rem; color:var(--gold-bright); margin-bottom:0.7rem;}
+.guild-member dl{display:grid; grid-template-columns:auto 1fr; gap:0.25rem 0.65rem; font-family:'Inter'; font-size:0.7rem;}
+.guild-member dt{color:var(--text-dim);}.guild-member dd{color:var(--text); text-align:right;}
+.guild-resources{display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-top:0.9rem;}
+.guild-resources label{font-family:'Inter'; font-size:0.64rem; color:var(--text-dim);}
+.guild-resources input{width:100%; margin-top:0.2rem; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:4px; color:var(--gold-bright); padding:0.4rem; font-family:'Inter';}
+.guild-member button{width:100%; margin-top:0.8rem; background:transparent; border:1px solid var(--panel-line); border-radius:4px; color:var(--gold-bright); padding:0.45rem; font-family:'Inter'; font-size:0.68rem; cursor:pointer;}
+.guild-member button:hover{border-color:var(--gold);}
+.guild-member.guild-card{padding:1.5rem 0.8rem 1rem; overflow:hidden; cursor:pointer; border-color:var(--member-color,var(--panel-line)); transition:transform 0.2s, border-color 0.2s;}
+.guild-member.guild-card:hover{transform:translateY(-4px); border-color:var(--member-color,var(--panel-line));}
+.guild-card .guild-card-image{width:82px; height:82px; margin:0 auto; border-radius:50%; background-size:cover; background-position:center top; border:2px solid var(--member-color,var(--gold));}
+.empty-guild-card{cursor:default !important;}
+.empty-guild-card .guild-card-image{display:grid; place-items:center; background:var(--panel); color:var(--gold-bright); font:2rem 'Cinzel',serif;}
+.guild-card .guild-card-body{padding:0.9rem 0.2rem 0.1rem; text-align:center;}
+.guild-card .guild-card-body h3{font-size:1.15rem; margin-bottom:0.25rem;}
+.guild-card .guild-card-subtitle{font-family:'Inter'; font-size:0.72rem; line-height:1.45; color:var(--text-dim);}
+.guild-card .guild-card-subtitle span{display:block;}
+.guild-card.no-name .guild-card-body h3{font-family:'Spectral'; font-style:italic; font-weight:400;}
+.guild-card.dm-card{padding-bottom:1.5rem;}
+.guild-card.dm-card{grid-column:1 / -1; min-height:160px; display:flex; align-items:center; justify-content:center;}
+.guild-card.dm-card .guild-card-body{display:none;}
+.dead-tribute{max-width:1000px; margin:2.8rem auto 0; padding-top:1.9rem; border-top:1px solid var(--panel-line);}
+.dead-tribute-title{text-align:center; font-family:'Cinzel'; font-size:1.35rem; color:var(--gold-bright); letter-spacing:0.08em; text-transform:uppercase;}
+.dead-tribute-subtitle{text-align:center; font-family:'Spectral'; font-style:italic; color:var(--text-dim); font-size:0.95rem; margin:0.45rem 0 1.4rem;}
+.dead-tribute-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.8rem;}
+.dead-tribute-card{background:linear-gradient(145deg,rgba(0,0,0,0.3),var(--panel)); border:2px solid var(--tribute-color,#000); border-radius:8px; padding:1rem; display:grid; grid-template-columns:96px minmax(0,1fr) 120px; gap:1rem; align-items:center; box-shadow:0 14px 35px rgba(0,0,0,0.28); min-width:0;}
+.dead-tribute-card:only-child{grid-column:1 / -1; width:min(620px,100%); justify-self:center;}
+.dead-tribute-card .tribute-image{width:96px; height:126px; border:2px solid #000; border-radius:5px; background-size:cover; background-position:center top; filter:saturate(0.7) contrast(1.05);}
+.dead-tribute-card h3{font-size:1.25rem; color:var(--gold-bright); margin-bottom:0.45rem; text-align:left;}
+.tribute-info-title{font-family:'Cinzel'; font-size:0.78rem; color:var(--gold); margin-bottom:0.3rem; text-align:left;}
+.dead-tribute-card dl{display:grid; grid-template-columns:1fr; gap:0.2rem; font-family:'Inter'; font-size:0.72rem; line-height:1.3; text-align:left;}
+.dead-tribute-card dt{color:var(--text-dim);}.dead-tribute-card dd{color:var(--text); text-align:left; overflow-wrap:anywhere;}
+.tribute-date{font-family:'Cinzel'; font-size:1.55rem; line-height:1.1; text-align:center; color:var(--gold-bright); white-space:nowrap; min-width:0;}
+.tribute-date a{color:inherit; text-decoration:none; cursor:pointer;}
+.tribute-date a:hover{text-shadow:0 0 10px rgba(232,197,99,0.8);}
+@media(max-width:700px){.dead-tribute-grid{grid-template-columns:1fr;}}
+@media(max-width:520px){.dead-tribute-card{grid-template-columns:64px minmax(0,1fr) 78px;}.dead-tribute-card .tribute-image{width:64px;height:86px;}.tribute-date{font-size:1.05rem;}}
+.dm-dashboard{max-width:820px; margin:2.5rem auto 0; padding:1.5rem; background:var(--panel); border:1px solid var(--gold); border-radius:8px;}
+.dm-dashboard h2{text-align:center; color:var(--gold-bright); margin-bottom:1rem;}
+.dm-space-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem;}
+.dm-space-grid textarea{width:100%; min-height:140px; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:5px; color:var(--text); padding:0.7rem; font-family:'Spectral'; resize:vertical;}
+.dm-space-grid label{font-family:'Cinzel'; color:var(--gold); font-size:0.82rem;}
+@media(max-width:620px){.dm-space-grid{grid-template-columns:1fr;}.guild-title{font-size:1.45rem;}}
 
 .rules-panel{background:var(--panel); border:1px solid var(--panel-line); border-radius:8px; padding:1.8rem; margin-bottom:2.2rem;}
 .rules-panel h3{font-family:'Cinzel'; color:var(--gold-bright); font-size:1.1rem; margin-bottom:0.3rem;}
@@ -231,6 +348,7 @@ section.block{padding:3.2rem 1.5rem; max-width:1080px; margin:0 auto;}
 .rules-table{width:100%; border-collapse:collapse; margin-top:0.6rem;}
 .rules-table td{font-family:'Inter'; font-size:0.82rem; color:var(--text); padding:0.45rem 0.6rem; border-bottom:1px solid var(--panel-line);}
 .rules-table td:last-child{text-align:right; color:var(--gold-bright); font-weight:600; white-space:nowrap;}
+.rules-table td:only-child{text-align:left; color:var(--text); font-weight:400; white-space:normal; overflow-wrap:anywhere;}
 .rules-subhead{font-family:'Inter'; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin:1.3rem 0 0.5rem; opacity:0.9;}
 .rules-subhead:first-child{margin-top:0;}
 .level-chip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(64px,1fr)); gap:0.5rem; margin-top:0.6rem;}
@@ -238,6 +356,75 @@ section.block{padding:3.2rem 1.5rem; max-width:1080px; margin:0 auto;}
 .level-chip .lv{font-family:'Cinzel'; font-size:0.72rem; color:var(--gold-bright);}
 .level-chip .pg{font-family:'Inter'; font-size:0.66rem; color:var(--text-dim); margin-top:0.15rem;}
 .rules-note{font-family:'Spectral'; font-style:italic; font-size:0.8rem; color:var(--text-dim); opacity:0.7; margin-top:1.4rem; text-align:center;}
+
+.materials-panel{background:var(--panel); border:1px solid var(--panel-line); border-radius:8px; padding:1.6rem; margin-bottom:2rem;}
+.materials-panel h3{font-family:'Cinzel'; color:var(--gold-bright); font-size:1rem; margin-bottom:0.3rem;}
+.materials-panel .rules-sub{font-family:'Inter'; font-size:0.72rem; color:var(--text-dim); opacity:0.8; margin-bottom:1rem;}
+.materials-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:0.4rem; max-height:280px; overflow-y:auto; padding-right:0.4rem;}
+.material-chip{
+  display:flex; align-items:center; gap:0.4rem; background:var(--bg-deep); border:1px solid var(--panel-line);
+  border-radius:6px; padding:0.4rem 0.6rem; font-family:'Inter'; font-size:0.74rem; color:var(--text-dim);
+  cursor:pointer; transition:all 0.15s; user-select:none;
+}
+.material-chip input{accent-color:var(--gold); flex-shrink:0;}
+.material-chip.checked{border-color:var(--gold); color:var(--text); background:rgba(201,162,39,0.08);}
+.materials-clear{font-family:'Inter'; font-size:0.7rem; color:var(--text-dim); text-decoration:underline; cursor:pointer; background:none; border:none; margin-top:0.8rem;}
+
+.forja-tabs{display:flex; gap:0.4rem; overflow-x:auto; margin-bottom:1.6rem; scrollbar-width:none; padding-bottom:0.2rem;}
+.forja-tabs::-webkit-scrollbar{display:none;}
+.forja-tab{
+  flex-shrink:0; font-family:'Inter'; font-size:0.72rem; letter-spacing:0.03em; text-transform:uppercase;
+  background:var(--panel); border:1px solid var(--panel-line); color:var(--text-dim); padding:0.5rem 0.9rem;
+  border-radius:999px; cursor:pointer; transition:all 0.2s;
+}
+.forja-tab.active{background:var(--gold); color:#0B121C; font-weight:600; border-color:var(--gold);}
+
+.recipe-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1rem;}
+.recipe-card{
+  background:var(--panel); border:1px solid var(--panel-line); border-radius:8px; padding:1.2rem;
+  transition:border-color 0.2s, opacity 0.2s;
+}
+.recipe-card.matched{border-color:var(--gold);}
+.recipe-card.dimmed{opacity:0.45;}
+.recipe-card h4{font-family:'Cinzel'; font-size:0.95rem; color:var(--text);}
+.recipe-card .r-meta{font-family:'Inter'; font-size:0.68rem; color:var(--gold-bright); opacity:0.85; margin-top:0.2rem;}
+.recipe-card .r-ingredients{font-family:'Spectral'; font-size:0.82rem; color:var(--text-dim); margin-top:0.6rem;}
+.recipe-card .r-price{font-family:'Inter'; font-size:0.85rem; color:var(--gold-bright); font-weight:600; margin-top:0.6rem;}
+
+.forja-stations{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.2rem;}
+.station-card{
+  background:var(--panel); border:1px solid var(--panel-line); border-radius:8px; padding:1.4rem; position:relative;
+  min-height:190px; display:flex; flex-direction:column;
+}
+.station-card .st-label{font-family:'Inter'; font-size:0.64rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); opacity:0.85;}
+.station-card h4{font-family:'Cinzel'; font-size:1.05rem; color:var(--gold-bright); margin-top:0.2rem;}
+.station-card .st-empty{font-family:'Spectral'; font-style:italic; font-size:0.82rem; color:var(--text-dim); opacity:0.6; margin-top:1rem;}
+.station-card select{
+  width:100%; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:6px; color:var(--text);
+  font-family:'Inter'; font-size:0.78rem; padding:0.5rem 0.6rem; margin-top:0.8rem;
+}
+.station-card input.st-name{
+  width:100%; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:6px; color:var(--text);
+  font-family:'Inter'; font-size:0.78rem; padding:0.5rem 0.6rem; margin-top:0.5rem;
+}
+.station-card button.st-start{
+  margin-top:0.8rem; font-family:'Inter'; font-size:0.72rem; letter-spacing:0.04em; text-transform:uppercase;
+  background:var(--gold); color:#0B121C; border:none; padding:0.55rem; border-radius:6px; cursor:pointer; font-weight:600;
+}
+.station-card button.st-start:disabled{opacity:0.4; cursor:default;}
+.station-card .st-active-name{font-family:'Cinzel'; font-size:0.95rem; color:var(--text); margin-top:0.3rem;}
+.station-card .st-active-meta{font-family:'Inter'; font-size:0.72rem; color:var(--text-dim); margin-top:0.3rem;}
+.station-card .st-bar-track{height:6px; background:var(--bg-deep); border-radius:999px; overflow:hidden; margin-top:0.8rem; border:1px solid var(--panel-line);}
+.station-card .st-bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-bright)); transition:width 1s linear;}
+.station-card .st-countdown{font-family:'Inter'; font-size:0.78rem; color:var(--gold-bright); margin-top:0.5rem;}
+.station-card button.st-collect{
+  margin-top:0.9rem; font-family:'Inter'; font-size:0.75rem; letter-spacing:0.04em; text-transform:uppercase;
+  background:var(--r-common); color:#0B121C; border:none; padding:0.6rem; border-radius:6px; cursor:pointer; font-weight:700;
+}
+.station-card button.st-cancel{
+  margin-top:0.5rem; font-family:'Inter'; font-size:0.68rem; color:var(--text-dim); background:none; border:none;
+  text-decoration:underline; cursor:pointer; align-self:flex-start;
+}
 .timeline{position:relative; max-width:600px; margin:0 auto; padding-left:2rem;}
 .timeline::before{content:''; position:absolute; left:9px; top:6px; bottom:6px; width:1px; background:var(--panel-line);}
 .timeline-node{position:relative; padding-bottom:2.2rem;}
@@ -267,7 +454,7 @@ section.block{padding:3.2rem 1.5rem; max-width:1080px; margin:0 auto;}
 .dm-notes-box .dm-warn{font-family:'Inter'; font-size:0.7rem; color:var(--text-dim); opacity:0.75; margin-bottom:1rem;}
 .dm-notes-box textarea{
   width:100%; min-height:320px; background:var(--bg-deep); border:1px solid var(--panel-line); border-radius:6px;
-  color:var(--text); font-family:'Spectral'; font-size:0.95rem; padding:0.9rem; resize:vertical;
+  color:var(--text); font-family:'Spectral'; font-size:0.95rem; padding:0.9rem; resize:vertical; overflow-y:hidden;
 }
 .dm-notes-box textarea:focus{outline:none; border-color:var(--gold);}
 .party-arrow{position:absolute; top:50%; transform:translateY(-50%); z-index:5; width:42px; height:42px; border-radius:50%; border:1px solid var(--gold); background:rgba(11,18,28,0.7); color:var(--gold-bright); font-size:1.1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s;}
@@ -347,9 +534,11 @@ body.presentation-mode .view.active{padding-top:1rem;}
 }
 
 .splash-screen{
-  position:fixed; inset:0; z-index:500; background:var(--bg-deep);
+  position:fixed; inset:0; z-index:500; overflow:hidden; background:radial-gradient(circle at center, #17263a 0%, var(--bg-deep) 65%);
   display:flex; align-items:center; justify-content:center; transition:opacity 0.85s ease, visibility 0.85s;
 }
+.splash-screen::before,.splash-screen::after{content:''; position:absolute; width:42vmax; height:42vmax; border:1px solid rgba(232,197,99,0.14); border-radius:50%; animation:splashOrbit 9s linear infinite;}
+.splash-screen::after{width:64vmax; height:64vmax; border-color:rgba(224,139,43,0.1); animation-duration:14s; animation-direction:reverse;}
 .splash-screen.hide{opacity:0; visibility:hidden; pointer-events:none;}
 .splash-crest{
   width:66px; height:66px; border:2px solid var(--gold); border-radius:10px;
@@ -357,6 +546,11 @@ body.presentation-mode .view.active{padding-top:1rem;}
   animation:goldPulse 1.7s ease-in-out infinite;
 }
 .splash-crest span{transform:rotate(-45deg); font-family:'Cinzel'; font-size:1.5rem; color:var(--gold-bright); font-weight:700;}
+@keyframes splashOrbit{from{transform:rotate(0deg) scale(0.92);}50%{transform:rotate(180deg) scale(1.04);}to{transform:rotate(360deg) scale(0.92);}}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:0.01ms !important;}
+}
 
 .block, .forge-section{position:relative;}
 .deco-icon{position:absolute; fill:none; stroke:var(--gold); stroke-width:3; opacity:0.13; pointer-events:none; z-index:0;}
@@ -485,6 +679,62 @@ footer a:hover{color:var(--gold-bright);}
 
 .armor-side-note{border:1px dashed #3A2E1E; border-radius:6px; padding:2.4rem 1rem; text-align:center; font-family:'Inter'; font-size:0.72rem; color:var(--text-dim); margin-top:2rem;}
 .pending-note{font-family:'Inter'; font-size:0.7rem; color:var(--text-dim); opacity:0.6; text-align:center; margin-top:1.4rem;}
+@media(max-width:600px){
+  body{padding-top:60px; padding-bottom:0;}
+  header{top:0; bottom:auto; padding:0.55rem 0.7rem; gap:0.6rem; border-top:none; border-bottom:1px solid var(--gold); background:rgba(6,10,17,0.97);}
+  header .crest{display:none;}
+  .nav-dropdown-wrap{position:absolute; left:50%; margin-left:0; transform:translateX(-50%);}
+  .nav-dropdown-btn{width:44px; min-height:44px; justify-content:center; padding:0.65rem; font-size:0;}
+  .nav-dropdown-btn::before{content:'☰'; font-size:1.15rem; color:var(--gold-bright);}
+  .nav-dropdown-btn .chev{display:none;}
+  .nav-dropdown-menu{top:calc(100% + 0.5rem); bottom:auto; left:auto; right:0; width:min(230px,calc(100vw - 1.4rem)); max-height:70vh; overflow-y:auto; padding:0.5rem;}
+  .nav-dropdown-menu button{min-height:42px; padding:0.7rem 0.8rem;}
+  .party-avatars{display:none;}
+  .subhero{min-height:27vh; padding:4.8rem 1rem 1.5rem;}
+  .subhero h1{font-size:clamp(1.55rem,8vw,2.2rem);}
+  section.block{padding:2.3rem 0.9rem;}
+  .hero{min-height:72vh; padding:5rem 1rem 3rem;}
+  .hero h1{font-size:clamp(2rem,12vw,3rem);}
+  .mission-tiers,.guild-roster,.cards-grid{grid-template-columns:1fr; gap:0.85rem;}
+  .guild-roster{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .guild-card.dm-card{grid-column:1 / -1; width:100%; min-height:130px;}
+  .guild-member.guild-card{padding:1.1rem 0.45rem 0.8rem;}
+  .guild-card .guild-card-image{width:68px; height:68px;}
+  .guild-card .guild-card-body{padding-top:0.65rem;}
+  .guild-card .guild-card-body h3{font-size:0.82rem;}
+  .guild-card .guild-card-subtitle{font-size:0.61rem;}
+  .guild-title{font-size:1.4rem; margin-bottom:1.4rem;}
+  .guild-group-title{font-size:1.05rem; margin:1.8rem 0 0.8rem;}
+  .party-stage{height:430px;}
+  .party-card{padding:1.4rem;}
+  .party-card .pname{font-size:1.65rem;}
+  .mi-room{padding:1rem;}
+  .mi-room-grid{grid-template-columns:1fr;}
+  .mi-room-box.full{grid-column:auto;}
+  .mochila-resources{display:grid; grid-template-columns:auto auto minmax(52px,76px) auto minmax(52px,76px); gap:0.35rem; align-items:center;}
+  .mochila-resources input{width:100%; min-width:0;}
+  .mochila-resources .mi-save-status{grid-column:1 / -1;}
+  .dm-space-grid{grid-template-columns:1fr;}
+  .map-showcase{padding:0 0.8rem 2.5rem;}
+  .map-showcase-caption{font-size:0.82rem;}
+  .rules-panel{padding:1.1rem 0.8rem; overflow:hidden;}
+  .rules-table{display:block; width:100%;}
+  .rules-table tbody,.rules-table tr{display:block; width:100%;}
+  .rules-table tr{padding:0.55rem 0; border-bottom:1px solid var(--panel-line);}
+  .rules-table td{display:block; width:100%; padding:0.15rem 0; border-bottom:none; overflow-wrap:anywhere;}
+  .rules-table td:last-child{padding-top:0.25rem; text-align:left; white-space:normal; overflow-wrap:anywhere;}
+  .timeline{padding-left:1.7rem;}
+  .timeline-node::before{left:-1.7rem;}
+  .timeline-node{padding-bottom:1.6rem;}
+  .mission-modal{padding:1.4rem;}
+  .mission-modal h3{font-size:1.2rem; padding-right:1.2rem;}
+  .mi-gate{padding:1.4rem;}
+  .dm-dashboard{padding:1rem;}
+  footer{padding:1.7rem 1rem;}
+  *,*::before,*::after{animation:none !important; transition:none !important;}
+  body::after{display:none;}
+  .ember-layer,.deco-wisp{display:none;}
+}
 </style>
 </head>
 <body>
@@ -536,14 +786,14 @@ footer a:hover{color:var(--gold-bright);}
       <button data-view="mi">Mi Personaje</button>
       <button data-view="forge">Herrería</button>
       <button data-view="reglas">Reglas</button>
-      <button data-view="gremio">Gremio</button>
+      <button data-view="forja">Fabricación</button>
       <button data-view="colosos">Bestiario</button>
       <button data-view="galeria">Galería de Arte</button>
     </div>
   </div>
 
   <div class="party-avatars" id="headerAvatars">
-    <div class="avatar-chip" style="background:#000000; color:#E8C563;" title="Birsha" data-id="birsha">B</div>
+    <div class="avatar-chip" style="background:#000000; color:#E8C563;" title="Itzel" data-id="itzel">I</div>
     <div class="avatar-chip" style="background:#2E6B4F" title="Temis" data-id="temis">T</div>
     <div class="avatar-chip" style="background:#8C6A2E" title="Cinto" data-id="cinto">C</div>
     <div class="avatar-chip" style="background:#8C3A2E" title="Chank-kla" data-id="chankkla">Ch</div>
@@ -615,10 +865,10 @@ footer a:hover{color:var(--gold-bright);}
     <div class="progress-panel">
       <div class="progress-top">
         <span class="lvl">Nivel 4</span>
-        <span class="pg-count">105 / 150 PG hasta Nivel 5</span>
+        <span class="pg-count">115 / 150 PG hasta Nivel 5</span>
       </div>
-      <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
-      <p class="progress-note">105 PG = umbral exacto de nivel 4. El gremio acaba de subir; toca desde cero hacia nivel 5.</p>
+      <div class="bar-track"><div class="bar-fill" style="width:22.22%"></div></div>
+      <p class="progress-note">115 PG acumulados; faltan 35 PG para alcanzar el Nivel 5.</p>
     </div>
   </section>
 
@@ -907,21 +1157,19 @@ footer a:hover{color:var(--gold-bright);}
 
       <div class="rules-subhead">PG por tipo de misión</div>
       <table class="rules-table">
-        <tr><td>Oneshot Fácil</td><td>8 PG</td></tr>
-        <tr><td>Oneshot Medio</td><td>12 PG</td></tr>
-        <tr><td>Oneshot Difícil</td><td>16 PG</td></tr>
-        <tr><td>Parte de Campaña Media</td><td>35 PG</td></tr>
-        <tr><td>Parte de Campaña Dura</td><td>45 PG</td></tr>
+        <tr><td>Oneshot Fácil</td><td>12 PG</td></tr>
+        <tr><td>Oneshot Medio</td><td>18 PG</td></tr>
+        <tr><td>Oneshot Difícil</td><td>24 PG</td></tr>
+        <tr><td>Parte de Campaña Media</td><td>25 PG</td></tr>
+        <tr><td>Parte de Campaña Difícil</td><td>30 PG</td></tr>
         <tr><td>Derrota de Coloso</td><td>280–420 PG</td></tr>
       </table>
 
       <div class="rules-subhead">Modificadores</div>
       <table class="rules-table">
-        <tr><td>El gremio casi pierde a un PJ</td><td>−2 PG</td></tr>
-        <tr><td>El gremio pierde a un PJ</td><td>−8 PG</td></tr>
-        <tr><td>Objetivo secundario completado</td><td>+3 PG</td></tr>
-        <tr><td>Roleplay excepcional</td><td>+2 PG</td></tr>
-        <tr><td>Misión en desventaja notable</td><td>+4 PG</td></tr>
+        <tr><td>El gremio pierde a un PJ</td><td>−20 PG</td></tr>
+        <tr><td>Objetivo secundario completado</td><td>+5 PG</td></tr>
+        <tr><td>Roleplay excepcional</td><td>+5 PG</td></tr>
         <tr><td>Fallo del objetivo principal (sobreviviendo)</td><td>×0.5</td></tr>
         <tr><td>Bonus por completar campaña</td><td>+50 PG</td></tr>
       </table>
@@ -931,46 +1179,66 @@ footer a:hover{color:var(--gold-bright);}
     </div>
 
     <div class="rules-panel">
-      <h3>Sistema de Bastión Gremial</h3>
-      <div class="rules-sub">El gremio es el bastión. Las salas se desbloquean con PG acumulados; construirlas cuesta PG adicionales del fondo común.</div>
+      <h3>Loot de Caza</h3>
+      <div class="rules-sub">Una recompensa material por enfrentarse a monstruos que no conceden experiencia</div>
+      <p style="font-family:'Spectral'; font-size:0.92rem; color:var(--text); margin-bottom:1rem;">
+        Debido al sistema de PG, luchar contra monstruos no siempre resulta satisfactorio: derrotarlos no otorga XP. El <b>Loot de Caza</b> permite aprovechar sus restos para conseguir materiales útiles para la alquimia, la creación de toxinas y otros sistemas de fabricación.
+      </p>
 
-      <div class="rules-subhead">Límite de habitaciones por nivel</div>
+      <div class="rules-subhead">Cómo funciona</div>
+      <ul>
+        <li>Cada tipo de criatura tiene su propia categoría de loot. Por ejemplo: <b>Loot de Caza General: Aberraciones (VD 0 a 4)</b>.</li>
+        <li>Para extraer materiales hay que superar una prueba de habilidad relacionada con la criatura: <b>Arcano, Religión, Supervivencia</b> u otras que encajen con el tipo de monstruo.</li>
+        <li>La <b>CD base</b> depende del tipo de criatura y de su VD. Cuanto mayor sea el VD, más difícil será aprovechar sus restos.</li>
+        <li>Se pueden hacer <b>hasta 3 intentos</b> de extracción por criatura. Cada intento posterior aumenta la CD en <b>+3</b>.</li>
+        <li>La prueba puede realizarla un personaje distinto en cada intento, siempre que tenga sentido que participe en la extracción.</li>
+      </ul>
+
+      <div class="rules-subhead">Ejemplo: aberración de VD 2</div>
+      <ul>
+        <li><b>1.er intento:</b> CD 11.</li>
+        <li><b>2.º intento:</b> CD 14.</li>
+        <li><b>3.er intento:</b> CD 17.</li>
+      </ul>
+
+      <div class="rules-subhead">Resultado de la extracción</div>
+      <ul>
+        <li><b>Fallo:</b> la biología inestable de la criatura se descompone y se pierde casi todo el material. Solo se obtiene <b>1 Uso de Paquete de Bestias</b>.</li>
+        <li><b>Éxito:</b> se tira 1d6 a discreción del DM para determinar el material obtenido.</li>
+      </ul>
+
       <table class="rules-table">
-        <tr><td>Nivel 1–3</td><td>2 salas · básicas</td></tr>
-        <tr><td>Nivel 4–6</td><td>4 salas · intermedias</td></tr>
-        <tr><td>Nivel 7–10</td><td>6 salas · avanzadas</td></tr>
-        <tr><td>Nivel 11–20</td><td>8 salas · legendarias</td></tr>
+        <tr><td>1–2</td><td>1× Paquete de Bestias</td></tr>
+        <tr><td>3–4</td><td>1× Paquete de Cueros y Fibras</td></tr>
+        <tr><td>5–6</td><td>1× Paquete de Hongos Venenosos</td></tr>
       </table>
+
+      <p class="rules-note">Cada categoría de criatura puede tener materiales, pruebas y resultados propios. El DM definirá la CD base y la tabla de loot cuando se incorpore una nueva categoría.</p>
+    </div>
+
+    <div class="rules-panel">
+      <h3>Sistema de Bastión Gremial</h3>
+      <div class="rules-sub">Las habitaciones se desbloquean automáticamente al alcanzar el nivel indicado. Ya no requieren pagar PG, salvo el coste específico del Santuario de Guerra.</div>
 
       <div class="rules-subhead">Básicas</div>
       <table class="rules-table">
-        <tr><td>Sala de guardia — +2 a iniciativa para todo el gremio en misiones</td><td>16 PG</td></tr>
-        <tr><td>Taller — fabrican objetos no mágicos entre misiones pagando materiales</td><td>20 PG</td></tr>
-        <tr><td>Taberna — genera 20–60 PO por semana de descanso</td><td>20 PG</td></tr>
+        <tr><td>Nivel 0 · Bastión — lugar privado donde guardar tu equipo y recibir misiones</td></tr>
+        <tr><td>Nivel 2 · Herrería — compra objetos mágicos y no mágicos por PO</td></tr>
+        <tr><td>Nivel 4 · Habitación — espacio privado personalizado</td></tr>
       </table>
 
-      <div class="rules-subhead">Intermedias</div>
+      <div class="rules-subhead">Medias</div>
       <table class="rules-table">
-        <tr><td>Biblioteca — ventaja en una tirada de Conocimiento/Historia/Naturaleza antes de misión</td><td>45 PG</td></tr>
-        <tr><td>Casa de Fieras — permite tener una mascota útil</td><td>45 PG</td></tr>
-        <tr><td>Herrería — mejora o repara un arma/armadura no mágica (1 objeto a la vez)</td><td>45 PG</td></tr>
-        <tr><td>Torre del vigía — pista del DM sobre enemigos o terreno antes de misión</td><td>35 PG</td></tr>
+        <tr><td>Nivel 6 · Casa de Fieras — permite tener una mascota útil</td></tr>
+        <tr><td>Nivel 8 · Mercado Negro — permite comprar y fabricar objetos raros</td></tr>
+        <tr><td>Nivel 10 · Foso de Criaturas — obtiene materiales de monstruos de forma pasiva</td></tr>
       </table>
 
       <div class="rules-subhead">Avanzadas</div>
       <table class="rules-table">
-        <tr><td>Foso de Criaturas — 1d100 entre misiones: 85–94 materiales, 95–100 objeto mágico</td><td>75 PG</td></tr>
-        <tr><td>Torre Mágica — recupera un hechizo de nivel 1–3 en descanso corto</td><td>90 PG</td></tr>
-        <tr><td>Sala de Alquimia — fabrican pociones pagando PO</td><td>70 PG</td></tr>
-        <tr><td>Mercado Negro — acceso a objetos raros de stock rotativo</td><td>75 PG</td></tr>
-      </table>
-
-      <div class="rules-subhead">Legendarias</div>
-      <table class="rules-table">
-        <tr><td>Portal Arcano — teletransporte a cualquier lugar ya visitado</td><td>150 PG</td></tr>
-        <tr><td>Forja de Colosos — objetos raros o muy raros con materiales de Coloso</td><td>150 PG</td></tr>
-        <tr><td>Sala de los Héroes — bono permanente en honor a un PJ muerto</td><td>125 PG</td></tr>
-        <tr><td>Santuario de Guerra — ritual para resucitar a un PJ caído (una vez por arco)</td><td>140 PG + 1000 PO</td></tr>
+        <tr><td>Nivel 12 · Forja de Colosos — permite fabricar y comprar objetos muy raros y legendarios con Material de Coloso</td></tr>
+        <tr><td>Nivel 14 · Sala de los Héroes — bono permanente en honor a un PJ muerto</td></tr>
+        <tr><td>Nivel 16 · Santuario de Guerra — ritual para resucitar a un PJ caído</td><td>Cuesta PG y PO</td></tr>
       </table>
       <p class="rules-note">Sin Santuario de Guerra, la muerte de un PJ es permanente.</p>
     </div>
@@ -987,8 +1255,91 @@ footer a:hover{color:var(--gold-bright);}
       </ul>
     </div>
 
+    <div class="rules-panel">
+      <h3>Armas de fuego</h3>
+      <div class="rules-sub">Fuera de lo tradicional, con reglas propias</div>
+      <ul>
+        <li>El daño de un arma de fuego <b>no suma tu modificador de característica</b>, salvo que el arma diga lo contrario.</li>
+        <li>Luchando con dos armas de fuego ligeras, el ataque adicional resta 2 al daño (mínimo 1).</li>
+        <li>Todas gastan <b>munición especial</b> con el uso — aunque recuerda que en esta mesa no llevamos la cuenta de munición, así que esto es solo sabor narrativo, no una restricción real.</li>
+        <li>Por defecto nadie tiene competencia con armas de fuego. En Carne de Titanes, <b>el DM puede concedértela directamente</b> si encaja con tu personaje, sin más trámite.</li>
+      </ul>
+      <div class="rules-subhead">Competencia por clase (si el DM la concede)</div>
+      <table class="rules-table">
+        <tr><td>Pistolero, Capitán, Mártir, Guerrero, Investigador*</td><td>Simples + marciales</td></tr>
+        <tr><td>Artesano</td><td>Simples + marciales + exóticas</td></tr>
+        <tr><td>Alquimista, Nigromante, Mago de guerra, Bruja, Clérigo, Monje, Brujo</td><td>Solo simples</td></tr>
+        <tr><td>Bardo, Pícaro, Guardián*</td><td>Simples + marciales (con matices por propiedad)</td></tr>
+        <tr><td>Druida, Hechicero, Mago</td><td>Simples (sin Dos Manos ni Dispersión)</td></tr>
+      </table>
+      <p class="rules-note">*Algunas clases excluyen propiedades concretas (Explosiva, Pesada, Mirilla...). Pregunta al DM si tu arma concreta encaja.</p>
+    </div>
+
+    <div class="rules-panel">
+      <h3>Armas cambiantes</h3>
+      <div class="rules-sub">Dos armas fusionadas en una sola plataforma</div>
+      <ul>
+        <li>Combinan dos armas distintas en una sola pieza flexible (por ejemplo, un arco que se convierte en espada). Llevan la etiqueta <b>Cambiante</b>.</li>
+        <li>Son exóticas: solo el Artesano tiene competencia con ellas de forma nativa.</li>
+        <li>Para cualquier otro personaje, <b>el DM puede concederle la competencia directamente</b> si tiene sentido para la historia — sin entrenamiento ni tiempo de práctica de por medio.</li>
+      </ul>
+    </div>
+
+    <div class="rules-panel">
+      <h3><a href="https://nivel20.com/games/dnd-5/rulebooks/1889-en-proceso-espiral-de-secretos-de-valda/items?tag=2615" target="_blank" rel="noopener" style="color:var(--ember-bright); text-decoration:underline;">Injertos</a> monstruosos</h3>
+      <div class="rules-sub">Ventajas poco convencionales, a cambio de un precio</div>
+      <ul>
+        <li>Sustituyes partes de tu cuerpo por apéndices u órganos extraídos de monstruos, a cambio de garras, visión en la oscuridad, resistencias u otras ventajas.</li>
+        <li><b>Cosechar un injerto:</b> solo de un <b>miniboss</b> muerto en las últimas 48 horas (o preservado con un conjuro como Dulce Descanso), y superando una prueba de <b>Inteligencia CD 20</b>. Tarda 10 minutos, y el injerto debe encajar en tamaño con quien vaya a recibirlo (se puede ajustar alquímicamente).</li>
+        <li><b>Insertar un injerto:</b> cirugía de 1 hora con kit de sanador, suministros de alquimia, y alguien con competencia en Medicina o herramientas de alquimia. Pierdes la mitad de tus PG actuales y todos tus dados de golpe, y no puedes usar el injerto hasta pasadas 24 horas de adaptación.</li>
+        <li><b>Sustituir un injerto por otro:</b> solo 30 minutos, pierdes la mitad de tus PG actuales otra vez, pero no vuelves a perder los dados de golpe.</li>
+        <li><b>Ranuras corporales:</b> brazos, cabeza, externo, interno, piernas — un injerto por ranura como máximo.</li>
+        <li>El coste varía según el injerto. Algunos se consiguen más baratos en mercados de mala reputación especializados en tráfico de injertos, con los riesgos que eso conlleva.</li>
+      </ul>
+    </div>
+
     <p class="rules-note">Pendiente de añadir: acciones/acciones adicionales detalladas, e Invocaciones de Brujo homebrew. Iremos ampliando esta página según haga falta en mesa.</p>
 
+  </section>
+
+  <footer>
+    <div>Carne de Titanes — una campaña de Jackks</div>
+  </footer>
+
+</div>
+
+<!-- ================= FABRICACIÓN VIEW ================= -->
+<div class="view" id="view-forja">
+
+  <section class="subhero">
+    <div class="subhero-inner">
+      <div class="hero-eyebrow">Materiales, tiempo y paciencia</div>
+      <h1>Fabricación</h1>
+      <p>8 puestos compartidos. Marca lo que llevas encima y mira qué puedes hacer.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="materials-panel">
+      <h3>¿Qué materiales llevas?</h3>
+      <div class="rules-sub">Márcalos para resaltar las recetas que ya puedes hacer. No se guarda entre sesiones — vuelve a marcarlos cada vez.</div>
+      <div class="materials-grid" id="materialsGrid"></div>
+      <button class="materials-clear" id="materialsClear">Desmarcar todos</button>
+    </div>
+
+    <div class="forja-tabs" id="forjaTabs"></div>
+    <div class="recipe-grid" id="recipeGrid"></div>
+
+    <p class="rules-note" id="forjaPendingNote"></p>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <div class="eyebrow">En marcha ahora mismo</div>
+      <h2>Los 8 Puestos</h2>
+    </div>
+    <div class="forja-stations" id="forjaStations"></div>
+    <p class="rules-note">El coste se muestra como referencia — se paga por confianza fuera de la web, igual que el resto de la economía del gremio.</p>
   </section>
 
   <footer>
@@ -1001,9 +1352,9 @@ footer a:hover{color:var(--gold-bright);}
 
   <section class="subhero">
     <div class="subhero-inner">
-      <div class="hero-eyebrow">Selecciona quién eres</div>
+      <div class="hero-eyebrow">Gremio unificado</div>
       <h1>Mi Personaje</h1>
-      <p>Tu ficha, tu Mochila. Se guarda sola.</p>
+      <p>La compañía, sus recursos y sus salas privadas.</p>
     </div>
   </section>
 
@@ -1084,6 +1435,7 @@ footer a:hover{color:var(--gold-bright);}
     </div>
     <p class="map-showcase-caption" style="max-width:640px; margin:0 auto 2.5rem; text-align:center;">Aquí se relata la historia del gremio de aventureros del continente El Suelo.</p>
     <div class="timeline">
+      <div class="timeline-node"><h4>Torneo de Piedra Hueca</h4><p>Itzel se alza como campeona del torneo y deja su nombre grabado en la historia del gremio.</p></div>
       <div class="timeline-node"><h4>Axeholm</h4><p>Expulsar a los Guls del antiguo Bastión del Clan Enano.</p></div>
       <div class="timeline-node"><h4>La tumba de Delian</h4><p>Rescatar a la hija del herrero del pueblo de un ritual goblin.</p></div>
       <div class="timeline-node"><h4>Tutorial</h4><p>Sesión introductoria de la campaña, pequeño tutorial.</p></div>
@@ -1106,17 +1458,34 @@ footer a:hover{color:var(--gold-bright);}
   </div>
 </div>
 
+<div class="mission-modal-backdrop" id="missionModalBackdrop">
+  <div class="mission-modal">
+    <button class="close-x" id="missionModalClose">✕</button>
+    <h3 id="missionModalTitle"></h3>
+    <div class="mission-modal-sub" id="missionModalSub"></div>
+    <p id="missionModalDesc"></p>
+  </div>
+</div>
+
+<div class="mission-modal-backdrop" id="vinPuzzleModalBackdrop">
+  <div class="mission-modal vin-puzzle-modal">
+    <button class="close-x" id="vinPuzzleModalClose">✕</button>
+    <h3>Puzzle</h3>
+    <img id="vinPuzzleModalImg" src="vin-puzzle.svg" alt="Puzzle de El Rastro de Dante">
+  </div>
+</div>
+
 <script>
 window.addEventListener('load', ()=>{
   const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-  const maxWait = new Promise(res => setTimeout(res, 1800));
+  const maxWait = new Promise(res => setTimeout(res, 2200));
   Promise.race([fontsReady, maxWait]).then(()=>{
     requestAnimationFrame(()=>{
       requestAnimationFrame(()=>{
         setTimeout(()=>{
           const splash = document.getElementById('splashScreen');
           if(splash) splash.classList.add('hide');
-        }, 900);
+        }, 1100);
       });
     });
   });
@@ -1201,16 +1570,16 @@ renderLevelChips();
 
 const missions = {
   facil: [
-    {title:'Oneshot fácil', meta:'Nivel 3 · 5 jugadores', desc:'Título y premisa pendientes de definir.'}
+    {title:'Sombras del Fuerte del Último Vigía', meta:'Nivel 4 · 4-5 personajes · 3-4 horas', desc:'Un grupo drow queda dentro de una fortaleza abandonada tras un ataque que salió mal. El gremio debe entrar y detenerlos antes de que escapen de vuelta al inframundo con información peligrosa sobre la superficie.', detail:'La aventura transcurre en las ruinas de un fuerte fronterizo tomado por un comando drow que originalmente iba a usarlo como cabeza de puente para una invasión, hasta que algo dentro del fuerte los sorprendió a ellos primero. El gremio llega cuando los drow, heridos y a la defensiva, intentan asegurar una salida hacia el inframundo antes de que la información que llevan llegue a sus superiores. Combina exploración de un fuerte semien ruinas, un combate central bien armado y un puñado de PNJs secundarios con personalidad propia. Pensada para 4-5 personajes de nivel 4, dura entre 3 y 4 horas.'}
   ],
   medio: [
-    {title:'Oneshot medio', meta:'Nivel 3 · 5 jugadores', desc:'Título y premisa pendientes de definir.'}
+    {title:'Bajo la Rosa Negra', meta:'Nivel 3 · 5 jugadores', desc:'Una posada tiene un fantasma que ronda sus pasillos y un secreto sectario enterrado bajo el piso. El gremio debe bajar a resolver ambas cosas y cerrar una tragedia de décadas atrás.', detail:'El gremio llega a una posada con fama de estar embrujada, contratado para investigar apariciones que llevan años inquietando al pueblo. La familia que regenta el lugar tiene sus propias tensiones y secretos, y a medida que el gremio indaga queda claro que lo que ronda la posada tiene raíz en algo que pasó hace mucho tiempo bajo el edificio mismo. Combina investigación social con los PNJs de la posada, exploración de espacios ocultos y un enfrentamiento final con lo que sea que hayan estado despertando sin darse cuenta.'}
   ],
   dificil: [
-    {title:'La Casa de la Muerte', meta:'Nivel 3 · 5 jugadores', desc:'Adaptación oneshot del módulo clásico, ajustada a nivel 3.'}
+    {title:'La Casa de la Muerte', meta:'Nivel 3 · 5 jugadores', desc:'Un caserón abandonado en las afueras del pueblo tiene fama de estar embrujado y de haberse tragado a varios chicos que entraron a explorarlo. El gremio entra a buscar respuestas y a lo que quede de ellos.', detail:'El gremio llega a un pueblo donde una mansión lleva años vacía y rodeada de rumores oscuros: ruidos, niños que desaparecieron y familiares que nunca volvieron a hablar del tema. Al entrar, la casa se revela mucho más grande de lo que parece desde afuera, con varios niveles que esconden capas de una historia familiar que se fue pudriendo con el tiempo. Combina exploración ambiental cargada de pistas narrativas, encuentros con lo sobrenatural que van escalando en intensidad y un descenso final a algo mucho peor debajo de los cimientos. Es intensa y puede resultar letal si no se juega con cuidado. Tiene fama de picar más duro de lo que su nivel sugiere.'}
   ],
   especial: [
-    {title:'Torneo del Coliseo', meta:'6 vs 6 · Formato torneo', desc:'Un torneo por equipos en un coliseo, con un arma rara en juego. El arma se personalizará según quién gane.'}
+    {title:'Rescate en la nieve', meta:'Misión especial', desc:'Una caravana de mercaderes desapareció en las rutas de montaña hace días. El gremio se divide en dos equipos para rastrearla antes de que el invierno se cierre del todo.', detail:'La premisa es simple en la superficie: una caravana mercante no llegó a destino y nadie sabe si fue el clima, bandidos, o algo peor. A medida que ambos grupos avanzan por rutas distintas de la misma cordillera, empiezan a toparse con señales de que la región está más tensa de lo normal, tensión que tiene que ver con la vieja fricción entre Creyentes y Racionalistas, que en esta zona no es solo una diferencia de opinión. Cada grupo va a acumular piezas de una imagen más grande que solo se completa cuando se vuelven a juntar. Hacia el final, hay un momento de gran escala pensado para dejar una marca: algo que se ve a la distancia y que deja claro que esta cordillera no es tan "segura" como el mapa sugiere.'}
   ]
 };
 function renderMissions(){
@@ -1223,8 +1592,8 @@ function renderMissions(){
       el.innerHTML = `<p class="mission-empty">Aún no hay misiones registradas aquí.</p>`;
       return;
     }
-    el.innerHTML = list.map(m => `
-      <div class="mission-entry">
+    el.innerHTML = list.map((m, index) => `
+      <div class="mission-entry clickable" data-mission-key="${key}" data-mission-index="${index}" tabindex="0" role="button">
         <h4>${m.title}</h4>
         <div class="m-meta">${m.meta}</div>
         <div class="m-desc">${m.desc}</div>
@@ -1234,7 +1603,517 @@ function renderMissions(){
 }
 renderMissions();
 
+function openMissionModal(mission){
+  document.getElementById('missionModalTitle').textContent = mission.title;
+  document.getElementById('missionModalSub').textContent = mission.meta;
+  document.getElementById('missionModalDesc').textContent = mission.detail || mission.desc;
+  document.getElementById('missionModalBackdrop').classList.add('active');
+}
+function closeMissionModal(){ document.getElementById('missionModalBackdrop').classList.remove('active'); }
+document.getElementById('missionModalClose').addEventListener('click', closeMissionModal);
+document.getElementById('missionModalBackdrop').addEventListener('click', e=>{ if(e.target.id === 'missionModalBackdrop') closeMissionModal(); });
+document.querySelectorAll('.mission-entry.clickable').forEach(entry=>{
+  const open = ()=>openMissionModal(missions[entry.dataset.missionKey][Number(entry.dataset.missionIndex)]);
+  entry.addEventListener('click', open);
+  entry.addEventListener('keydown', e=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+});
+
+/* ---------------- FABRICACIÓN ----------------
+   Sistema de precios: coste = ((valor materiales) + (horas listadas × 3 PO/hora de mano de obra)) × 1.2, redondeado a 5, mínimo 10.
+   El tiempo real de fabricación es el TRIPLE del tiempo listado (según lo hablado).
+   Esta es una selección representativa (~40 recetas) — quedan pendientes el resto de las ~140 del documento original,
+   se irán añadiendo por categoría en próximas rondas. */
+
+const MATERIAL_TIERS = {
+  'Aceite de Base Alquímica':3,
+  'Agua':1,
+  'Agua Pura':1,
+  'Alga Abisal Azul':4,
+  'Calmavia':3,
+  'Carne Celestial':4,
+  'Carne Infernal':4,
+  'Carne de Bestia':2,
+  'Carne de Calamar Gigante':4,
+  'Carne de Dragón':5,
+  'Carne de Gigante':5,
+  'Carne de Grifo o Roc':5,
+  'Carne de Hidra':5,
+  'Carne de Kraken o Leviatán':5,
+  'Carne de Oso-Lechuza':4,
+  'Carne de Tarrasca':6,
+  'Cereales':1,
+  'Chiles Ígneos':2,
+  'Combustible Básico':1,
+  'Componentes Mecánicos':3,
+  'Cuero Curtido':2,
+  'Cueros y Fibras':1,
+  'Destilado de Planos':4,
+  'Endulzante Natural':2,
+  'Escamas o Pelos de Bestia':4,
+  'Esencia Feérica':3,
+  'Flor de Ensueño':4,
+  'Flor de Pulso':4,
+  'Flor de Sueño Ligero':2,
+  'Frutas Extraplanares':4,
+  'Frutos Secos':1,
+  'Grasa Animal':1,
+  'Grasa Vegetal':1,
+  'Harina':1,
+  'Hierba Calmante':2,
+  'Hierba del Alba Rápida':4,
+  'Hierba del Caminante':3,
+  'Hierba del Elfo':3,
+  'Hierbas Aromáticas':2,
+  'Hierbas Calmantes':2,
+  'Hierbas Estimulantes':2,
+  'Hierbas Ilusorias':3,
+  'Hoja de Brisa':4,
+  'Hoja de Vigilia':3,
+  'Hongos Venenosos':3,
+  'Hongos del Underdark':4,
+  'Huevos (Roc o Grifo)':3,
+  'Lavanda Umbría':4,
+  'Lingotes de Acero':2,
+  'Lingotes de Hierro':1,
+  'Madera Reforzada':1,
+  'Menta':2,
+  'Miel':1,
+  'Minerales y Metales':2,
+  'Música Ilusoria':3,
+  'Néctar Celestial':4,
+  'Paquete de Bestias':2,
+  'Paquete de Hongos Comestibles':2,
+  'Paquete de Sales':2,
+  'Pergamino (Hoja)':2,
+  'Pescado Abisal':3,
+  'Polvo de Diamante':4,
+  'Polvos de Estabilidad':3,
+  'Pólvora y Salitre':3,
+  'Queso Refinado':3,
+  'Quintaesencia Pura':5,
+  'Raíz Despierta':5,
+  'Raíz Serena':4,
+  'Reactivos Elementales':3,
+  'Remaches, Hebillas y Relleno':2,
+  'Residuo Mágico':3,
+  'Sal Gruesa':1,
+  'Sangre de Bestia':4,
+  'Sangre de Criatura Mágica':5,
+  'Sangre de Dragón o Fénix':5,
+  'Sangre de Oso':2,
+  'Savia':3,
+  'Seda de Araña':4,
+  'Telaraña Gigante':4,
+  'Telas y Sedas':2,
+  'Tinta Arcana (carga)':3,
+  'Tintes y Bordados':2,
+  'Tocino':2,
+  'Uvas':1,
+  'Vino Añejo':3,
+  'Vino Feérico':3,
+};
+const TIER_PO = {1:1, 2:5, 3:20, 4:80, 5:400, 6:2000};
+
+function calcPrice(materials, hours){
+  const matValue = materials.reduce((sum,m)=> sum + (TIER_PO[MATERIAL_TIERS[m.name]]||5) * m.qty, 0);
+  const labor = hours * 3;
+  const raw = (matValue + labor) * 1.2;
+  return Math.max(10, Math.round(raw/5)*5);
+}
+
+const FORJA_CATEGORIES = [
+  {key:'canalizadores', label:'Canalizadores'},
+  {key:'ropajes', label:'Armaduras y Ropajes'},
+  {key:'armaduras', label:'Armaduras'},
+  {key:'escudos', label:'Escudos'},
+  {key:'pergaminos', label:'Pergaminos'},
+  {key:'armas', label:'Armas'},
+  {key:'alquimia', label:'Alquimia y Pociones'},
+  {key:'comida', label:'Comidas y Bebidas'}
+];
+
+function R(name, category, hours, timeLabel, materials){
+  return { name, category, hours, timeLabel, materials, price: calcPrice(materials, hours) };
+}
+
+const RECIPES = [
+  R('Cetro/Bastón','canalizadores',24,'1 día',[{name:'Madera Reforzada',qty:1}]),
+  R('Cristal','canalizadores',24,'1 día',[{name:'Minerales y Metales',qty:1}]),
+  R('Varita/Vara','canalizadores',24,'1 día',[{name:'Madera Reforzada',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Orbe','canalizadores',48,'2 días',[{name:'Minerales y Metales',qty:2},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Ramita de Muérdago','canalizadores',6,'6 horas',[{name:'Flor de Sueño Ligero',qty:1}]),
+  R('Tótem','canalizadores',48,'2 días',[{name:'Madera Reforzada',qty:1}]),
+  R('Vara de Madera','canalizadores',24,'1 día',[{name:'Madera Reforzada',qty:2}]),
+  R('Varita de Tejo','canalizadores',24,'1 día',[{name:'Madera Reforzada',qty:2},{name:'Paquete de Hongos Comestibles',qty:1}]),
+  R('Símbolo Sagrado','canalizadores',48,'2 días',[{name:'Lingotes de Hierro',qty:1}]),
+  R('Amuleto de Esquirla Oscura','canalizadores',168,'1 semana',[{name:'Destilado de Planos',qty:1},{name:'Minerales y Metales',qty:1}]),
+  R('Sombrero de Mago','canalizadores',168,'1 semana',[{name:'Telas y Sedas',qty:2},{name:'Tintes y Bordados',qty:1},{name:'Esencia Feérica',qty:1}]),
+  R('Incensario del Olvido de Morthen','canalizadores',168,'1 semana',[{name:'Reactivos Elementales',qty:1},{name:'Minerales y Metales',qty:1},{name:'Destilado de Planos',qty:1}]),
+  R('Raíz del Sueño de Kalathos','canalizadores',168,'1 semana',[{name:'Madera Reforzada',qty:1},{name:'Hongos del Underdark',qty:1},{name:'Destilado de Planos',qty:1}]),
+  R('Núcleo de Escoria Viva de Cenath','canalizadores',168,'1 semana',[{name:'Reactivos Elementales',qty:1},{name:'Lingotes de Hierro',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Prisma de Glitch','canalizadores',168,'1 semana',[{name:'Polvo de Diamante',qty:1},{name:'Quintaesencia Pura',qty:1},{name:'Destilado de Planos',qty:1}]),
+  R('Guantes de Cuero','ropajes',48,'2 días',[{name:'Cuero Curtido',qty:1},{name:'Remaches, Hebillas y Relleno',qty:1}]),
+  R('Guantes de Cocina','ropajes',48,'2 días',[{name:'Telas y Sedas',qty:2},{name:'Remaches, Hebillas y Relleno',qty:1}]),
+  R('Guantes Blancos','ropajes',48,'2 días',[{name:'Telas y Sedas',qty:2}]),
+  R('Calzado de Campesino','ropajes',48,'2 días',[{name:'Cuero Curtido',qty:2}]),
+  R('Calzado Liviano','ropajes',48,'2 días',[{name:'Cuero Curtido',qty:1},{name:'Telas y Sedas',qty:1}]),
+  R('Ropa de Remendado','ropajes',168,'1 semana',[{name:'Telas y Sedas',qty:2},{name:'Residuo Mágico',qty:1}]),
+  R('Calzado Militar','ropajes',96,'4 días',[{name:'Cuero Curtido',qty:2},{name:'Remaches, Hebillas y Relleno',qty:2},{name:'Destilado de Planos',qty:1}]),
+  R('Túnica Obscura','ropajes',72,'3 días',[{name:'Telas y Sedas',qty:2},{name:'Tintes y Bordados',qty:2}]),
+  R('Collar de Perlas','ropajes',72,'3 días',[{name:'Telas y Sedas',qty:1},{name:'Esencia Feérica',qty:1}]),
+  R('Sombrero de Alimañas','ropajes',120,'5 días',[{name:'Telas y Sedas',qty:2},{name:'Esencia Feérica',qty:2}]),
+  R('Capa de Muchos Estilos','ropajes',168,'1 semana',[{name:'Telas y Sedas',qty:3},{name:'Residuo Mágico',qty:2},{name:'Tintes y Bordados',qty:2}]),
+  R('Yelmo del Terror','ropajes',168,'1 semana',[{name:'Lingotes de Hierro',qty:2},{name:'Destilado de Planos',qty:1}]),
+  R('Botas de Pistas Falsas','ropajes',168,'1 semana',[{name:'Cuero Curtido',qty:2},{name:'Residuo Mágico',qty:1}]),
+  R('Armadura Humeante (sobre base propia)','ropajes',168,'1 semana',[{name:'Residuo Mágico',qty:2},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Capa Ondeante','ropajes',96,'4 días',[{name:'Telas y Sedas',qty:3},{name:'Residuo Mágico',qty:1}]),
+  R('Capa de Mantarraya','ropajes',72,'3 días',[{name:'Telas y Sedas',qty:2},{name:'Alga Abisal Azul',qty:1},{name:'Destilado de Planos',qty:1}]),
+  R('Capa Élfica','ropajes',72,'3 días',[{name:'Telas y Sedas',qty:2},{name:'Polvos de Estabilidad',qty:2},{name:'Destilado de Planos',qty:1}]),
+  R('Capa de Protección','ropajes',72,'3 días',[{name:'Telas y Sedas',qty:2},{name:'Polvos de Estabilidad',qty:2},{name:'Destilado de Planos',qty:1}]),
+  R('Acolchada (Ligera)','armaduras',24,'1 día',[{name:'Remaches, Hebillas y Relleno',qty:2}]),
+  R('Cuero (Ligera)','armaduras',48,'2 días',[{name:'Cuero Curtido',qty:2},{name:'Remaches, Hebillas y Relleno',qty:1}]),
+  R('Cuero Tachonado (Ligera)','armaduras',72,'3 días',[{name:'Cuero Curtido',qty:3},{name:'Lingotes de Hierro',qty:1},{name:'Remaches, Hebillas y Relleno',qty:1}]),
+  R('Malla de Seda de Araña (Ligera)','armaduras',96,'4 días',[{name:'Seda de Araña',qty:1},{name:'Remaches, Hebillas y Relleno',qty:1}]),
+  R('Cota Guarnecida (Pesada)','armaduras',72,'3 días',[{name:'Lingotes de Hierro',qty:3},{name:'Cuero Curtido',qty:1},{name:'Remaches, Hebillas y Relleno',qty:1}]),
+  R('Cota de Malla (Pesada)','armaduras',96,'4 días',[{name:'Lingotes de Hierro',qty:5},{name:'Remaches, Hebillas y Relleno',qty:2}]),
+  R('Armadura de Bandas (Pesada)','armaduras',168,'1 semana',[{name:'Lingotes de Acero',qty:4},{name:'Remaches, Hebillas y Relleno',qty:2}]),
+  R('Armadura de Placas (Pesada)','armaduras',336,'2 semanas',[{name:'Lingotes de Acero',qty:8},{name:'Remaches, Hebillas y Relleno',qty:3}]),
+  R('Juggernaut (Pesada)','armaduras',336,'2 semanas',[{name:'Lingotes de Acero',qty:10},{name:'Quintaesencia Pura',qty:1},{name:'Remaches, Hebillas y Relleno',qty:5}]),
+  R('Escudo','escudos',24,'1 día',[{name:'Madera Reforzada',qty:1},{name:'Lingotes de Hierro',qty:1}]),
+  R('Escudo Torre','escudos',96,'4 días',[{name:'Madera Reforzada',qty:2},{name:'Lingotes de Acero',qty:2},{name:'Remaches, Hebillas y Relleno',qty:1}]),
+  R('Pergamino de Truco','pergaminos',24,'1 día',[{name:'Polvos de Estabilidad',qty:1},{name:'Pergamino (Hoja)',qty:1},{name:'Tinta Arcana (carga)',qty:1}]),
+  R('Pergamino Nivel 1','pergaminos',24,'1 día',[{name:'Esencia Feérica',qty:1},{name:'Pergamino (Hoja)',qty:1},{name:'Tinta Arcana (carga)',qty:1}]),
+  R('Pergamino Nivel 2','pergaminos',48,'2 días',[{name:'Pergamino (Hoja)',qty:1},{name:'Tinta Arcana (carga)',qty:2},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Pergamino Nivel 3','pergaminos',72,'3 días',[{name:'Pergamino (Hoja)',qty:1},{name:'Tinta Arcana (carga)',qty:3},{name:'Destilado de Planos',qty:1}]),
+  R('Pergamino Nivel 4','pergaminos',96,'4 días',[{name:'Pergamino (Hoja)',qty:1},{name:'Tinta Arcana (carga)',qty:4},{name:'Polvo de Diamante',qty:1}]),
+  R('Pergamino Nivel 5','pergaminos',168,'1 semana',[{name:'Pergamino (Hoja)',qty:1},{name:'Tinta Arcana (carga)',qty:5},{name:'Quintaesencia Pura',qty:1}]),
+  R('Dardo','armas',1,'1 hora',[{name:'Lingotes de Hierro',qty:1}]),
+  R('Honda','armas',1,'1 hora',[{name:'Cueros y Fibras',qty:1}]),
+  R('Balestrino','armas',4,'4 horas',[{name:'Lingotes de Hierro',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Arco Corto','armas',24,'1 día',[{name:'Madera Reforzada',qty:1},{name:'Cueros y Fibras',qty:1}]),
+  R('Ballesta Ligera','armas',24,'1 día',[{name:'Lingotes de Hierro',qty:1},{name:'Madera Reforzada',qty:1},{name:'Cueros y Fibras',qty:1}]),
+  R('Garrote','armas',2,'2 horas',[{name:'Madera Reforzada',qty:1}]),
+  R('Bastón (Staff)','armas',4,'4 horas',[{name:'Madera Reforzada',qty:1}]),
+  R('Garrote Grande','armas',6,'6 horas',[{name:'Madera Reforzada',qty:2}]),
+  R('Hacha de Mano / Jabalina','armas',4,'4 horas',[{name:'Lingotes de Hierro',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Hoz / Lanza','armas',6,'6 horas',[{name:'Lingotes de Hierro',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Martillo Ligero','armas',8,'8 horas',[{name:'Lingotes de Hierro',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Daga','armas',8,'8 horas',[{name:'Lingotes de Hierro',qty:1},{name:'Cueros y Fibras',qty:1}]),
+  R('Maza','armas',24,'1 día',[{name:'Lingotes de Hierro',qty:2},{name:'Madera Reforzada',qty:1}]),
+  R('Red','armas',6,'6 horas',[{name:'Cueros y Fibras',qty:2}]),
+  R('Cerbatana','armas',8,'8 horas',[{name:'Madera Reforzada',qty:1}]),
+  R('Arco Largo','armas',48,'2 días',[{name:'Madera Reforzada',qty:2},{name:'Cueros y Fibras',qty:1}]),
+  R('Ballesta Pesada','armas',72,'3 días',[{name:'Lingotes de Acero',qty:1},{name:'Componentes Mecánicos',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Ballesta de Mano','armas',72,'3 días',[{name:'Lingotes de Acero',qty:1},{name:'Componentes Mecánicos',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Ballesta de Repetición','armas',120,'5 días',[{name:'Lingotes de Acero',qty:1},{name:'Componentes Mecánicos',qty:2},{name:'Madera Reforzada',qty:1}]),
+  R('Pistola','armas',168,'1 semana',[{name:'Lingotes de Acero',qty:2},{name:'Pólvora y Salitre',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Mosquete','armas',168,'1 semana',[{name:'Lingotes de Acero',qty:3},{name:'Pólvora y Salitre',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Trabuco','armas',168,'1 semana',[{name:'Lingotes de Acero',qty:3},{name:'Pólvora y Salitre',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Látigo','armas',24,'1 día',[{name:'Cueros y Fibras',qty:2}]),
+  R('Pica','armas',24,'1 día',[{name:'Lingotes de Acero',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Pico de Guerra','armas',24,'1 día',[{name:'Lingotes de Acero',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Tridente','armas',24,'1 día',[{name:'Lingotes de Acero',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Espada Corta','armas',48,'2 días',[{name:'Lingotes de Acero',qty:1},{name:'Cueros y Fibras',qty:1}]),
+  R('Hacha de Guerra','armas',48,'2 días',[{name:'Lingotes de Acero',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Lanza de Caballería','armas',48,'2 días',[{name:'Lingotes de Acero',qty:1},{name:'Madera Reforzada',qty:1}]),
+  R('Mangual','armas',48,'2 días',[{name:'Lingotes de Acero',qty:1},{name:'Cueros y Fibras',qty:1}]),
+  R('Martillo a Dos Manos','armas',48,'2 días',[{name:'Lingotes de Acero',qty:2},{name:'Madera Reforzada',qty:1}]),
+  R('Espada Larga','armas',72,'3 días',[{name:'Lingotes de Acero',qty:2},{name:'Cueros y Fibras',qty:1}]),
+  R('Lucero del Alba','armas',72,'3 días',[{name:'Lingotes de Acero',qty:2},{name:'Cueros y Fibras',qty:1}]),
+  R('Martillo de Guerra','armas',72,'3 días',[{name:'Lingotes de Acero',qty:2},{name:'Madera Reforzada',qty:1}]),
+  R('Kunai con Cadena','armas',72,'3 días',[{name:'Lingotes de Acero',qty:1},{name:'Cueros y Fibras',qty:2}]),
+  R('Alabarda','armas',72,'3 días',[{name:'Lingotes de Acero',qty:2},{name:'Madera Reforzada',qty:1}]),
+  R('Guja','armas',96,'4 días',[{name:'Lingotes de Acero',qty:2},{name:'Cueros y Fibras',qty:1}]),
+  R('Estoque','armas',96,'4 días',[{name:'Lingotes de Acero',qty:2},{name:'Cueros y Fibras',qty:1}]),
+  R('Hacha a Dos Manos','armas',120,'5 días',[{name:'Lingotes de Acero',qty:3},{name:'Madera Reforzada',qty:1}]),
+  R('Katana','armas',120,'5 días',[{name:'Lingotes de Acero',qty:3},{name:'Cueros y Fibras',qty:1}]),
+  R('Cimitarra de Doble Hoja','armas',120,'5 días',[{name:'Lingotes de Acero',qty:3},{name:'Cueros y Fibras',qty:1}]),
+  R('Espadón','armas',168,'1 semana',[{name:'Lingotes de Acero',qty:4},{name:'Cueros y Fibras',qty:1}]),
+  R('Agua Bendita (Frasco)','alquimia',4,'4 horas',[{name:'Agua Pura',qty:1},{name:'Paquete de Sales',qty:1},{name:'Esencia Feérica',qty:1}]),
+  R('Ácido (Vial)','alquimia',8,'8 horas',[{name:'Reactivos Elementales',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Fuego de Alquimista (Frasco)','alquimia',8,'8 horas',[{name:'Reactivos Elementales',qty:1},{name:'Aceite de Base Alquímica',qty:1},{name:'Combustible Básico',qty:1}]),
+  R('Tinta Arcana (fabricación)','alquimia',8,'8 horas',[{name:'Aceite de Base Alquímica',qty:1},{name:'Combustible Básico',qty:1},{name:'Polvo de Diamante',qty:1}]),
+  R('Antitoxina','alquimia',8,'8 horas',[{name:'Reactivos Elementales',qty:1},{name:'Miel',qty:1},{name:'Hierbas Estimulantes',qty:1}]),
+  R('Poción de Vida - Menor','alquimia',24,'1 día',[{name:'Sangre de Bestia',qty:1},{name:'Polvos de Estabilidad',qty:1},{name:'Hierbas Estimulantes',qty:1}]),
+  R('Poción del Vigilante','alquimia',24,'1 día',[{name:'Hoja de Vigilia',qty:1},{name:'Endulzante Natural',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Té de Caminante','alquimia',24,'1 día',[{name:'Hierba del Caminante',qty:1},{name:'Polvos de Estabilidad',qty:1},{name:'Agua',qty:1}]),
+  R('Aceite de Escoria Ardiente','alquimia',24,'1 día',[{name:'Reactivos Elementales',qty:1},{name:'Aceite de Base Alquímica',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Antídoto de Morthen','alquimia',24,'1 día',[{name:'Hongos del Underdark',qty:1},{name:'Aceite de Base Alquímica',qty:1},{name:'Calmavia',qty:1}]),
+  R('Elixir de la Voz Clara','alquimia',24,'1 día',[{name:'Esencia Feérica',qty:1},{name:'Hierba del Elfo',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Poción de Trepar','alquimia',24,'1 día',[{name:'Telaraña Gigante',qty:1},{name:'Aceite de Base Alquímica',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Veneno Simple','alquimia',24,'1 día',[{name:'Hongos Venenosos',qty:1},{name:'Aceite de Base Alquímica',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Sangre de Asesino','alquimia',24,'1 día',[{name:'Hongos del Underdark',qty:1},{name:'Aceite de Base Alquímica',qty:1},{name:'Reactivos Elementales',qty:1}]),
+  R('Poción de Amistad Animal','alquimia',24,'1 día',[{name:'Escamas o Pelos de Bestia',qty:1},{name:'Hierba del Caminante',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Aceite Escurridizo','alquimia',24,'1 día',[{name:'Grasa Animal',qty:1},{name:'Aceite de Base Alquímica',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Extracto de Raíz de Escarcha','alquimia',24,'1 día',[{name:'Alga Abisal Azul',qty:1},{name:'Polvos de Estabilidad',qty:1},{name:'Agua',qty:1}]),
+  R('Poción de Vida - Mayor','alquimia',48,'2 días',[{name:'Aceite de Base Alquímica',qty:1},{name:'Flor de Pulso',qty:1},{name:'Sangre de Bestia',qty:1}]),
+  R('Poción de Amistad','alquimia',48,'2 días',[{name:'Endulzante Natural',qty:1},{name:'Esencia Feérica',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Fuego de Alquimista Concentrado','alquimia',48,'2 días',[{name:'Reactivos Elementales',qty:2},{name:'Aceite de Base Alquímica',qty:1},{name:'Combustible Básico',qty:1}]),
+  R('Veneno Drow','alquimia',48,'2 días',[{name:'Aceite de Base Alquímica',qty:1},{name:'Lavanda Umbría',qty:1},{name:'Hongos del Underdark',qty:1}]),
+  R('Branquias de Vaelor','alquimia',48,'2 días',[{name:'Alga Abisal Azul',qty:1},{name:'Pescado Abisal',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Susurro de Ivana','alquimia',48,'2 días',[{name:'Destilado de Planos',qty:1},{name:'Lavanda Umbría',qty:1},{name:'Flor de Ensueño',qty:1}]),
+  R('Suero de Estabilidad','alquimia',48,'2 días',[{name:'Polvos de Estabilidad',qty:1},{name:'Raíz Serena',qty:1},{name:'Destilado de Planos',qty:1}]),
+  R('Poción de Crecimiento','alquimia',48,'2 días',[{name:'Aceite de Base Alquímica',qty:1},{name:'Carne de Oso-Lechuza',qty:1},{name:'Reactivos Elementales',qty:1}]),
+  R('Poción de Aliento de Fuego','alquimia',48,'2 días',[{name:'Reactivos Elementales',qty:2},{name:'Chiles Ígneos',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Esencia de Éter','alquimia',48,'2 días',[{name:'Hongos Venenosos',qty:1},{name:'Combustible Básico',qty:1},{name:'Destilado de Planos',qty:1}]),
+  R('Aliento Embotellado','alquimia',72,'3 días',[{name:'Destilado de Planos',qty:1},{name:'Hoja de Brisa',qty:1},{name:'Agua Pura',qty:1}]),
+  R('Poción de Fortaleza Psiónica','alquimia',72,'3 días',[{name:'Destilado de Planos',qty:1},{name:'Hongos del Underdark',qty:1},{name:'Hierbas Ilusorias',qty:1}]),
+  R('Poción de Vida - Superior','alquimia',72,'3 días',[{name:'Sangre de Criatura Mágica',qty:1},{name:'Flor de Pulso',qty:1},{name:'Destilado de Planos',qty:1}]),
+  R('Poción de Heroísmo','alquimia',72,'3 días',[{name:'Néctar Celestial',qty:1},{name:'Hierba del Alba Rápida',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Esencia de Invisibilidad','alquimia',72,'3 días',[{name:'Destilado de Planos',qty:1},{name:'Hierbas Ilusorias',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Elixir de Mente Clara','alquimia',72,'3 días',[{name:'Destilado de Planos',qty:1},{name:'Lavanda Umbría',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Tónico de la Sombra Perdida','alquimia',96,'4 días',[{name:'Destilado de Planos',qty:1},{name:'Hongos del Underdark',qty:1},{name:'Combustible Básico',qty:1}]),
+  R('Aceite de Velocidad','alquimia',96,'4 días',[{name:'Flor de Pulso',qty:1},{name:'Reactivos Elementales',qty:1},{name:'Aceite de Base Alquímica',qty:1}]),
+  R('Poción de Disminución','alquimia',96,'4 días',[{name:'Destilado de Planos',qty:1},{name:'Hongos del Underdark',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Poción de Forma Gaseosa','alquimia',96,'4 días',[{name:'Destilado de Planos',qty:1},{name:'Hoja de Brisa',qty:1},{name:'Combustible Básico',qty:1}]),
+  R('Suerte Líquida','alquimia',96,'4 días',[{name:'Destilado de Planos',qty:1},{name:'Esencia Feérica',qty:1},{name:'Polvo de Diamante',qty:1}]),
+  R('Elixir de Salud','alquimia',96,'4 días',[{name:'Destilado de Planos',qty:1},{name:'Raíz Serena',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Poción de Forma Acuosa','alquimia',120,'5 días',[{name:'Alga Abisal Azul',qty:1},{name:'Destilado de Planos',qty:1},{name:'Agua Pura',qty:1}]),
+  R('Poción de Vitalidad','alquimia',120,'5 días',[{name:'Sangre de Criatura Mágica',qty:1},{name:'Destilado de Planos',qty:1},{name:'Hierba del Caminante',qty:1}]),
+  R('Poción de Vida - Suprema','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Sangre de Dragón o Fénix',qty:1},{name:'Néctar Celestial',qty:1}]),
+  R('Poción de Velocidad Suprema','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Flor de Pulso',qty:1},{name:'Reactivos Elementales',qty:1}]),
+  R('Poción de Vuelo Supremo','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Hoja de Brisa',qty:1},{name:'Carne de Grifo o Roc',qty:1}]),
+  R('Poción de Poder','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Polvos de Estabilidad',qty:1},{name:'Raíz Despierta',qty:1}]),
+  R('Poción de Resistencia Estable','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Reactivos Elementales',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Aceite de Etereidad','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Reactivos Elementales',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Poción de Fuerza de Gigante (Nubes)','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Carne de Gigante',qty:1},{name:'Polvos de Estabilidad',qty:1}]),
+  R('Poción de Invulnerabilidad','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Carne de Tarrasca',qty:1},{name:'Polvo de Diamante',qty:2}]),
+  R('Poción de Fuerza de Gigante (Tormenta)','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Carne de Gigante',qty:1},{name:'Reactivos Elementales',qty:1}]),
+  R('Poción de Longevidad','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Sangre de Dragón o Fénix',qty:1},{name:'Frutas Extraplanares',qty:1}]),
+  R('Poción de Posibilidad','alquimia',168,'1 semana',[{name:'Quintaesencia Pura',qty:1},{name:'Destilado de Planos',qty:2},{name:'Polvo de Diamante',qty:1}]),
+  R('Aceite de Afilado','alquimia',336,'2 semanas',[{name:'Quintaesencia Pura',qty:1},{name:'Polvo de Diamante',qty:1},{name:'Esencia Feérica',qty:1}]),
+  R('Cóctel "Sangre de Oso" x5','comida',8,'8 horas',[{name:'Sangre de Oso',qty:2},{name:'Hierbas Estimulantes',qty:1}]),
+  R('Tasajo de Bestia','comida',8,'8 horas',[{name:'Carne de Bestia',qty:1},{name:'Sal Gruesa',qty:1}]),
+  R('Barrita Energética Gnoma','comida',8,'8 horas',[{name:'Cereales',qty:1},{name:'Miel',qty:1},{name:'Hierbas Estimulantes',qty:1},{name:'Frutos Secos',qty:1}]),
+  R('Galleta de Lembas (Imitación)','comida',8,'8 horas',[{name:'Miel',qty:1},{name:'Hierbas Aromáticas',qty:1},{name:'Agua',qty:1},{name:'Harina',qty:1},{name:'Grasa Vegetal',qty:1}]),
+  R('Caramelo de Menta Mental','comida',8,'8 horas',[{name:'Menta',qty:1},{name:'Endulzante Natural',qty:1},{name:'Agua',qty:1},{name:'Hierbas Calmantes',qty:1}]),
+  R('Desayuno de Campeones','comida',24,'1 día',[{name:'Huevos (Roc o Grifo)',qty:1},{name:'Tocino',qty:1},{name:'Sal Gruesa',qty:1},{name:'Grasa Animal',qty:1},{name:'Hierbas Estimulantes',qty:1}]),
+  R('Pastelillo de Hada','comida',24,'1 día',[{name:'Esencia Feérica',qty:1},{name:'Endulzante Natural',qty:1},{name:'Harina',qty:1},{name:'Grasa Vegetal',qty:1}]),
+  R('Chili de Aliento de Dragón','comida',48,'2 días',[{name:'Chiles Ígneos',qty:1},{name:'Carne de Bestia',qty:1},{name:'Hierbas Estimulantes',qty:1}]),
+  R('Sashimi de las Profundidades','comida',24,'1 día',[{name:'Pescado Abisal',qty:1},{name:'Sal Gruesa',qty:1},{name:'Hierbas Estimulantes',qty:1}]),
+  R('Sopa de Ojos (Imitación)','comida',72,'3 días',[{name:'Carne de Calamar Gigante',qty:1},{name:'Hierbas Ilusorias',qty:1},{name:'Chiles Ígneos',qty:1},{name:'Sal Gruesa',qty:1}]),
+  R('Filete de Oso-Lechuza','comida',72,'3 días',[{name:'Carne de Oso-Lechuza',qty:1},{name:'Sal Gruesa',qty:1},{name:'Hierbas Estimulantes',qty:1}]),
+  R('Vino de la Verdad','comida',120,'5 días',[{name:'Uvas',qty:1},{name:'Esencia Feérica',qty:1},{name:'Hierbas Calmantes',qty:1}]),
+  R('Ambrosía de los Cielos','comida',120,'5 días',[{name:'Miel',qty:1},{name:'Frutas Extraplanares',qty:1},{name:'Hierbas Ilusorias',qty:1},{name:'Esencia Feérica',qty:1}]),
+  R('Medallón de Tarrasca','comida',120,'5 días',[{name:'Carne de Tarrasca',qty:1},{name:'Hongos del Underdark',qty:1},{name:'Hierbas Calmantes',qty:1},{name:'Miel',qty:1}]),
+  R('Fondue de Almas Vinculadas','comida',120,'5 días',[{name:'Polvo de Diamante',qty:1},{name:'Vino Feérico',qty:1},{name:'Hierbas Estimulantes',qty:1}]),
+  R('Carpaccio de la Dualidad','comida',120,'5 días',[{name:'Carne Celestial',qty:1},{name:'Carne Infernal',qty:1},{name:'Hierbas Estimulantes',qty:1},{name:'Miel',qty:1}]),
+  R('Parrillada de la Hidra','comida',168,'1 semana',[{name:'Carne de Hidra',qty:1},{name:'Hierbas Estimulantes',qty:1},{name:'Vino Feérico',qty:1},{name:'Queso Refinado',qty:1}]),
+  R('Cazuela del Leviatán','comida',168,'1 semana',[{name:'Carne de Kraken o Leviatán',qty:1},{name:'Alga Abisal Azul',qty:1},{name:'Vino Feérico',qty:1},{name:'Chiles Ígneos',qty:1}]),
+  R('La Última Cena de los Héroes','comida',336,'2 semanas',[{name:'Carne de Dragón',qty:1},{name:'Carne de Calamar Gigante',qty:1},{name:'Huevos (Roc o Grifo)',qty:1},{name:'Vino Añejo',qty:1},{name:'Vino Feérico',qty:1},{name:'Hierbas Ilusorias',qty:1},{name:'Chiles Ígneos',qty:1}]),
+];
+
+const checkedMaterials = new Set();
+let activeForjaTab = 'canalizadores';
+
+function renderMaterialsGrid(){
+  const el = document.getElementById('materialsGrid');
+  const names = Object.keys(MATERIAL_TIERS).sort((a,b)=>a.localeCompare(b,'es'));
+  el.innerHTML = names.map(name => `
+    <label class="material-chip" data-mat="${name}">
+      <input type="checkbox">
+      <span>${name}</span>
+    </label>
+  `).join('');
+  el.querySelectorAll('.material-chip').forEach(chip=>{
+    chip.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const name = chip.dataset.mat;
+      if(checkedMaterials.has(name)){ checkedMaterials.delete(name); chip.classList.remove('checked'); chip.querySelector('input').checked = false; }
+      else { checkedMaterials.add(name); chip.classList.add('checked'); chip.querySelector('input').checked = true; }
+      renderRecipeGrid();
+    });
+  });
+  document.getElementById('materialsClear').addEventListener('click', ()=>{
+    checkedMaterials.clear();
+    el.querySelectorAll('.material-chip').forEach(c=>{ c.classList.remove('checked'); c.querySelector('input').checked=false; });
+    renderRecipeGrid();
+  });
+}
+
+function renderForjaTabs(){
+  const el = document.getElementById('forjaTabs');
+  el.innerHTML = FORJA_CATEGORIES.map(c=>`<button class="forja-tab ${c.key===activeForjaTab?'active':''}" data-cat="${c.key}">${c.label}</button>`).join('');
+  el.querySelectorAll('.forja-tab').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ activeForjaTab = btn.dataset.cat; renderForjaTabs(); renderRecipeGrid(); });
+  });
+}
+
+function renderRecipeGrid(){
+  const el = document.getElementById('recipeGrid');
+  const list = RECIPES.filter(r=>r.category===activeForjaTab);
+  el.innerHTML = list.map(r=>{
+    const allMatched = r.materials.every(m=>checkedMaterials.has(m.name));
+    const anyChecked = checkedMaterials.size > 0;
+    const cls = allMatched ? 'matched' : (anyChecked ? 'dimmed' : '');
+    return `
+    <div class="recipe-card ${cls}">
+      <h4>${r.name}</h4>
+      <div class="r-meta">${r.timeLabel} de fabricación (real: ${r.hours*3 < 24 ? (r.hours*3)+'h' : Math.round(r.hours*3/24)+'d'})</div>
+      <div class="r-ingredients">${r.materials.map(m=>`${m.qty}× ${m.name}`).join(', ')}</div>
+      <div class="r-price">${r.price} PO</div>
+    </div>`;
+  }).join('');
+  document.getElementById('forjaPendingNote').textContent = `${list.length} recetas en esta categoría.`;
+}
+
+function parseRealMs(hoursListed){
+  return hoursListed * 3 * 3600000;
+}
+
+let forjaSlotsState = {};
+let forjaUnsub = null;
+let forjaTickInterval = null;
+let forjaStationsSignature = '';
+
+function renderForja(){
+  renderMaterialsGrid();
+  renderForjaTabs();
+  renderRecipeGrid();
+  forjaStationsSignature = '';
+
+  if(forjaUnsub) forjaUnsub();
+  if(forjaTickInterval) clearInterval(forjaTickInterval);
+
+  if(!window.ctFirebase){
+    document.getElementById('forjaStations').innerHTML = '<p class="rules-note">Sin conexión a la base de datos — los puestos no se pueden cargar ahora mismo.</p>';
+    return;
+  }
+
+  forjaUnsub = window.ctFirebase.watchForja((slots)=>{
+    forjaSlotsState = slots || {};
+    renderForjaStations();
+  });
+
+  forjaTickInterval = setInterval(renderForjaStations, 1000);
+}
+
+function renderForjaStations(){
+  const el = document.getElementById('forjaStations');
+  if(!el || !document.getElementById('view-forja').classList.contains('active')) return;
+  const signature = JSON.stringify(FORJA_CATEGORIES.map(cat=>{
+    const slot = forjaSlotsState[cat.key];
+    if(!slot || !slot.recipeName) return null;
+    const remaining = (slot.startedAt + slot.durationMs) - Date.now();
+    return [slot.recipeName, slot.crafter, slot.price, slot.startedAt, slot.durationMs, remaining > 0 ? 'active' : 'ready'];
+  }));
+  if(signature === forjaStationsSignature){
+    updateForjaStationTimers();
+    return;
+  }
+  forjaStationsSignature = signature;
+  el.innerHTML = FORJA_CATEGORIES.map(cat=>{
+    const slot = forjaSlotsState[cat.key];
+    const recipesInCat = RECIPES.filter(r=>r.category===cat.key);
+    if(slot && slot.recipeName){
+      const remaining = (slot.startedAt + slot.durationMs) - Date.now();
+      if(remaining > 0){
+        const pct = Math.max(0, Math.min(100, 100 - (remaining / slot.durationMs * 100)));
+        const totalSec = Math.floor(remaining/1000);
+        const d = Math.floor(totalSec/86400), h = Math.floor((totalSec%86400)/3600), m = Math.floor((totalSec%3600)/60), s = totalSec%60;
+        const countdown = d>0 ? `${d}d ${h}h ${m}m` : (h>0 ? `${h}h ${m}m ${s}s` : `${m}m ${s}s`);
+        return `
+          <div class="station-card" data-forja-cat="${cat.key}">
+            <span class="st-label">${cat.label}</span>
+            <div class="st-active-name">${slot.recipeName}</div>
+            <div class="st-active-meta">Fabricando: ${slot.crafter || '—'} · ${slot.price} PO</div>
+            <div class="st-bar-track"><div class="st-bar-fill" style="width:${pct}%"></div></div>
+            <div class="st-countdown">Quedan ${countdown}</div>
+            <button class="st-cancel" onclick="cancelForjaSlot('${cat.key}')">Cancelar</button>
+          </div>`;
+      } else {
+        return `
+          <div class="station-card" data-forja-cat="${cat.key}">
+            <span class="st-label">${cat.label}</span>
+            <div class="st-active-name">${slot.recipeName}</div>
+            <div class="st-active-meta">Fabricado por: ${slot.crafter || '—'} · ${slot.price} PO</div>
+            <button class="st-collect" onclick="collectForjaSlot('${cat.key}')">✓ Recoger</button>
+          </div>`;
+      }
+    } else {
+      return `
+        <div class="station-card" data-forja-cat="${cat.key}">
+          <span class="st-label">${cat.label}</span>
+          <div class="st-empty">Puesto libre.</div>
+          <select id="sel-${cat.key}">
+            <option value="">Elegir receta...</option>
+            ${recipesInCat.map(r=>`<option value="${r.name}">${r.name} — ${r.price} PO</option>`).join('')}
+          </select>
+          <input type="text" class="st-name" id="name-${cat.key}" placeholder="¿Quién fabrica?">
+          <button class="st-start" onclick="startForjaSlot('${cat.key}')">Empezar a fabricar</button>
+        </div>`;
+    }
+  }).join('');
+  updateForjaStationTimers();
+}
+
+function updateForjaStationTimers(){
+  FORJA_CATEGORIES.forEach(cat=>{
+    const slot = forjaSlotsState[cat.key];
+    const card = document.querySelector(`[data-forja-cat="${cat.key}"]`);
+    if(!slot || !slot.recipeName || !card) return;
+    const remaining = (slot.startedAt + slot.durationMs) - Date.now();
+    if(remaining <= 0) return;
+    const pct = Math.max(0, Math.min(100, 100 - (remaining / slot.durationMs * 100)));
+    const totalSec = Math.floor(remaining/1000);
+    const d = Math.floor(totalSec/86400), h = Math.floor((totalSec%86400)/3600), m = Math.floor((totalSec%3600)/60), s = totalSec%60;
+    const countdown = d>0 ? `${d}d ${h}h ${m}m` : (h>0 ? `${h}h ${m}m ${s}s` : `${m}m ${s}s`);
+    const bar = card.querySelector('.st-bar-fill');
+    const countdownEl = card.querySelector('.st-countdown');
+    if(bar) bar.style.width = `${pct}%`;
+    if(countdownEl) countdownEl.textContent = `Quedan ${countdown}`;
+  });
+}
+
+function startForjaSlot(catKey){
+  const sel = document.getElementById('sel-'+catKey);
+  const nameInput = document.getElementById('name-'+catKey);
+  const recipeName = sel.value;
+  const crafter = nameInput.value.trim();
+  if(!recipeName || !crafter) { showToast('Elige receta y quién la fabrica'); return; }
+  const recipe = RECIPES.find(r=>r.name===recipeName && r.category===catKey);
+  if(!recipe) return;
+  const slotData = {
+    recipeName: recipe.name,
+    crafter,
+    price: recipe.price,
+    startedAt: Date.now(),
+    durationMs: parseRealMs(recipe.hours)
+  };
+  window.ctFirebase.saveForjaSlot(catKey, slotData).then(()=>{ showToast('Fabricación iniciada'); });
+}
+
+function collectForjaSlot(catKey){
+  window.ctFirebase.saveForjaSlot(catKey, {recipeName:null, crafter:null, price:null, startedAt:null, durationMs:null}).then(()=>{ showToast('Objeto recogido'); });
+}
+
+function cancelForjaSlot(catKey){
+  window.ctFirebase.saveForjaSlot(catKey, {recipeName:null, crafter:null, price:null, startedAt:null, durationMs:null}).then(()=>{ showToast('Fabricación cancelada'); });
+}
+
 const changelog = [
+  {date:'21 sep', text:'Actualización del gremio: misión especial completada (+30 PG), penalización por muerte (-20 PG) y progreso de 105 a 115 PG.'},
+  {date:'21 sep', text:'Birsha ha muerto tras resbalarse y caer por un puente.'},
+  {date:'21 sep', text:'Itzel se une al gremio de las ocho sombras.'},
+  {date:'21 sep', text:'Añadido un tributo a los caídos.'},
+  {date:'13 sep', text:'Nueva experiencia responsive: la página adapta automáticamente navegación, tarjetas, reglas y salas para móvil o PC desde la misma dirección.'},
+  {date:'13 sep', text:'Salas personales ampliadas: cajas de texto autoajustables, recursos mejor organizados en móvil y acceso privado actualizado para los personajes.'},
+  {date:'13 sep', text:'Panel de Gremios reorganizado: Vinculo de las ocho sombras y Los Otros muestran tarjetas con retrato, identidad y acceso a sus salas personales.'},
+  {date:'13 sep', text:'Misiones renovadas: nuevas aventuras, descripciones completas al pulsar cada tarjeta y misión especial Rescate en la nieve.'},
+  {date:'13 sep', text:'Historia actualizada con el Torneo de Piedra Hueca, donde Itzel se proclama campeona.'},
+  {date:'6 sep', text:'Añadido un botón para volver al selector desde la contraseña de la sala de otro personaje.'},
+  {date:'6 sep', text:'Pulido visual general: fondo ambiental animado, iluminación reactiva al cursor, transiciones de entrada, splash más elaborado y respeto por reducción de movimiento.'},
+  {date:'6 sep', text:'Corregido el diseño del Bastión: sus habitaciones vuelven a alinearse a la izquierda y el texto largo se adapta al ancho disponible.'},
+  {date:'6 sep', text:'Simplificada la presentación del Bastión: eliminada la etiqueta «Desbloqueada» de sus habitaciones.'},
+  {date:'6 sep', text:'Bastión Gremial rediseñado: habitaciones desbloqueadas por nivel del gremio, sin costes de PG salvo el Santuario de Guerra.'},
+  {date:'6 sep', text:'Actualizado el sistema de PG: nuevas recompensas por misión y modificadores revisados.'},
+  {date:'6 sep', text:'Añadido Loot de Caza en Reglas: extracción de materiales mediante pruebas de habilidad según criatura y VD.'},
+  {date:'6 sep', text:'Catálogo de la Herrería actualizado con 10 armas, 10 armaduras y 10 accesorios nuevos.'},
+  {date:'6 sep', text:'Fabricación corregida: los desplegables y nombres de artesano ya no se reinician durante la actualización de los puestos.'},
+  {date:'1 sep', text:'Fabricación completa: las 164 recetas del documento original, todas con el precio recalculado.'},
+  {date:'31 ago', text:'Nueva pestaña Fabricación: 8 puestos compartidos en tiempo real, filtro de materiales, y ~40 recetas de un sistema de precios recalculado de cero. Faltan el resto de las ~140 recetas, se irán añadiendo por categoría.'},
+  {date:'22 ago', text:'Injertos monstruosos: solo se pueden cosechar de un miniboss, superando Inteligencia CD 20.'},
+  {date:'22 ago', text:'Reglas ampliadas: Armas de fuego (con tabla de competencias), Armas cambiantes e Injertos monstruosos, todo redactado de cero para no copiar el manual original.'},
   {date:'16 ago', text:'Añadido el campo "Dinero" a cada miembro del Gremio B.'},
   {date:'16 ago', text:'Gremio B ahora tiene un bloque de equipo por cada uno de sus 6 miembros, no uno compartido.'},
   {date:'16 ago', text:'Herrería ampliada: mínimo 5 objetos Comunes y 3 Infrecuentes por categoría (armas, armaduras, accesorios).'},
@@ -1245,7 +2124,7 @@ const changelog = [
   {date:'16 ago', text:'Torneo del Coliseo ajustado a 6vs6.'},
   {date:'16 ago', text:'Armas mágicas comunes de la Herrería renovadas con nombres y efectos nuevos.'},
   {date:'16 ago', text:'Primera entrada real del Bestiario: la Banshee, con un glifo propio dibujado para ella.'},
-  {date:'16 ago', text:'Colores de los avatares del header: Birsha en negro, DM en blanco.'},
+  {date:'16 ago', text:'Colores de los avatares del header: Itzel en negro, DM en blanco.'},
   {date:'15 ago', text:'Therian entra con espacio propio en Mi Personaje (Mochila y Equipo), avatar en el header y arte real en Galería e Invitados.'},
   {date:'15 ago', text:'Los avatares del header ahora son clicables: llevan directo a la Mochila de ese personaje (o a la Zona DM).'},
   {date:'15 ago', text:'Añadida la categoría "Especial" en Misiones, con el Torneo del Coliseo.'},
@@ -1363,12 +2242,17 @@ function renderGremioBFlow(container){
     return;
   }
 
-  let gbState = {};
-  window.ctFirebase.loadChar('gremiob').then(data=>{
-    gbState = data.equipo || {};
-    inputs.forEach(inp=>{
-      const memberData = gbState[inp.dataset.member];
-      if(memberData && memberData[inp.dataset.slot]) inp.value = memberData[inp.dataset.slot];
+  let legacyState = {};
+  Promise.all([
+    window.ctFirebase.loadChar('gremiob'),
+    ...members.map(member=>window.ctFirebase.loadChar(member.key))
+  ]).then(([legacyData, ...memberData])=>{
+    legacyState = legacyData.equipo || {};
+    members.forEach((member, index)=>{
+      const equipo = memberData[index].equipo || legacyState[member.key] || {};
+      inputs.forEach(inp=>{
+        if(inp.dataset.member === member.key && equipo[inp.dataset.slot]) inp.value = equipo[inp.dataset.slot];
+      });
     });
   }).catch(()=>{
     members.forEach(m=>{
@@ -1384,9 +2268,11 @@ function renderGremioBFlow(container){
       if(status) status.textContent = 'Escribiendo...';
       clearTimeout(saveTimer);
       saveTimer = setTimeout(()=>{
-        if(!gbState[inp.dataset.member]) gbState[inp.dataset.member] = {};
-        gbState[inp.dataset.member][inp.dataset.slot] = inp.value;
-        window.ctFirebase.saveEquipo('gremiob', gbState)
+        const equipo = {};
+        inputs.forEach(memberInput=>{
+          if(memberInput.dataset.member === inp.dataset.member) equipo[memberInput.dataset.slot] = memberInput.value;
+        });
+        window.ctFirebase.saveEquipo(inp.dataset.member, equipo)
           .then(()=>{ if(status) status.textContent = 'Guardado ✓'; showToast('Equipo guardado'); })
           .catch(()=>{ if(status) status.textContent = 'Error al guardar — reintenta.'; });
       }, 900);
@@ -1421,13 +2307,17 @@ function renderDMGate(container, back){
 function renderDMNotes(container, back){
   container.innerHTML = `
     ${back}
-    <div class="dm-notes-box">
+    <div class="dm-notes-box dm-dashboard">
       <div style="display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
-        <h3>Notas privadas</h3>
+        <h3>Dungeon Master</h3>
         <button class="mi-switch" id="dmUndoBtn" style="margin-bottom:0;" disabled>↺ Deshacer último cambio</button>
       </div>
       <div class="dm-warn">Esto vive en la misma base de datos pública, protegido solo por esta contraseña en el navegador — no lo uses para nada que no puedas permitirte que se filtre.</div>
-      <textarea id="dmNotesText" placeholder="Cargando..."></textarea>
+      <div class="dm-space-grid">
+        <label>Misiones<textarea id="dmNotesText" placeholder="Misiones..."></textarea></label>
+        <label>Balance<textarea id="dmBalanceText" placeholder="Balance..."></textarea></label>
+        <label>Tareas<textarea id="dmTasksText" placeholder="Tareas..."></textarea></label>
+      </div>
       <div class="mochila-status" id="dmNotesStatus"></div>
     </div>
   `;
@@ -1435,6 +2325,13 @@ function renderDMNotes(container, back){
   const textarea = document.getElementById('dmNotesText');
   const status = document.getElementById('dmNotesStatus');
   const undoBtn = document.getElementById('dmUndoBtn');
+  ['dmNotesText','dmBalanceText','dmTasksText'].forEach(id=>{
+    const space = document.getElementById(id);
+    const key = 'ctt_dm_space_' + id;
+    const saved = localStorage.getItem(key);
+    if(saved !== null) space.value = saved;
+    space.addEventListener('input', ()=>localStorage.setItem(key, space.value));
+  });
   textarea.disabled = true;
   status.textContent = 'Cargando...';
   let lastSaved = '';
@@ -1448,6 +2345,7 @@ function renderDMNotes(container, back){
 
   window.ctFirebase.loadDMNotes().then(data=>{
     textarea.value = data.text || '';
+    container.querySelectorAll('textarea').forEach(autoGrowTextarea);
     lastSaved = data.text || '';
     prevSaved = data.prevText || '';
     undoBtn.disabled = !prevSaved;
@@ -1536,7 +2434,17 @@ function showToast(msg){
   toastTimer = setTimeout(()=>{ t.classList.remove('show'); }, 2200);
 }
 
+function autoGrowTextarea(textarea){
+  textarea.style.height = 'auto';
+  textarea.style.height = `${textarea.scrollHeight}px`;
+}
+document.addEventListener('input', e=>{
+  if(e.target.matches('textarea')) autoGrowTextarea(e.target);
+});
+
 document.addEventListener('mousemove', (e)=>{
+  document.body.style.setProperty('--ambient-x', `${(e.clientX / window.innerWidth) * 100}%`);
+  document.body.style.setProperty('--ambient-y', `${(e.clientY / window.innerHeight) * 100}%`);
   const el = e.target.closest('.glow-hover');
   if(!el) return;
   const r = el.getBoundingClientRect();
@@ -1575,7 +2483,10 @@ function goToView(target){
   document.getElementById('view-galeria').classList.toggle('active', target==='galeria');
   document.getElementById('view-reglas').classList.toggle('active', target==='reglas');
   document.getElementById('view-historia').classList.toggle('active', target==='historia');
+  document.getElementById('view-forja').classList.toggle('active', target==='forja');
   if(target==='mi') renderMiPersonaje();
+  if(target==='historia') openMissionModal(missions.especial[0]);
+  if(target==='forja') renderForja();
   window.scrollTo({top:0, behavior:'instant'});
 }
 document.querySelectorAll('.nav-dropdown-menu button').forEach(btn=>{
@@ -1604,6 +2515,13 @@ const party = [
    desc:'Vuelve al gremio como miembro de pleno derecho. Vigilante Gris: aguanta el golpe y lo reparte con maniobras de batalla.'}
 ];
 window.ctParty = party;
+party[0].name = 'Itzel';
+party[0].race = 'Angel Caido, Satanita';
+party[0].klass = 'Martir Carga de la Discordia';
+party[0].id = 'itzel';
+const birshaTributeImage = party[0].img;
+party[0].img = 'Fotos/Itzel.jpg';
+function imageSource(image){ return image && image.startsWith('/9j/') ? `data:image/jpeg;base64,${image}` : image; }
 
 const gremioB = [
   {name:'John C.', race:'Humano', klass:'Investigador — Exterminador', color:'#8D7768', img:'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iICIiAiIgL5yj0C+og6pK0UnzMBP2VA4/wCDI8jC69GxnvEWntdrzC2Iui3CJ6z2EdxpVuMq2OVx9KfBKLFGKw0/C9g8v1UZxDOG4hs8Lw/w54966fiA/usuWtehqGCm1oEbyNu3039FgGjbGLsxXywxD4gWt67B2Fwcs1dPU4JMptx4onjp499wuDPDY4g+ZC1F7NrcsHGV2+5zz70wOl330SeoV59pl11zhfH1KO3PuPDebXUAfMqVSw2YxuTbep0HzkxiNzN63rsVpjL4qfjjyfk2laysQ3WrjTe7z5kfdV/G3BcORttlIi8QRsDepPKNf2WDTxXFeSrOjjqRVvFHK952SB9FYuHvZlksdFye/O5X9S0ga2qY8FrqvzOPDWla4gzhwmNf4DTJZnGmA603fmo/EwQ4nFMB8OzakPiyub1aHny2e62rY9mte/C2O0GuAHUgdSsSr7KK9SwwxSv8Jp2GHqFpODTLL/Iby2oL8ZkM3CaVdkviWB8ch7Bq2FwP7OWYOu3ncCT36d1dMXgKuOYOWNvPrROlKhoaNAaXRjhMXDz/ACcuWuEMLYYw1o0AuxEWjlEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAQjY0iII2fB1bBcXOlHMd/C7S7Dh6pg8J3O4a0ST1KzkVbjKtM8p6qFdwniZBEHwF3hEluz22suLC0YRpkICz0U6iLbfbpjqwxfJGB+S7Q0DsF9RSgREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERB/9k=',
@@ -1631,7 +2549,7 @@ function makeCarousel(data, stageId, dotsId, tagLabel){
     return `
       <div class="party-card">
         <div class="bg-tint" style="background:radial-gradient(circle at 75% 15%, ${p.color}66, transparent 65%), linear-gradient(160deg, ${p.color}30, #0B121C 78%)"></div>
-        ${p.img ? `<div class="art-cut" style="background-image:url('data:image/jpeg;base64,${p.img}')"></div>` : ''}
+        ${p.img ? `<div class="art-cut" style="background-image:url('${imageSource(p.img)}')"></div>` : ''}
         <div class="bg-scrim"></div>
         ${tagLabel ? `<span class="npc-tag">${tagLabel}</span>` : ''}
         <div class="content" ${centered ? 'style="text-align:center; width:100%;"' : ''}>
@@ -1746,7 +2664,7 @@ function renderGallery(){
   const all = [...party, ...gremioB];
   el.innerHTML = all.map(p => `
     <div class="gallery-tile">
-      <img src="data:image/jpeg;base64,${p.img}" alt="${p.name}" loading="lazy" decoding="async">
+      <img src="${imageSource(p.img)}" alt="${p.name}" loading="lazy" decoding="async">
       <div class="g-label">${p.name}</div>
     </div>
   `).join('');
@@ -1759,12 +2677,12 @@ const weapons = [
   {name:'Colmillo Errante', type:'Puñal arrojadizo', dice:'1d4+DES', rarity:'comun', price:280, desc:'Sutil. Al lanzarlo, vuelve volando a tu mano al final del turno.'},
   {name:'Golpe de Alba', type:'Martillo de guerra', dice:'1d8+FUE', rarity:'comun', price:320, desc:'+1 a impacto y daño. Desprende un tenue resplandor cálido.'},
   {name:'Viento Cortante', type:'Arco corto', dice:'1d6+DES', rarity:'comun', price:300, desc:'El disparo no hace ruido. Ventaja para no ser detectado justo después de disparar.'},
-  {name:'Detonador de Bolsillo', type:'Pistola', dice:'1d10+DES', rarity:'comun', price:340, desc:'Recarga con una acción adicional una vez por turno. El disparo suena como un pequeño trueno.'},
+  {name:'Detonador de Bolsillo', type:'Pistola', dice:'1d10+DES', rarity:'comun', price:340, desc:'Recarga con una acción libre una vez por turno. El disparo suena como un pequeño trueno.'},
   {name:'Hacha de Mano Templada', type:'Hacha de mano', dice:'1d6+FUE', rarity:'comun', price:290, desc:'+1 a impacto y daño. El filo nunca pierde brillo.'},
-  {name:'Vara del Chispazo', type:'Varita', dice:'1d4+INT', rarity:'comun', price:260, desc:'Al golpear cuerpo a cuerpo, puedes descargarla para infligir 1d4 de daño de trueno adicional (una vez por descanso corto).'},
+  {name:'Vara de Chispazo', type:'Varita', dice:'1d4+INT', rarity:'comun', price:260, desc:'Al golpear cuerpo a cuerpo, puedes descargarla para infligir 1d4 de daño de trueno adicional (una vez por descanso corto).'},
   {name:'Aguijón Veloz', type:'Espada corta', dice:'1d6+DES', rarity:'azul', price:680, desc:'Sutil. Al impactar, tu velocidad aumenta 3 metros hasta el final de tu turno.'},
   {name:'Tridente de Marea', type:'Tridente', dice:'1d8+FUE', rarity:'azul', price:720, desc:'+1d4 de daño de frío adicional contra objetivos en contacto con agua.'},
-  {name:'Espada de la Luz Lunar', type:'Espada larga', dice:'1d8+DES', rarity:'azul', price:650, desc:'Al desenvainarla, emite luz brillante en un radio de 4m. Se considera un arma mágica para superar resistencias al daño no mágico.'},
+  {name:'Espada de la Luz Lunar', type:'Espada larga', dice:'1d8+DES', rarity:'azul', price:650, desc:'Al desenfundarla, emite luz brillante en un radio de 4 m. Se considera un arma mágica para superar resistencias al daño no mágico.'},
   {name:'Bastón del Eco Arcano', type:'Bastón mágico', dice:'1d6+FUE', rarity:'azul', price:900, desc:'Una vez por descanso largo, puedes lanzar un truco de daño que conozcas como Acción Adicional en vez de como Acción.'}
 ];
 
@@ -1773,24 +2691,24 @@ const armors = [
   {name:'Guardamanos de Hierro Frío', slot:'Guantes', rarity:'comun', price:280, desc:'Ventaja para escapar de agarres.'},
   {name:'Botas de Marcha Firme', slot:'Botas', rarity:'comun', price:270, desc:'Ventaja en salvaciones para no ser derribado.'},
   {name:'Cota de Musgo', slot:'Armadura', baseAC:'11 + DES', weight:'Ligera', rarity:'comun', price:310, desc:'+1 a la CA total. Resistencia a daño de veneno mientras estés en terreno natural.'},
-  {name:'Placas Remendadas', slot:'Armadura', baseAC:'13 + DES (máx. 2)', weight:'Intermedia', rarity:'comun', price:360, desc:'+1 a la CA total. Dale un golpecito a la coraza para que se ilumine en un radio de 6m.'},
-  {name:'Coraza Autónoma', slot:'Armadura', baseAC:'18', weight:'Pesada', rarity:'comun', price:400, desc:'+1 a la CA total. Puede ponerse y quitarse sola con una orden mental sencilla.'},
-  {name:'Guantes de Poder', slot:'Guantes', rarity:'azul', price:750, desc:'Al impactar a un objetivo con un crítico, aplicas una penalización de 1d4 a su próxima tiradas de ataque una vez por turno.'},
-  {name:'Botas Élficas', slot:'Botas', rarity:'azul', price:450, desc:'Tus pasos no emiten ningún sonido, sin importar la velocidad a la que te muevas o la superficie. Tienes Ventaja en todas las pruebas de Destreza (Sigilo) que dependan de no hacer ruido..'},
-  {name:'Diadema de Sinergia Arcana', slot:'Casco', rarity:'azul', price:600, desc:'Cada vez que aplicas un estado a un enemigo obtienes Sinergia Arcana, el turno siguiente usas el modificador de tu característica de lanzamiento de conjuros al daño de tus ataques con armas'},
-  {name:'Escamas del Abismo Menor', slot:'Armadura', baseAC:'18', weight:'Pesada', rarity:'azul', price:900, desc:'+2 a la CA total. Resistencia a daño necrótico.'}
+  {name:'Placas Remendadas', slot:'Armadura', baseAC:'13 + DES (máx. 2)', weight:'Intermedia', rarity:'comun', price:360, desc:'+1 a la CA total. Dale un golpecito a la coraza para que se ilumine en un radio de 6 m.'},
+  {name:'Coraza Autónoma', slot:'Armadura', baseAC:'16', weight:'Pesada', rarity:'comun', price:400, desc:'+1 a la CA total. Puede ponerse y quitarse sola con una orden mental sencilla.'},
+  {name:'Guantes de Poder', slot:'Guantes', rarity:'azul', price:750, desc:'Al impactar a un objetivo con un crítico, aplicas una penalización de 1d4 a su próxima tirada de ataque una vez por turno.'},
+  {name:'Botas Etélicas', slot:'Botas', rarity:'azul', price:450, desc:'Tus pasos no emiten ningún sonido, sin importar la velocidad a la que te muevas. Tienes ventaja en todas las pruebas de Destreza (Sigilo) que dependan de no hacer ruido.'},
+  {name:'Diadema de Sinergia Arcana', slot:'Casco', rarity:'azul', price:600, desc:'Cada vez que aplicas un estado a un enemigo obtienes Sinergia Arcana, el turno siguiente usas el modificador de tu característica de lanzamiento de conjuros al daño de tus ataques con armas.'},
+  {name:'Escamas del Abismo Menor', slot:'Armadura', baseAC:'16', weight:'Pesada', rarity:'azul', price:900, desc:'+2 a la CA total. Resistencia a daño necrótico.'},
 ];
 
 const accessories = [
   {name:'Anillo de Aguas Quietas', type:'Anillo', rarity:'comun', price:300, desc:'Ventaja en salvaciones de Sabiduría contra ser asustado o dominado por miedo.'},
   {name:'Amuleto del Rastreador', type:'Amuleto', rarity:'comun', price:310, desc:'Ventaja en pruebas de Sabiduría (Percepción) para encontrar pistas, huellas o pasadizos ocultos.'},
-  {name:'Anillo de Alondra', type:'Anillo', rarity:'comun', price:260, desc:'Permite al portador lanzar el truco Guía, 1 vez por descanso corto.'},
+  {name:'Anillo de Alondra', type:'Anillo', rarity:'comun', price:260, desc:'Permite al portador lanzar el truco Guía 1 vez por descanso corto.'},
   {name:'Anillo del Pulso Constante', type:'Anillo', rarity:'comun', price:280, desc:'Ventaja en salvaciones de Constitución contra veneno.'},
   {name:'Capa del Asesino', type:'Capa', rarity:'comun', price:390, desc:'Una vez por turno, al matar a un enemigo obtienes Invisibilidad durante un turno, una vez por descanso largo.'},
   {name:'Capa de Ceniza Fría', type:'Capa', rarity:'azul', price:620, desc:'Resistencia a daño de frío mientras la lleves puesta.'},
-  {name:'Amuleto de Pasos Neblinosos', type:'Amuleto', rarity:'azul', price:550, desc:'Permite tira Paso brumoso una vez por descanso largo.'},
+  {name:'Amuleto de Pasos Neblinosos', type:'Amuleto', rarity:'azul', price:550, desc:'Permite tirar Paso Brumoso una vez por descanso largo.'},
   {name:'Amuleto del Peregrino', type:'Amuleto', rarity:'azul', price:700, desc:'Ventaja en tiradas de Supervivencia para encontrar comida y agua.'},
-  {name:'Capa de Protección', type:'Capa', rarity:'azul', price:700, desc:'Otorga un bono pasivo de +1 a (CA) y +1 a todas las Tiradas de Salvación.'},
+  {name:'Capa de Protección', type:'Capa', rarity:'azul', price:700, desc:'Otorga un bono pasivo de +1 a la CA y +1 a todas las Tiradas de Salvación.'},
   {name:'Anillo del Eco Cercano', type:'Anillo', rarity:'azul', price:420, desc:'Una vez por descanso corto, susurra un mensaje que solo oirá quien elijas, hasta 18 metros de distancia.'}
 ];
 
@@ -1850,12 +2768,144 @@ function renderMiPersonaje(){
     renderGremioBFlow(container);
     return;
   }
+  if(saved === 'gremio-overview' || !saved){
+    renderGuildOverview(container);
+    return;
+  }
   const chosen = window.ctParty.find(p => p.id === saved);
   if(!chosen){
     renderCharPicker(container);
+  } else if(sessionStorage.getItem('ctt_room_auth_'+chosen.id) !== '1'){
+    renderCharGate(container, chosen);
   } else {
     renderCharPanel(container, chosen);
   }
+}
+
+function guildResourceKey(id, resource){ return `ctt_guild_${id}_${resource}`; }
+const guildDisplay = {
+  itzel:['Itzel','Angel Caido, Satanita · Martir Carga de la Discordia'],
+  temis:['Temis','Elfo de los Bosques, Clérigo del Engaño'],
+  cinto:['ACC-05 Cinto','Forjado, Monje Borracho'],
+  chankkla:['Chank-kla','Thri-kreen, Guerrero Campeón'],
+  vin:['Vin','Elfa Eladrin, Mago del Canto de la Hoja'],
+  therian:['Therian','Dracónido Amatista, Guardián Vigilante Gris']
+};
+const gremioBDisplay = {
+  'John C.':['John C.','Humano, Investigador Exterminador'],
+  Razon:['Razon','Enano, Pugilista Cuadrilátero'],
+  H:['No name','Vasija Metálica, Bárbaro Guardián Espiritual'],
+  Mus:['Mus','Replicante de Lorwyn, Círculo de la Luna'],
+  Pistol:['Pistol','Hombre Lagarto, Pistolero de Precisión'],
+  Adalman:['Adalman','Necropolitano, Nigromante Maestro Pálido']
+};
+const guildBorderColors = {
+  itzel:'#B32635', temis:'#7BCB8B', cinto:'#B98A63', chankkla:'#E08B2B', vin:'#245A8A', therian:'#8E5BB7',
+  'gremiob_johnc':'#5A3825', 'gremiob_razon':'#C9826B', 'gremiob_h':'#80868B',
+  'gremiob_mus':'#55B7A5', 'gremiob_pistol':'#176B3A', 'gremiob_adalman':'#27B83A', dm:'#B026FF'
+};
+function guildCardId(member){ return member.id || `gremiob_${member.name.toLowerCase().replace(/[^a-z0-9]/g,'')}`; }
+function guildMemberCard(member, isOther){
+  const display = (isOther ? gremioBDisplay[member.name] : guildDisplay[member.id]) || [member.name, `${member.race}, ${member.klass}`];
+  const identity = guildCardId(member);
+  const nameClass = display[0] === 'No name' ? ' no-name' : '';
+  const detailLines = member.id === 'itzel' ? ['Angel Caido, Satanita', 'Martir Carga de la Discordia'] : display[1].split(',').map(text=>text.trim());
+  return `<article class="guild-member guild-card${nameClass}" data-guild-member="${identity}" data-other="${isOther}" style="--member-color:${guildBorderColors[identity] || member.color || 'var(--gold)'};">
+    <div class="guild-card-image" style="background-image:url('${imageSource(member.img)}')"></div>
+    <div class="guild-card-body"><h3>${display[0]}</h3><div class="guild-card-subtitle">${detailLines.map(line=>`<span>${line}</span>`).join('')}</div></div>
+  </article>`;
+}
+function renderGuildOverview(container){
+  container.innerHTML = `<h2 class="guild-title">Gremios</h2>
+    <div class="guild-group-title">Vinculo de las ocho sombras</div>
+    <div class="guild-roster">${window.ctParty.map(member=>guildMemberCard(member, false)).join('')}</div>
+    <div class="guild-group-title">Los Otros</div>
+    <div class="guild-roster">${gremioB.filter(member=>member.name !== 'Pistol').map(member=>guildMemberCard(member, true)).join('')}<article class="guild-member guild-card empty-guild-card" aria-label="Miembro desconocido"><div class="guild-card-image">?</div></article></div>
+    <div class="guild-group-title">Dungeon Master</div>
+    <div class="guild-roster"><article class="guild-member guild-card dm-card" data-dm-card style="--member-color:${guildBorderColors.dm};"><div class="guild-card-image" style="background-image:url('data:image/jpeg;base64,${DM_IMG}')"></div></article></div>
+    <section class="dead-tribute" aria-labelledby="deadTributeTitle">
+      <h2 class="dead-tribute-title" id="deadTributeTitle">Tributo a los caídos</h2>
+      <p class="dead-tribute-subtitle">Su historia permanece en el gremio.</p>
+      <div class="dead-tribute-grid">
+        <article class="dead-tribute-card" style="--tribute-color:#B32635;">
+          <div class="tribute-image" style="background-image:url('${imageSource(birshaTributeImage)}')"></div>
+          <div>
+            <h3>Birsha</h3>
+            <div class="tribute-info-title">Información</div>
+            <dl>
+              <dd>Brujo de Patrón del Velo</dd>
+              <dd>Anómalo Simbólico</dd>
+              <dt>Causa de la muerte</dt><dd>Se resbaló y se cayó por un puente</dd>
+            </dl>
+          </div>
+          <div class="tribute-date"><a href="https://www.youtube.com/watch?v=4RmLad99Zgk" target="_blank" rel="noopener noreferrer">18/09/26</a></div>
+        </article>
+        <article class="dead-tribute-card" style="--tribute-color:#176B3A;">
+          <div class="tribute-image" style="background-image:url('${imageSource(gremioB.find(item=>item.name === 'Pistol').img)}')"></div>
+          <div>
+            <h3>Pistol</h3>
+            <div class="tribute-info-title">Información</div>
+            <dl>
+              <dd>Pistolero de Precisión</dd>
+              <dd>Hombre Lagarto</dd>
+              <dt>Estado</dt><dd>Ha desaparecido</dd>
+            </dl>
+          </div>
+          <div class="tribute-date">22/09/26</div>
+        </article>
+      </div>
+    </section>`;
+  container.querySelectorAll('[data-guild-member]').forEach(button=>button.addEventListener('click', ()=>{
+    const member = button.dataset.other === 'true' ? gremioB.find(item=>guildCardId(item) === button.dataset.guildMember) : window.ctParty.find(item=>item.id === button.dataset.guildMember);
+    if(button.dataset.other === 'true') renderBMemberGate(container, member);
+    else { localStorage.setItem(MI_KEY, member.id); renderMiPersonaje(); }
+  }));
+  document.querySelector('[data-dm-card]').addEventListener('click', ()=>{ localStorage.setItem(MI_KEY, 'dm'); renderDMFlow(container); });
+}
+function renderBMemberGate(container, member){
+  container.innerHTML = `<div class="mi-gate"><h2>Sala de ${member.name}</h2><p>Introduce la contraseña común del Gremio B.</p><input type="password" id="guildBPassword" placeholder="Contraseña"><button id="guildBEnter">Entrar</button><button class="mi-gate-back" id="guildBBack">← Volver al gremio</button><div class="mi-gate-error" id="guildBError"></div></div>`;
+  const input = document.getElementById('guildBPassword');
+  const check = ()=>{ if(input.value.trim() === '2312') renderBMemberDetail(container, member); else document.getElementById('guildBError').textContent = 'Contraseña incorrecta.'; };
+  document.getElementById('guildBEnter').addEventListener('click', check);
+  document.getElementById('guildBBack').addEventListener('click', ()=>renderGuildOverview(container));
+  input.addEventListener('keydown', e=>{ if(e.key === 'Enter') check(); });
+  input.focus();
+}
+function renderBMemberDetail(container, member){
+  const display = gremioBDisplay[member.name] || [member.name, `${member.race}, ${member.klass}`];
+  renderCharPanel(container, {id:guildCardId(member), name:display[0], race:member.race, klass:member.klass, color:member.color, img:member.img});
+}
+
+function renderCharGate(container, p){
+  container.innerHTML = `
+    <div class="mi-gate" style="--room-color:${p.color};">
+      <h2>Sala privada de ${p.name}</h2>
+      <p>Introduce tu contraseña para entrar en tu habitación personal.</p>
+      <input type="password" id="charRoomPassword" placeholder="Contraseña" autocomplete="current-password">
+      <button id="charRoomEnter">Entrar</button>
+      <button class="mi-gate-back" id="charRoomBack" type="button">← Volver al selector</button>
+      <div class="mi-gate-error" id="charRoomError"></div>
+    </div>`;
+  const input = document.getElementById('charRoomPassword');
+  const error = document.getElementById('charRoomError');
+  const enter = ()=>{
+    const privatePasswords = {chankkla:'4769', itzel:'179274', therian:'5005', vin:'Dante'};
+    const password = privatePasswords[p.id] || p.name.trim().toLowerCase();
+    if(input.value.trim() === '2312' || input.value.trim().toLowerCase() === password.toLowerCase()){
+      sessionStorage.setItem('ctt_room_auth_'+p.id, '1');
+      renderMiPersonaje();
+    } else {
+      error.textContent = 'Contraseña incorrecta.';
+      input.select();
+    }
+  };
+  document.getElementById('charRoomEnter').addEventListener('click', enter);
+  document.getElementById('charRoomBack').addEventListener('click', ()=>{
+    localStorage.removeItem(MI_KEY);
+    renderMiPersonaje();
+  });
+  input.addEventListener('keydown', e=>{ if(e.key === 'Enter') enter(); });
+  input.focus();
 }
 
 function renderCharPicker(container){
@@ -1863,7 +2913,7 @@ function renderCharPicker(container){
     <div class="char-picker-grid">
       ${window.ctParty.map(p => `
         <div class="char-picker-tile glow-hover" data-id="${p.id}">
-          <div class="mini-art" style="background-image:url('data:image/jpeg;base64,${p.img}')"></div>
+          <div class="mini-art" style="background-image:url('${imageSource(p.img)}')"></div>
           <h4>${p.name}</h4>
         </div>
       `).join('')}
@@ -1886,28 +2936,62 @@ function renderCharPicker(container){
 }
 
 function renderCharPanel(container, p){
+  const roomColors = {itzel:'#161616', temis:'#3F8F5B', therian:'#7C4DAD', chankkla:'#C86B2A', cinto:'#7A4F32', vin:'#3D72B8'};
+  const roomColor = roomColors[p.id] || p.color;
+  const isItzel = p.id === 'itzel';
+  const isBirsha = isItzel;
   container.innerHTML = `
     <button class="mi-switch" id="miSwitchBtn">← No soy ${p.name}, cambiar personaje</button>
-    <div class="mi-personaje-panel">
-      <div class="mi-header">
-        <div class="mi-art" style="background-image:url('data:image/jpeg;base64,${p.img}')"></div>
-        <div>
-          <h2>${p.name}</h2>
-          <div class="mi-sub">${p.klass} · ${p.race}</div>
+    <div class="mi-room" style="--room-color:${roomColor}; --room-line:${roomColor}88;">
+      <div class="mi-room-head">
+        <div class="mi-art" style="background-image:url('${imageSource(p.img)}')"></div>
+        <div><h2>${p.name}</h2><div class="mi-sub">${p.klass} · ${p.race}</div></div>
+      </div>
+      <div class="mi-room-grid">
+        <div class="mi-room-box full">
+          <h3>Mochila</h3>
+          <div class="room-hint">Notas, inventario y cualquier cosa que quieras guardar. Se guarda sola.</div>
+          <div class="mochila-resources">
+            <span class="resource-label">Recursos</span>
+            <span class="resource-label">PO</span><input id="miPo" type="number" min="0" step="1" value="0" aria-label="PO">
+            <span class="resource-label">Raciones</span><input id="miRations" type="number" min="0" step="1" value="0" aria-label="Raciones">
+            <span class="mi-save-status" id="miResourcesStatus"></span>
+          </div>
+          <textarea id="mochilaText" placeholder="Cargando..."></textarea>
+          <div class="mi-save-status" id="mochilaStatus"></div>
         </div>
-      </div>
-      <p class="mi-desc">${p.desc}</p>
-      <div class="mochila-box">
-        <h3>Mochila</h3>
-        <div class="mochila-hint">Notas, inventario, lo que quieras. Se guarda sola en cuanto dejas de escribir.</div>
-        <textarea id="mochilaText" placeholder="Cargando..."></textarea>
-        <div class="mochila-status" id="mochilaStatus"></div>
-      </div>
-      <div class="equipo-box">
-        <h3>Registro de Inventario Mágico</h3>
-        <div class="equipo-hint">Qué llevas puesto/equipado ahora mismo. Se guarda solo, igual que la Mochila.</div>
-        ${renderEquipoGroups()}
-        <div class="mochila-status" id="equipoStatus"></div>
+        <div class="mi-room-box full">
+          <h3>Registro de Inventario Mágico</h3>
+          <div class="room-hint">Qué llevas puesto o equipado ahora mismo.</div>
+          ${renderEquipoGroups()}
+          <div class="mi-save-status" id="equipoStatus"></div>
+        </div>
+        <div class="mi-room-box full">
+          <h3>Espacio personalizado</h3>
+          <div class="room-hint">Contenido privado de ${p.name}: notas, secretos, ideas y recuerdos.</div>
+          <div id="miPrivateSections">
+            <div class="room-writing"><textarea placeholder="Este espacio solo lo verá ${p.name}."></textarea></div>
+          </div>
+          <button class="room-add" id="miAddPrivateSection" type="button">+ Añadir tramo</button>
+          <div class="mi-save-status" id="miPrivateStatus"></div>
+        </div>
+        ${p.id === 'birsha' || p.id === 'chankkla' || p.id === 'vin' ? `
+        <div class="mi-room-box full mission-tier secret-missions" style="--tier-color:${isBirsha ? 'var(--r-purple)' : 'var(--room-color)'};">
+          <h3>${isBirsha ? 'Misiones secretas: Culto de Baco' : p.id === 'vin' ? 'El Rastro de Dante' : 'Instinto de Colmena'}</h3>
+          <div class="tier-sub">${isBirsha ? 'Reclutamiento y recompensas especiales' : p.id === 'vin' ? 'Misión secreta' : 'Misión especial · Karma'}</div>
+          <div id="miCultSections">
+            <div class="mission-entry">${isBirsha || p.id === 'vin' ? '' : '<div class="m-desc">Libera a tu pueblo de la esclavitud para ganar Karma positivo o entrega y somete a tu pueblo para ganar Karma Negativo.</div>'}<textarea id="miCultContent" placeholder="El DM añadirá aquí tus misiones..."></textarea>${p.id === 'vin' ? '<button type="button" class="vin-puzzle-link" id="vinPuzzleLink">Puzzle</button>' : ''}</div>
+          </div>
+          <button class="room-add" id="miAddCultSection" type="button">+ Añadir misión</button>
+          ${isBirsha ? `<div class="recruit-progress"><div class="recruit-progress-top"><span>Puntos de culto</span><span><b id="miCultRecruitsLabel">0</b> / 3</span></div><div class="recruit-progress-track"><div class="recruit-progress-fill" id="miCultProgressFill"></div></div><div class="recruit-reward">Siguiente recompensa: Bautizo de sangre</div><input id="miCultRecruits" type="hidden" value="0"></div>` : p.id === 'vin' ? `<div class="recruit-progress"><div class="recruit-progress-top"><span>Ecos Robados</span><span><input id="miCultRecruits" type="number" min="0" max="10" step="1" value="0" aria-label="Ecos Robados"> / 10</span></div><div class="recruit-progress-track"><div class="recruit-progress-fill" id="miCultProgressFill"></div></div></div>` : `<div class="karma-panel"><div class="karma-label"><span>Karma</span><span class="karma-value" id="miKarmaLabel">0</span></div><div class="karma-track"><input id="miKarma" type="range" min="-20" max="20" step="1" value="0" aria-label="Karma"><span class="karma-thumb" id="miKarmaThumb"></span></div><div class="karma-markers"><span>-20</span><span>-10</span><span>-5</span><span>-3</span><span>0</span><span>+3</span><span>+5</span><span>+10</span><span>+20</span></div></div>`}
+          <div class="mi-save-status" id="miCultStatus"></div>
+        </div>` : ''}
+        <div class="mi-room-box mi-image-box">
+          <h3>Imagen de la habitación</h3>
+          <div class="room-hint">Se usará como fondo de esta sala.</div>
+          <label class="mi-upload">Imagen privada<input id="miRoomImage" type="file" accept="image/*"></label>
+          <img class="mi-upload-preview" id="miRoomImagePreview" alt="Imagen de la habitación" style="display:none;">
+        </div>
       </div>
     </div>
   `;
@@ -1919,6 +3003,28 @@ function renderCharPanel(container, p){
   const textarea = document.getElementById('mochilaText');
   const status = document.getElementById('mochilaStatus');
   const equipoStatus = document.getElementById('equipoStatus');
+  const room = container.querySelector('.mi-room');
+  const privateSections = document.getElementById('miPrivateSections');
+  const privateStatus = document.getElementById('miPrivateStatus');
+  const addPrivateSection = document.getElementById('miAddPrivateSection');
+  const poInput = document.getElementById('miPo');
+  const rationsInput = document.getElementById('miRations');
+  const resourcesStatus = document.getElementById('miResourcesStatus');
+  const roomImage = document.getElementById('miRoomImage');
+  const roomImagePreview = document.getElementById('miRoomImagePreview');
+  const vinPuzzleLink = document.getElementById('vinPuzzleLink');
+  const vinPuzzleModal = document.getElementById('vinPuzzleModalBackdrop');
+  const vinPuzzleModalImg = document.getElementById('vinPuzzleModalImg');
+  const cultContent = document.getElementById('miCultContent');
+  const cultRecruits = document.getElementById('miCultRecruits');
+  const cultStatus = document.getElementById('miCultStatus');
+  const cultSections = document.getElementById('miCultSections');
+  const addCultSection = document.getElementById('miAddCultSection');
+  const cultProgressFill = document.getElementById('miCultProgressFill');
+  const cultRecruitsLabel = document.getElementById('miCultRecruitsLabel');
+  const karmaInput = document.getElementById('miKarma');
+  const karmaLabel = document.getElementById('miKarmaLabel');
+  const karmaThumb = document.getElementById('miKarmaThumb');
   textarea.value = '';
   textarea.disabled = true;
   status.textContent = 'Cargando...';
@@ -1935,14 +3041,108 @@ function renderCharPanel(container, p){
     textarea.value = data.text || '';
     textarea.disabled = false;
     status.textContent = data.text ? 'Guardado' : '';
+    poInput.value = Number.isInteger(data.po) ? data.po : 0;
+    rationsInput.value = Number.isInteger(data.rations) ? data.rations : 0;
+    const privateValues = Array.isArray(data.privateSections) ? data.privateSections : [data.privateContent || ''];
+    privateSections.innerHTML = privateValues.map(value=>`<div class="room-writing"><textarea>${escapeRoomText(value)}</textarea></div>`).join('');
+    if(cultContent){
+      cultContent.value = data.cultContent || '';
+      if(cultRecruits){
+        cultRecruits.value = isBirsha ? 0 : (Number.isInteger(data.cultRecruits) ? data.cultRecruits : 0);
+        updateCultProgress();
+        if(isBirsha && data.cultRecruits !== 0) window.ctFirebase.saveCharData(p.id, {cultRecruits:0});
+      }
+      if(karmaInput){ karmaInput.value = Number.isInteger(data.karma) ? Math.max(-20, Math.min(20, data.karma)) : 0; updateKarma(); }
+    }
+    if(data.roomImage){ applyRoomBackground(data.roomImage); roomImagePreview.src = data.roomImage; roomImagePreview.style.display = 'block'; }
     const equipo = data.equipo || {};
     equipoInputs.forEach(inp=>{
       if(equipo[inp.dataset.slot]) inp.value = equipo[inp.dataset.slot];
     });
+    container.querySelectorAll('textarea').forEach(autoGrowTextarea);
   }).catch(()=>{
     status.textContent = 'No se pudo cargar. Revisa tu conexión.';
     textarea.disabled = false;
   });
+
+  function savePrivateData(data, statusEl, message){
+    statusEl.textContent = 'Guardando...';
+    window.ctFirebase.saveCharData(p.id, data)
+      .then(()=>{ statusEl.textContent = 'Guardado ✓'; if(message) showToast(message); })
+      .catch(()=>{ statusEl.textContent = 'Error al guardar — reintenta.'; });
+  }
+
+  let privateTimer;
+  function escapeRoomText(value){ return String(value || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function savePrivateSections(){
+    const values = Array.from(privateSections.querySelectorAll('textarea')).map(input=>input.value);
+    privateStatus.textContent = 'Escribiendo...'; clearTimeout(privateTimer);
+    privateTimer = setTimeout(()=>savePrivateData({privateSections:values, privateContent:values.join('\n\n')}, privateStatus, 'Espacio guardado'), 900);
+  }
+  privateSections.addEventListener('input', savePrivateSections);
+  addPrivateSection.addEventListener('click', ()=>{
+    const block = document.createElement('div'); block.className = 'room-writing';
+    block.innerHTML = '<textarea placeholder="Nuevo tramo privado..."></textarea>';
+    privateSections.appendChild(block); block.querySelector('textarea').focus(); savePrivateSections();
+  });
+
+  let resourcesTimer;
+  [poInput, rationsInput].forEach(input=>input.addEventListener('input', ()=>{
+    resourcesStatus.textContent = 'Guardando...'; clearTimeout(resourcesTimer);
+    resourcesTimer = setTimeout(()=>savePrivateData({po:Math.max(0, parseInt(poInput.value,10)||0), rations:Math.max(0, parseInt(rationsInput.value,10)||0)}, resourcesStatus, 'Recursos guardados'), 500);
+  }));
+
+  roomImage.addEventListener('change', ()=>{
+    const file = roomImage.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{ applyRoomBackground(reader.result); roomImagePreview.src = reader.result; roomImagePreview.style.display = 'block'; savePrivateData({roomImage:reader.result}, resourcesStatus, 'Imagen guardada'); };
+    reader.readAsDataURL(file);
+  });
+
+  if(vinPuzzleLink){
+    vinPuzzleLink.addEventListener('click', ()=>vinPuzzleModal.classList.add('active'));
+    document.getElementById('vinPuzzleModalClose').addEventListener('click', ()=>vinPuzzleModal.classList.remove('active'));
+    vinPuzzleModal.addEventListener('click', e=>{ if(e.target === vinPuzzleModal) vinPuzzleModal.classList.remove('active'); });
+  }
+
+  function applyRoomBackground(image){ room.classList.add('has-room-image'); room.style.setProperty('--room-image', `url("${image}")`); }
+
+  function updateCultProgress(){
+    if(!cultRecruits || !cultProgressFill) return;
+    const maxPoints = p.id === 'vin' ? 10 : 3;
+    const points = Math.max(0, Math.min(maxPoints, parseInt(cultRecruits.value,10)||0));
+    if(cultRecruitsLabel) cultRecruitsLabel.textContent = points;
+    cultRecruits.value = points;
+    cultProgressFill.style.width = `${(points / maxPoints) * 100}%`;
+  }
+  function updateKarma(){
+    if(!karmaInput || !karmaLabel || !karmaThumb) return;
+    const value = Math.max(-20, Math.min(20, parseInt(karmaInput.value,10)||0));
+    karmaLabel.textContent = value > 0 ? `+${value}` : value;
+    karmaThumb.style.left = `${((value + 20) / 40) * 100}%`;
+  }
+  if(cultContent){
+    let cultTimer;
+    const cultInputs = cultRecruits ? [cultContent, cultRecruits] : [cultContent];
+    cultInputs.forEach(input=>input.addEventListener('input', ()=>{
+      updateCultProgress();
+      cultStatus.textContent = 'Guardando...'; clearTimeout(cultTimer);
+      cultTimer = setTimeout(()=>savePrivateData({cultContent:cultContent.value, ...(cultRecruits ? {cultRecruits:Math.max(0, Math.min(p.id === 'vin' ? 10 : 3, parseInt(cultRecruits.value,10)||0))} : {})}, cultStatus, isBirsha ? 'Misiones secretas guardadas' : 'Misiones guardadas'), 700);
+    }));
+    if(karmaInput){
+      karmaInput.addEventListener('input', ()=>{
+        updateKarma();
+        cultStatus.textContent = 'Guardando...'; clearTimeout(cultTimer);
+        cultTimer = setTimeout(()=>savePrivateData({karma:parseInt(karmaInput.value,10)||0}, cultStatus, 'Karma guardado'), 500);
+      });
+      updateKarma();
+    }
+    addCultSection.addEventListener('click', ()=>{
+      const block = document.createElement('div'); block.className = 'mission-entry';
+      block.innerHTML = '<textarea placeholder="Describe la misión..."></textarea>';
+      cultSections.appendChild(block); block.querySelector('textarea').focus();
+    });
+  }
 
   let saveTimer;
   textarea.addEventListener('input', ()=>{
@@ -1951,7 +3151,10 @@ function renderCharPanel(container, p){
     saveTimer = setTimeout(()=>{
       window.ctFirebase.saveMochila(p.id, textarea.value)
         .then(()=>{ status.textContent = 'Guardado ✓'; showToast('Mochila guardada'); })
-        .catch(()=>{ status.textContent = 'Error al guardar — reintenta.'; });
+        .catch(error=>{
+          console.error('No se pudo guardar la mochila', {charId:p.id, error});
+          status.textContent = `Error al guardar (${error.code || 'desconocido'})`;
+        });
     }, 900);
   });
 
@@ -1968,7 +3171,10 @@ function renderCharPanel(container, p){
       equipoTimer = setTimeout(()=>{
         window.ctFirebase.saveEquipo(p.id, collectEquipo())
           .then(()=>{ equipoStatus.textContent = 'Guardado ✓'; showToast('Equipo guardado'); })
-          .catch(()=>{ equipoStatus.textContent = 'Error al guardar — reintenta.'; });
+          .catch(error=>{
+            console.error('No se pudo guardar el equipo', {charId:p.id, error});
+            equipoStatus.textContent = `Error al guardar (${error.code || 'desconocido'})`;
+          });
       }, 900);
     });
   });
@@ -2015,7 +3221,7 @@ function renderEquipoGroups(){
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBHTkrUBLgGa5IhAv5Mn-9QTR9x5W_bKrU",
@@ -2045,6 +3251,11 @@ async function saveEquipo(charId, equipo){
   await setDoc(ref, { equipo, updatedAt: Date.now() }, { merge: true });
 }
 
+async function saveCharData(charId, data){
+  const ref = doc(db, 'mochilas', charId);
+  await setDoc(ref, { ...data, updatedAt: Date.now() }, { merge: true });
+}
+
 async function loadDMNotes(){
   const ref = doc(db, 'dm', 'notas');
   const snap = await getDoc(ref);
@@ -2056,7 +3267,19 @@ async function saveDMNotes(text, prevText){
   await setDoc(ref, { text, prevText: prevText || '', updatedAt: Date.now() }, { merge: true });
 }
 
-window.ctFirebase = { loadChar, saveMochila, saveEquipo, loadDMNotes, saveDMNotes };
+function watchForja(callback){
+  const ref = doc(db, 'forja', 'estaciones');
+  return onSnapshot(ref, (snap)=>{
+    callback(snap.exists() ? (snap.data().slots || {}) : {});
+  });
+}
+
+async function saveForjaSlot(slotKey, slotData){
+  const ref = doc(db, 'forja', 'estaciones');
+  await setDoc(ref, { slots: { [slotKey]: slotData }, updatedAt: Date.now() }, { merge: true });
+}
+
+window.ctFirebase = { loadChar, saveMochila, saveEquipo, saveCharData, loadDMNotes, saveDMNotes, watchForja, saveForjaSlot };
 
 if(document.getElementById('view-mi')?.classList.contains('active')){
   renderMiPersonaje();
