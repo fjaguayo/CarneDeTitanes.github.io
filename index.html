@@ -1592,6 +1592,81 @@ header .crest-mark{border:2px solid #d9ad45; background:radial-gradient(circle a
 .se-toggle em{font-family:'Inter', sans-serif; font-style:normal; font-size:0.64rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--text-dim);}
 .se-item.is-sold .se-art{filter:grayscale(0.85); opacity:0.6;}
 .se-item.is-sold .se-text b{text-decoration:line-through; text-decoration-color:rgba(139,30,18,0.7);}
+
+/* ---------------- PANEL DM · pestañas y editores ---------------- */
+.dm-tabs{max-width:980px; margin:0 auto 2rem;}
+.dm-tabbar{display:flex; flex-wrap:wrap; gap:0.3rem; padding:0 0.6rem; position:relative; z-index:2;}
+.dm-tab{position:relative; padding:0.6rem 1.05rem 0.7rem; border:2px solid #8a6416; border-bottom:none; border-radius:10px 10px 0 0; cursor:pointer;
+  background:linear-gradient(180deg, #4a2c16, #2c190b); color:#e8d3a0; font-family:'IM Fell English SC', serif; font-size:1.05rem; letter-spacing:0.04em;
+  box-shadow:inset 0 1px 0 rgba(255,220,150,0.2); transform:translateY(4px); transition:transform 0.15s, background 0.15s, color 0.15s;}
+.dm-tab:hover{transform:translateY(1px); color:#fff1cc;}
+.dm-tab.active{transform:translateY(2px); background:#ecdcb4; background-image:var(--tx-fiber); background-size:300px 300px; background-blend-mode:multiply; color:#6e1a0f; -webkit-text-stroke:0.3px currentColor; z-index:3;}
+.dm-tab:focus-visible{outline:2px solid #f3d98a; outline-offset:2px;}
+.dm-tabpanes > .dm-tabpane > .dm-notes-box{margin-top:0 !important; max-width:none;}
+.dm-tabpane[hidden]{display:none !important;}
+#view-mi .dm-tabs .dm-notes-box{border-radius:6px;}
+.ad-pane-inner{display:grid; gap:1rem; margin-top:0.6rem;}
+.ad-card{padding:1rem 1.1rem; border:1px solid var(--panel-line); border-radius:6px; background:rgba(255,248,230,0.35);}
+.ad-card h4{font-size:1.25rem; margin-bottom:0.6rem; color:var(--gold-bright) !important;}
+.ad-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.7rem 1rem; padding:0.6rem 0.2rem 0.4rem;}
+.ad-field{display:grid; gap:0.25rem; min-width:0;}
+.ad-field.wide{grid-column:1 / -1;}
+.ad-field > span{font-family:'Inter', sans-serif; font-size:0.7rem; letter-spacing:0.04em; color:var(--text-dim);}
+.ad-field input, .ad-field textarea, .ad-field select{width:100%; padding:0.5rem 0.6rem; font-family:'Spectral', serif; font-size:0.95rem; border-radius:4px; border:1px solid var(--panel-line); background:var(--bg-deep); color:var(--text); resize:vertical;}
+#view-mi .ad-field textarea{min-height:0 !important; height:auto; overflow-y:auto;}
+.ad-check{grid-template-columns:auto 1fr; align-items:center; gap:0.5rem; align-self:end; padding-bottom:0.5rem; cursor:pointer;}
+.ad-check input{width:18px; height:18px; accent-color:#8b1e12;}
+.ad-check > span{font-family:'Spectral', serif !important; font-size:1rem !important; color:var(--text) !important; letter-spacing:0 !important;}
+.ad-color > span:last-child{display:flex; align-items:center; gap:0.6rem;}
+.ad-color input[type=color]{width:46px !important; height:34px; padding:2px !important; cursor:pointer;}
+.ad-color code{font-size:0.8rem; color:var(--text-dim);}
+.ad-range input{accent-color:#8b1e12; padding:0 !important; border:none !important; background:none !important;}
+.ad-range b{color:var(--gold-bright);}
+.ad-image-row{display:grid; grid-template-columns:84px 1fr; gap:0.8rem; align-items:center;}
+.ad-thumb{width:84px; height:84px; border-radius:6px; border:1px solid var(--panel-line); background:rgba(255,250,236,0.6) center / contain no-repeat;}
+.ad-image-ctrls{display:grid; gap:0.4rem;}
+.ad-image-btns{display:flex; gap:0.4rem; flex-wrap:wrap;}
+.ad-btn{display:inline-flex; align-items:center; gap:0.3rem; padding:0.4rem 0.75rem; border-radius:4px; border:1px solid rgba(110,26,15,0.5); background:rgba(139,30,18,0.08); color:#6e1a0f; font-family:'Inter', sans-serif; font-size:0.74rem; cursor:pointer;}
+.ad-btn:hover{background:rgba(139,30,18,0.16);}
+.ad-btn.ghost{background:transparent;}
+.ad-item{border:1px solid var(--panel-line); border-radius:6px; background:rgba(255,248,230,0.45); margin-bottom:0.5rem;}
+.ad-item[open]{background:rgba(255,248,230,0.7); box-shadow:0 4px 10px rgba(60,30,8,0.12);}
+.ad-item > summary{display:flex; align-items:center; gap:0.7rem; padding:0.55rem 0.75rem; cursor:pointer; list-style:none;}
+.ad-item > summary::-webkit-details-marker{display:none;}
+.ad-item > summary::before{content:'▸'; color:#8b1e12; font-size:0.8rem; transition:transform 0.2s;}
+.ad-item[open] > summary::before{transform:rotate(90deg);}
+.ad-sum-art{width:34px; height:40px; flex-shrink:0; display:flex; justify-content:center;}
+.ad-sum-art svg, .ad-sum-art img{height:100%; width:auto;}
+.ad-sum-portrait{width:38px; height:38px; border-radius:50%; flex-shrink:0; background:rgba(255,250,236,0.6) center top / cover no-repeat; box-shadow:0 0 0 2px #c99a3a;}
+.ad-sum-title{flex:1; min-width:0; font-family:'Spectral', serif; font-weight:600; font-size:1rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.ad-sum-actions{display:flex; gap:0.3rem;}
+.ad-sum-actions button{background:transparent; border:1px solid var(--panel-line); border-radius:4px; color:var(--text-dim); padding:0.3rem 0.5rem; font-family:'Inter', sans-serif; font-size:0.7rem; cursor:pointer;}
+.ad-sum-actions button:hover:not(:disabled){border-color:#8b1e12; color:#6e1a0f;}
+.ad-sum-actions button:disabled{opacity:0.3; cursor:default;}
+.ad-item > .ad-grid{padding:0.4rem 0.9rem 0.9rem;}
+.ad-item > .ad-savebar{padding:0 0.9rem 0.9rem;}
+.ad-savebar{display:flex; justify-content:flex-end; align-items:center; gap:0.8rem; flex-wrap:wrap;}
+.ad-lines{gap:0.4rem;}
+.ad-line{display:grid; grid-template-columns:minmax(0,0.8fr) minmax(0,1.6fr) auto; gap:0.4rem;}
+.ad-subtabs{display:flex; gap:0.3rem; border-bottom:1px solid var(--panel-line);}
+.ad-subpane[hidden]{display:none;}
+@media(max-width:700px){
+  .ad-grid{grid-template-columns:1fr;}
+  .dm-tab{padding:0.45rem 0.7rem 0.55rem; font-size:0.92rem;}
+  .ad-line{grid-template-columns:1fr;}
+  .ad-sum-actions button[data-act="up"], .ad-sum-actions button[data-act="down"]{display:none;}
+}
+
+.ad-pane-inner{grid-template-columns:minmax(0,1fr);}
+.ad-pane-inner > *, .ad-item, .ad-item > summary{min-width:0;}
+.dm-tabpane .dm-notes-box{overflow:hidden;}
+@media(max-width:600px){
+  .nav-dropdown-btn{font-size:0 !important; letter-spacing:0 !important;}
+  .nav-dropdown-btn::before{font-size:1.15rem !important;}
+  .dm-tabs .dm-notes-box{padding:1rem 0.8rem !important;}
+  .ad-item > .ad-grid{padding:0.3rem 0.6rem 0.7rem;}
+  .ad-image-row{grid-template-columns:64px 1fr;} .ad-thumb{width:64px; height:64px;}
+}
 </style>
 </head>
 <body>
@@ -4569,7 +4644,7 @@ window.ctItemArt = itemArt;
   const cleanName = it => it.name.replace(/\s*\bSOLD\b\s*/i, ' ').trim();
   const slug = it => cleanName(it).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
   let soldMap = {};
-  const isSold = it => Object.prototype.hasOwnProperty.call(soldMap, slug(it)) ? !!soldMap[slug(it)] : /\bSOLD\b/i.test(it.name);
+  const isSold = it => typeof it.sold === 'boolean' ? it.sold : Object.prototype.hasOwnProperty.call(soldMap, slug(it)) ? !!soldMap[slug(it)] : /\bSOLD\b/i.test(it.name);
   let view = { mode:'wall', key:null, idx:null };
   const shelves = [
     { key:'armas',      label:'Armas',      sub:'Hojas, astas y cuerdas', items: weapons },
@@ -4771,11 +4846,11 @@ window.ctItemArt = itemArt;
 (function tome(){
   const el = document.getElementById('tome');
   if(!el || typeof colosos === 'undefined') return;
-  const entries = [];
-  colosos.forEach(c=> entries.push({ group:'Colosos', name:c.name, type:c.type, biome:c.biome, desc:c.desc, glyphSvg:null }));
-  bestiary.forEach(c=> entries.push({ group:'Criaturas', name:c.name, type:c.type, biome:c.biome, desc:c.desc, glyphSvg:c.glyphSvg || null }));
+  let entries = [];
+  colosos.forEach(c=> entries.push({ group:'Colosos', name:c.name, type:c.type, biome:c.biome, desc:c.desc }));
+  bestiary.forEach(c=> entries.push({ group:'Criaturas', name:c.name, type:c.type, biome:c.biome, desc:c.desc }));
   // página 0 = índice; página n (n>=1) = entries[n-1]
-  const total = entries.length + 1;
+  let total = entries.length + 1;
   let page = 0, busy = false;
   const unknown = e => /^\?+$/.test(e.name.trim());
 
@@ -4806,6 +4881,17 @@ window.ctItemArt = itemArt;
     return `<div class="pg-inner"><dl class="pg-facts"><div><dt>Tipo</dt><dd>${esc(e.type)}</dd></div><div><dt>Dónde</dt><dd>${esc(e.biome)}</dd></div></dl>
       <p class="pg-text">${unknown(e) ? 'El gremio aún no ha visto esta criatura. La página espera tinta.' : esc(e.desc)}</p><div class="pg-num">${n}</div></div>`;
   }
+  window.ctTome = {
+    getEntries: () => entries.map(e=>({ group:e.group, name:e.name, type:e.type, biome:e.biome, desc:e.desc })),
+    setEntries(list){
+      const order = { Colosos:0, Criaturas:1 };
+      entries = (list || []).map(e=>({ group: e.group === 'Colosos' ? 'Colosos' : 'Criaturas', name:e.name || '', type:e.type || '', biome:e.biome || '', desc:e.desc || '' }))
+        .map((e,i)=>({e,i})).sort((a,b)=> (order[a.e.group]-order[b.e.group]) || (a.i-b.i)).map(x=>x.e);
+      total = entries.length + 1;
+      if(page > total - 1) page = 0;
+      if(el.classList.contains('is-open')) paint();
+    }
+  };
   const leftOf = n => n===0 ? indexLeft() : entryLeft(n);
   const rightOf = n => n===0 ? indexRight() : entryRight(n);
 
@@ -4988,12 +5074,515 @@ window.ctItemArt = itemArt;
   window.renderWeaponSaleCards();
 })();
 
+
+/* ============================================================
+   7. ADMINISTRACIÓN DEL DM
+   Datos editables (portal, personajes, caídos, tienda, bestiario)
+   y panel del DM por pestañas.
+   ============================================================ */
+(function admin(){
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const uid = () => 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  const toast = msg => { if(typeof showToast === 'function') showToast(msg); };
+  const fb = () => window.ctFirebase && window.ctFirebase.saveDoc ? window.ctFirebase : null;
+
+  /* ---------- Imágenes: reducir y comprimir en el navegador ---------- */
+  function fileToData(file, max){
+    return new Promise((resolve, reject)=>{
+      if(!file || !/^image\//.test(file.type)) return reject(new Error('No es una imagen'));
+      const fr = new FileReader();
+      fr.onerror = reject;
+      fr.onload = () => {
+        const img = new Image();
+        img.onerror = reject;
+        img.onload = () => {
+          const k = Math.min(1, max / Math.max(img.width, img.height));
+          const c = document.createElement('canvas');
+          c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          let out = c.toDataURL('image/webp', 0.82);
+          if(!out.startsWith('data:image/webp')) out = c.toDataURL('image/png');
+          resolve(out);
+        };
+        img.src = fr.result;
+      };
+      fr.readAsDataURL(file);
+    });
+  }
+  const builtinImg = {};
+  function resolveImg(src){
+    if(!src) return '';
+    if(src.startsWith('builtin:')) return builtinImg[src.slice(8)] || '';
+    return typeof imageSource === 'function' ? imageSource(src) : src;
+  }
+
+  /* ============================================================
+     A. PORTAL
+     ============================================================ */
+  const portalState = {
+    level: (document.querySelector('#view-portal .progress-top .lvl') || {}).textContent || '',
+    pgText: (document.querySelector('#view-portal .progress-top .pg-count') || {}).textContent || '',
+    percent: parseFloat(((document.querySelector('#view-portal .bar-fill') || {}).style || {}).width) || 0,
+    note: (document.querySelector('#view-portal .progress-note') || {}).textContent || '',
+    changelog: typeof changelog !== 'undefined' ? changelog.map(c=>({ date:c.date, text:c.text })) : []
+  };
+  window.renderChangelog = function(){
+    const el = document.getElementById('changelogPanel'); if(!el) return;
+    el.innerHTML = portalState.changelog.map(c=>`<div class="changelog-item"><div class="changelog-date">${esc(c.date)}</div><div class="changelog-text">${esc(c.text)}</div></div>`).join('');
+  };
+  function applyPortal(){
+    const q = sel => document.querySelector('#view-portal ' + sel);
+    if(q('.progress-top .lvl')) q('.progress-top .lvl').textContent = portalState.level;
+    if(q('.progress-top .pg-count')) q('.progress-top .pg-count').textContent = portalState.pgText;
+    if(q('.bar-fill')) q('.bar-fill').style.width = Math.max(0, Math.min(100, Number(portalState.percent) || 0)) + '%';
+    if(q('.progress-note')) q('.progress-note').textContent = portalState.note;
+    window.renderChangelog();
+  }
+  applyPortal();
+
+  /* ============================================================
+     B. PERSONAJES
+     ============================================================ */
+  const roster = [];
+  if(typeof party !== 'undefined') party.forEach(m=> roster.push({ group:'Vínculo de las ocho sombras', obj:m, id:m.id }));
+  if(typeof gremioB !== 'undefined') gremioB.forEach(m=>{ const id = guildCardId(m); m.id = id; roster.push({ group:'Los Otros (Gremio B)', obj:m, id }); });
+  if(typeof guests !== 'undefined') guests.forEach((m,i)=>{ m.id = m.id || ('invitado_' + (i+1)); roster.push({ group:'Invitados', obj:m, id:m.id }); });
+  const CHAR_FIELDS = ['name','race','klass','desc','color','img'];
+  roster.forEach(r=>{ r.original = {}; CHAR_FIELDS.forEach(f=> r.original[f] = r.obj[f] || ''); });
+  // Imágenes de los caídos que viven en el código
+  builtinImg.birsha = typeof birshaTributeImage !== 'undefined' ? imageSource(birshaTributeImage) : '';
+  const pistol = typeof gremioB !== 'undefined' ? gremioB.find(m=>m.name === 'Pistol') : null;
+  builtinImg.pistol = pistol ? imageSource(pistol.img) : '';
+
+  function charView(r){ const o = {}; CHAR_FIELDS.forEach(f=> o[f] = r.obj[f] || ''); return o; }
+  function applyCharacter(r, data){
+    const o = r.obj;
+    CHAR_FIELDS.forEach(f=>{ if(typeof data[f] === 'string') o[f] = data[f]; });
+    o._edited = true;
+    const line = [o.race, o.klass].filter(Boolean).join(', ');
+    if(typeof guildDisplay !== 'undefined' && r.group.startsWith('Vínculo')) guildDisplay[r.id] = [o.name, line];
+    if(typeof gremioBDisplay !== 'undefined' && r.group.startsWith('Los Otros')) gremioBDisplay[o.name] = [o.name, line];
+    if(typeof guildBorderColors !== 'undefined' && o.color) guildBorderColors[r.id] = o.color;
+  }
+  if(typeof guildMemberCard === 'function'){
+    const origCard = guildMemberCard;
+    window.guildMemberCard = function(member, isOther){
+      if(!member || !member._edited) return origCard(member, isOther);
+      const identity = guildCardId(member);
+      const lines = [member.race, member.klass].filter(Boolean);
+      return `<article class="guild-member guild-card" data-guild-member="${identity}" data-other="${isOther}" style="--member-color:${guildBorderColors[identity] || member.color || 'var(--gold)'};">
+        <div class="guild-card-image" style="background-image:url('${resolveImg(member.img)}')"></div>
+        <div class="guild-card-body"><h3>${esc(member.name)}</h3><div class="guild-card-subtitle">${lines.map(l=>`<span>${esc(l)}</span>`).join('')}</div></div>
+      </article>`;
+    };
+  }
+  function refreshCharacters(){
+    try{
+      if(typeof carousels !== 'undefined'){
+        if(document.getElementById('partyStage')) carousels.party = makeCarousel(party, 'partyStage', 'partyDots', false);
+        if(document.getElementById('gremioBStage')) carousels.gremioB = makeCarousel(gremioB, 'gremioBStage', 'gremioBDots', 'PNJ');
+        if(document.getElementById('guestStage')) carousels.guests = makeCarousel(guests, 'guestStage', 'guestDots', 'Invitado');
+      }
+    }catch(err){ console.error(err); }
+    document.querySelectorAll('#headerAvatars .avatar-chip[data-id]').forEach(chip=>{
+      const r = roster.find(x=>x.id === chip.dataset.id); if(!r || !r.obj._edited) return;
+      chip.title = r.obj.name;
+      const words = r.obj.name.replace(/["'“”]/g,'').split(/[\s-]+/).filter(Boolean);
+      chip.textContent = (words[0] || '?').slice(0, words[0] && words[0].length > 3 ? 1 : 2);
+      if(r.obj.color) chip.style.background = r.obj.color;
+    });
+    const rosterEl = document.querySelector('#view-mi .guild-roster');
+    if(rosterEl && typeof renderGuildOverview === 'function') window.renderGuildOverview(rosterEl.parentElement);
+  }
+
+  /* ============================================================
+     C. TRIBUTO A LOS CAÍDOS
+     ============================================================ */
+  let fallen = [
+    { id:uid(), name:'Birsha', color:'#B32635', img:'builtin:birsha', date:'18/09/26', link:'https://www.youtube.com/watch?v=4RmLad99Zgk',
+      lines:[{label:'',value:'Brujo de Patrón del Velo'},{label:'',value:'Anómalo Simbólico'},{label:'Causa de la muerte',value:'Se resbaló y se cayó por un puente'}] },
+    { id:uid(), name:'Pistol', color:'#176B3A', img:'builtin:pistol', date:'22/09/26', link:'',
+      lines:[{label:'',value:'Pistolero de Precisión'},{label:'',value:'Hombre Lagarto'},{label:'Estado',value:'Ha desaparecido'}] },
+    { id:uid(), name:'Temis', color:'#4A90D9', img:'Fotos/Temis.png', date:'26/09/26', link:'',
+      lines:[{label:'Causa de la muerte',value:'Asesinado por Sahuagin Llamatormentas'}] }
+  ];
+  function tributeHTML(){
+    return fallen.map(f=>`
+      <article class="dead-tribute-card" style="--tribute-color:${esc(f.color || '#000')};">
+        <div class="tribute-image" style="background-image:url('${resolveImg(f.img)}')"></div>
+        <div>
+          <h3>${esc(f.name)}</h3>
+          <div class="tribute-info-title">Información</div>
+          <dl>${(f.lines || []).map(l=> (l.label ? `<dt>${esc(l.label)}</dt>` : '') + `<dd>${esc(l.value)}</dd>`).join('')}</dl>
+        </div>
+        <div class="tribute-date">${f.link ? `<a href="${esc(f.link)}" target="_blank" rel="noopener noreferrer">${esc(f.date)}</a>` : esc(f.date)}</div>
+      </article>`).join('');
+  }
+  if(typeof renderGuildOverview === 'function'){
+    const origGO = renderGuildOverview;
+    window.renderGuildOverview = function(container){
+      origGO.apply(this, arguments);
+      const grid = container && container.querySelector('.dead-tribute-grid');
+      if(grid) grid.innerHTML = tributeHTML();
+      const sec = container && container.querySelector('.dead-tribute');
+      if(sec) sec.style.display = fallen.length ? '' : 'none';
+    };
+  }
+  function refreshTribute(){
+    const grid = document.querySelector('#view-mi .dead-tribute-grid');
+    if(grid) grid.innerHTML = tributeHTML();
+  }
+
+  /* ============================================================
+     D. CATÁLOGO DE LA TIENDA
+     ============================================================ */
+  const CAT_KEYS = [['weapons','Armas'],['armors','Armaduras'],['accessories','Accesorios']];
+  const catArrays = { weapons: typeof weapons !== 'undefined' ? weapons : [], armors: typeof armors !== 'undefined' ? armors : [], accessories: typeof accessories !== 'undefined' ? accessories : [] };
+  function catalogSnapshot(){
+    const out = {};
+    CAT_KEYS.forEach(([k])=>{
+      out[k] = catArrays[k].map(it=>({
+        id: it.id || uid(),
+        name: window.ctShop ? window.ctShop.cleanName(it) : it.name,
+        kind: k === 'weapons' ? (it.type || '') : k === 'armors' ? (it.slot || '') : (it.type || ''),
+        dice: it.dice || '', baseAC: it.baseAC || '', weight: it.weight || '',
+        rarity: it.rarity || 'azul', price: Number(it.price) || 0, desc: it.desc || '', img: it.img || '',
+        sold: window.ctShop ? !!window.ctShop.isSold(it) : !!it.sold
+      }));
+    });
+    return out;
+  }
+  function applyCatalog(data){
+    CAT_KEYS.forEach(([k])=>{
+      if(!Array.isArray(data[k])) return;
+      const arr = catArrays[k];
+      arr.length = 0;
+      data[k].forEach(d=>{
+        const it = { id:d.id, name:d.name || 'Objeto', rarity:d.rarity || 'azul', price:Number(d.price) || 0, desc:d.desc || '', sold:!!d.sold };
+        if(d.img) it.img = d.img;
+        if(k === 'armors'){ it.slot = d.kind || 'Armadura'; if(d.baseAC) it.baseAC = d.baseAC; if(d.weight) it.weight = d.weight; if(d.dice) it.dice = d.dice; }
+        else { it.type = d.kind || (k === 'weapons' ? 'Arma' : 'Amuleto'); if(d.dice) it.dice = d.dice; if(d.baseAC) it.baseAC = d.baseAC; if(d.weight) it.weight = d.weight; }
+        arr.push(it);
+      });
+    });
+    if(window.ctShop) window.ctShop.setSold(window.ctShop.getSold());
+  }
+
+  /* ============================================================
+     E. BESTIARIO
+     ============================================================ */
+  function applyBestiary(data){ if(window.ctTome && Array.isArray(data.entries)) window.ctTome.setEntries(data.entries); }
+
+  /* ---------- Escuchar Firebase ---------- */
+  function listen(){
+    const f = window.ctFirebase; if(!f || !f.watchDoc) return;
+    f.watchDoc('portal','datos', d=>{ if(!d) return; ['level','pgText','note'].forEach(k=>{ if(typeof d[k] === 'string') portalState[k] = d[k]; }); if(typeof d.percent === 'number') portalState.percent = d.percent; if(Array.isArray(d.changelog)) portalState.changelog = d.changelog; applyPortal(); });
+    f.watchCollection('personajes', all=>{ if(!all) return; Object.entries(all).forEach(([id, data])=>{ const r = roster.find(x=>x.id === id); if(r) applyCharacter(r, data); }); refreshCharacters(); });
+    f.watchDoc('tributo','datos', d=>{ if(!d || !Array.isArray(d.fallen)) return; fallen = d.fallen.map(x=>Object.assign({ id:uid(), lines:[] }, x)); refreshTribute(); });
+    f.watchDoc('tienda','catalogo', d=>{ if(d) applyCatalog(d); });
+    f.watchDoc('bestiario','datos', d=>{ if(d) applyBestiary(d); });
+  }
+  if(window.ctFirebase) listen(); else window.addEventListener('ct-firebase-ready', listen, { once:true });
+
+  /* ============================================================
+     EDITORES
+     ============================================================ */
+  function field(f, value){
+    const v = value == null ? '' : value;
+    const label = `<span>${f.label}</span>`;
+    if(f.type === 'textarea') return `<label class="ad-field ${f.wide ? 'wide' : ''}">${label}<textarea data-k="${f.key}" rows="${f.rows || 3}" maxlength="${f.max || 2000}">${esc(v)}</textarea></label>`;
+    if(f.type === 'select') return `<label class="ad-field">${label}<select data-k="${f.key}">${f.options.map(([val,lab])=>`<option value="${esc(val)}" ${String(v)===String(val)?'selected':''}>${esc(lab)}</option>`).join('')}</select></label>`;
+    if(f.type === 'color') return `<label class="ad-field ad-color">${label}<span><input type="color" data-k="${f.key}" value="${/^#[0-9a-f]{6}$/i.test(v) ? v : '#8b1e12'}"><code>${esc(v)}</code></span></label>`;
+    if(f.type === 'number') return `<label class="ad-field">${label}<input type="number" data-k="${f.key}" value="${esc(v)}" ${f.min!=null?`min="${f.min}"`:''} ${f.max!=null?`max="${f.max}"`:''} step="${f.step || 1}"></label>`;
+    if(f.type === 'check') return `<label class="ad-field ad-check"><input type="checkbox" data-k="${f.key}" ${v ? 'checked' : ''}><span>${f.label}</span></label>`;
+    if(f.type === 'image'){ const hidden = /^(data:|builtin:|\/9j\/)/.test(String(v)); return `<div class="ad-field ad-image ${f.wide ? 'wide' : ''}">${label}
+        <div class="ad-image-row"><span class="ad-thumb" style="background-image:url('${resolveImg(v)}')"></span>
+          <span class="ad-image-ctrls"><input type="text" data-k="${f.key}" value="${hidden ? '' : esc(v)}" placeholder="${hidden ? 'Imagen actual (escribe una dirección o sube otra para cambiarla)' : 'Dirección de la imagen (o sube una)'}" data-hasdata="${hidden ? '1' : ''}">
+          <span class="ad-image-btns"><label class="ad-btn">Subir imagen<input type="file" accept="image/*" data-upload="${f.key}" data-max="${f.maxPx || 512}" hidden></label><button type="button" class="ad-btn ghost" data-clear="${f.key}">Quitar</button></span></span></div></div>`; }
+    return `<label class="ad-field ${f.wide ? 'wide' : ''}">${label}<input type="text" data-k="${f.key}" value="${esc(v)}" maxlength="${f.max || 200}" ${f.ph ? `placeholder="${esc(f.ph)}"` : ''}></label>`;
+  }
+  function bindFields(scope, obj, onChange){
+    scope.querySelectorAll('[data-k]').forEach(inp=>{
+      const k = inp.dataset.k;
+      const ev = inp.type === 'checkbox' || inp.tagName === 'SELECT' || inp.type === 'color' ? 'change' : 'input';
+      inp.addEventListener(ev, ()=>{
+        if(inp.type === 'checkbox') obj[k] = inp.checked;
+        else if(inp.type === 'number') obj[k] = inp.value === '' ? '' : Number(inp.value);
+        else obj[k] = inp.value;
+        if(inp.type === 'color'){ const c = inp.parentNode.querySelector('code'); if(c) c.textContent = inp.value; }
+        if(inp.dataset.hasdata && inp.value === '' ) return;
+        const th = inp.closest('.ad-image') && inp.closest('.ad-image').querySelector('.ad-thumb'); if(th) th.style.backgroundImage = `url('${resolveImg(inp.value)}')`;
+        onChange && onChange(k);
+      });
+    });
+    scope.querySelectorAll('[data-upload]').forEach(inp=> inp.addEventListener('change', async ()=>{
+      const k = inp.dataset.upload; const file = inp.files && inp.files[0]; if(!file) return;
+      try{
+        const data = await fileToData(file, Number(inp.dataset.max) || 512);
+        obj[k] = data;
+        const box = inp.closest('.ad-image'); box.querySelector('.ad-thumb').style.backgroundImage = `url('${data}')`;
+        const t = box.querySelector('input[type=text]'); t.value = ''; t.placeholder = 'Imagen subida'; t.dataset.hasdata = '1';
+        onChange && onChange(k);
+      }catch(e){ toast('No se pudo leer la imagen'); }
+      inp.value = '';
+    }));
+    scope.querySelectorAll('[data-clear]').forEach(b=> b.addEventListener('click', ()=>{
+      const k = b.dataset.clear; obj[k] = '';
+      const box = b.closest('.ad-image'); box.querySelector('.ad-thumb').style.backgroundImage = 'none';
+      const t = box.querySelector('input[type=text]'); t.value = ''; t.placeholder = 'Dirección de la imagen (o sube una)'; t.dataset.hasdata = '';
+      onChange && onChange(k);
+    }));
+  }
+  function saveBar(id, label){ return `<div class="ad-savebar"><span class="be-status" id="${id}Status"></span><button type="button" class="be-save" id="${id}Save">${label || 'Guardar cambios'}</button></div>`; }
+  async function doSave(root, id, fn){
+    const st = root.querySelector('#' + id + 'Status');
+    if(!fb()){ st.textContent = 'Sin conexión a la base de datos.'; return false; }
+    st.textContent = 'Guardando…';
+    try{ await fn(fb()); st.textContent = 'Guardado.'; toast('Guardado'); return true; }
+    catch(e){ console.error(e); st.textContent = 'No se pudo guardar. ¿Están publicadas las reglas nuevas de Firebase?'; return false; }
+  }
+  function markDirty(root, id){ const st = root.querySelector('#' + id + 'Status'); if(st) st.textContent = 'Hay cambios sin guardar.'; }
+
+  /* Lista genérica: añadir, reordenar, borrar, plegar */
+  function listEditor(host, opts){
+    const { items, fields, title, addLabel, onDirty, newItem, art } = opts;
+    function paint(){
+      host.innerHTML = `<button type="button" class="be-add" data-add>${addLabel}</button>` +
+        (items.length ? items.map((it,i)=>`
+          <details class="ad-item" data-i="${i}">
+            <summary>${art ? `<span class="ad-sum-art">${art(it)}</span>` : ''}<span class="ad-sum-title">${esc(title(it) || 'Sin título')}</span>
+              <span class="ad-sum-actions">
+                <button type="button" data-act="up" ${i===0?'disabled':''} title="Subir">↑</button>
+                <button type="button" data-act="down" ${i===items.length-1?'disabled':''} title="Bajar">↓</button>
+                <button type="button" data-act="del" class="danger">Borrar</button>
+              </span></summary>
+            <div class="ad-grid">${fields.map(f=> f.type === 'lines' ? linesField(it, f) : field(f, it[f.key])).join('')}</div>
+          </details>`).join('') : '<p class="be-empty">Vacío. Añade el primero.</p>');
+      host.querySelector('[data-add]').addEventListener('click', ()=>{ items.unshift(newItem()); paint(); onDirty(); const d = host.querySelector('details'); if(d) d.open = true; });
+      host.querySelectorAll('details.ad-item').forEach(d=>{
+        const i = Number(d.dataset.i); const it = items[i];
+        bindFields(d.querySelector('.ad-grid'), it, (k)=>{ onDirty(); if(k === fields[0].key || (opts.refreshOn || []).includes(k)){ d.querySelector('.ad-sum-title').textContent = title(it) || 'Sin título'; if(art){ d.querySelector('.ad-sum-art').innerHTML = art(it); } } });
+        bindLines(d, it, onDirty);
+        d.querySelectorAll('[data-act]').forEach(b=> b.addEventListener('click', e=>{
+          e.preventDefault(); e.stopPropagation();
+          const a = b.dataset.act;
+          if(a === 'up' && i > 0) [items[i-1], items[i]] = [items[i], items[i-1]];
+          if(a === 'down' && i < items.length - 1) [items[i+1], items[i]] = [items[i], items[i+1]];
+          if(a === 'del'){ if(!confirm('¿Borrar? Se quitará al guardar.')) return; items.splice(i,1); }
+          paint(); onDirty();
+        }));
+      });
+    }
+    paint();
+    return { repaint: paint };
+  }
+  function linesField(it, f){
+    it[f.key] = it[f.key] || [];
+    return `<div class="ad-field wide ad-lines" data-lines="${f.key}"><span>${f.label}</span>
+      ${it[f.key].map((l,j)=>`<div class="ad-line" data-j="${j}"><input type="text" data-lk="label" value="${esc(l.label)}" placeholder="Etiqueta (opcional)" maxlength="60"><input type="text" data-lk="value" value="${esc(l.value)}" placeholder="Texto" maxlength="160"><button type="button" class="ad-btn ghost" data-ldel="${j}">Quitar</button></div>`).join('')}
+      <button type="button" class="ad-btn" data-ladd>+ Añadir línea</button></div>`;
+  }
+  function bindLines(scope, it, onDirty){
+    scope.querySelectorAll('.ad-lines').forEach(box=>{
+      const key = box.dataset.lines;
+      const repaint = ()=>{ const tmp = document.createElement('div'); tmp.innerHTML = linesField(it, { key, label: box.querySelector('span').textContent }); box.replaceWith(tmp.firstElementChild); bindLines(scope, it, onDirty); };
+      box.querySelectorAll('.ad-line').forEach(row=>{ const j = Number(row.dataset.j); row.querySelectorAll('[data-lk]').forEach(inp=> inp.addEventListener('input', ()=>{ it[key][j][inp.dataset.lk] = inp.value; onDirty(); })); });
+      box.querySelectorAll('[data-ldel]').forEach(b=> b.addEventListener('click', ()=>{ it[key].splice(Number(b.dataset.ldel),1); repaint(); onDirty(); }));
+      const add = box.querySelector('[data-ladd]'); if(add) add.addEventListener('click', ()=>{ it[key].push({ label:'', value:'' }); repaint(); onDirty(); });
+    });
+  }
+
+  /* ---------- Portal ---------- */
+  function portalEditor(){
+    const root = document.createElement('div'); root.className = 'ad-pane-inner';
+    const d = clone(portalState);
+    root.innerHTML = `
+      <div class="ad-card"><h4>Puntos de Gremio</h4>
+        <div class="ad-grid">
+          ${field({ key:'level', label:'Nivel (texto grande)', ph:'Nivel 6' }, d.level)}
+          ${field({ key:'pgText', label:'Texto a la derecha', ph:'285 / 315 PG hasta Nivel 7' }, d.pgText)}
+          <label class="ad-field wide ad-range"><span>Barra de progreso: <b id="adPct">${Math.round(d.percent)}%</b></span><input type="range" min="0" max="100" step="1" data-k="percent" value="${d.percent}"></label>
+          ${field({ key:'note', label:'Nota bajo la barra', wide:true }, d.note)}
+        </div>
+      </div>
+      <div class="ad-card"><h4>Qué ha cambiado</h4><p class="be-hint">El primero de la lista sale arriba del todo.</p><div id="adChangelog"></div></div>
+      ${saveBar('adPortal')}`;
+    bindFields(root.querySelector('.ad-grid'), d, ()=> markDirty(root,'adPortal'));
+    const range = root.querySelector('input[type=range]');
+    range.addEventListener('input', ()=>{ d.percent = Number(range.value); root.querySelector('#adPct').textContent = range.value + '%'; markDirty(root,'adPortal'); });
+    listEditor(root.querySelector('#adChangelog'), { items:d.changelog, addLabel:'+ Añadir novedad', title:c=>`${c.date} · ${c.text}`.slice(0,90), onDirty:()=>markDirty(root,'adPortal'), newItem:()=>({ date:new Date().toLocaleDateString('es-ES',{ day:'numeric', month:'short' }).replace('.',''), text:'' }),
+      fields:[{ key:'date', label:'Fecha', max:20 }, { key:'text', label:'Texto', type:'textarea', rows:2, wide:true, max:400 }], refreshOn:['text'] });
+    root.querySelector('#adPortalSave').addEventListener('click', ()=> doSave(root,'adPortal', async f=>{
+      const data = { level:d.level, pgText:d.pgText, percent:Number(d.percent) || 0, note:d.note, changelog:d.changelog.filter(c=>c.text.trim()).map(c=>({ date:c.date.trim(), text:c.text.trim() })) };
+      await f.saveDoc('portal','datos', data);
+      Object.assign(portalState, clone(data)); applyPortal();
+    }));
+    return root;
+  }
+
+  /* ---------- Personajes ---------- */
+  function charactersEditor(){
+    const root = document.createElement('div'); root.className = 'ad-pane-inner';
+    const groups = [...new Set(roster.map(r=>r.group))];
+    root.innerHTML = `<p class="be-hint">Edita nombre, raza, clase, descripción, color y foto. La sala privada y la Mochila de cada uno no cambian.</p>` +
+      groups.map(g=>`<div class="ad-card"><h4>${g}</h4>${roster.filter(r=>r.group===g).map(r=>`
+        <details class="ad-item" data-id="${r.id}">
+          <summary><span class="ad-sum-art ad-sum-portrait" style="background-image:url('${resolveImg(r.obj.img)}')"></span><span class="ad-sum-title">${esc(r.obj.name)}</span><span class="ad-sum-actions"></span></summary>
+          <div class="ad-grid" data-form></div>
+          <div class="ad-savebar"><span class="be-status" data-st></span><button type="button" class="ad-btn ghost" data-reset>Volver al original</button><button type="button" class="be-save" data-save>Guardar personaje</button></div>
+        </details>`).join('')}</div>`).join('');
+    root.querySelectorAll('details.ad-item').forEach(det=>{
+      const r = roster.find(x=>x.id === det.dataset.id);
+      let d = charView(r);
+      const form = det.querySelector('[data-form]'); const st = det.querySelector('[data-st]');
+      const paint = ()=>{
+        form.innerHTML = [ field({ key:'name', label:'Nombre', max:80 }, d.name), field({ key:'race', label:'Raza', max:80 }, d.race), field({ key:'klass', label:'Clase / subclase', max:120 }, d.klass),
+          field({ key:'color', label:'Color', type:'color' }, d.color), field({ key:'desc', label:'Descripción (carrusel del Gremio)', type:'textarea', rows:3, wide:true, max:800 }, d.desc),
+          field({ key:'img', label:'Foto', type:'image', wide:true, maxPx:640 }, d.img) ].join('');
+        bindFields(form, d, k=>{ st.textContent = 'Hay cambios sin guardar.'; if(k==='name') det.querySelector('.ad-sum-title').textContent = d.name; if(k==='img') det.querySelector('.ad-sum-portrait').style.backgroundImage = `url('${resolveImg(d.img)}')`; });
+      };
+      paint();
+      det.querySelector('[data-reset]').addEventListener('click', ()=>{ d = clone(r.original); paint(); st.textContent = 'Original cargado: pulsa Guardar para aplicarlo.'; });
+      det.querySelector('[data-save]').addEventListener('click', async ()=>{
+        if(!fb()){ st.textContent = 'Sin conexión a la base de datos.'; return; }
+        if(!d.name.trim()){ st.textContent = 'El nombre no puede quedar vacío.'; return; }
+        st.textContent = 'Guardando…';
+        try{ await fb().saveDoc('personajes', r.id, { name:d.name.trim(), race:d.race.trim(), klass:d.klass.trim(), desc:d.desc.trim(), color:d.color, img:d.img }); applyCharacter(r, d); refreshCharacters(); st.textContent = 'Guardado.'; toast('Personaje guardado'); }
+        catch(e){ console.error(e); st.textContent = e && /size|exceed/i.test(String(e)) ? 'La foto es demasiado grande. Prueba con otra.' : 'No se pudo guardar. ¿Están publicadas las reglas nuevas de Firebase?'; }
+      });
+    });
+    return root;
+  }
+
+  /* ---------- Caídos ---------- */
+  function tributeEditor(){
+    const root = document.createElement('div'); root.className = 'ad-pane-inner';
+    const items = clone(fallen);
+    root.innerHTML = `<p class="be-hint">Aparecen en Mi Personaje, en "Tributo a los caídos". Si pones un enlace, la fecha se vuelve pulsable.</p><div id="adFallen"></div>${saveBar('adTrib')}`;
+    listEditor(root.querySelector('#adFallen'), { items, addLabel:'+ Añadir caído', title:f=>`${f.name}${f.date ? ' · ' + f.date : ''}`, onDirty:()=>markDirty(root,'adTrib'),
+      newItem:()=>({ id:uid(), name:'', color:'#8b1e12', img:'', date:'', link:'', lines:[{ label:'Causa de la muerte', value:'' }] }),
+      art:f=>`<span class="ad-sum-portrait" style="background-image:url('${resolveImg(f.img)}')"></span>`, refreshOn:['date','img'],
+      fields:[{ key:'name', label:'Nombre', max:80 }, { key:'date', label:'Fecha', max:20, ph:'26/09/26' }, { key:'color', label:'Color del marco', type:'color' }, { key:'link', label:'Enlace en la fecha (opcional)', max:300 },
+        { key:'lines', label:'Información', type:'lines' }, { key:'img', label:'Retrato', type:'image', wide:true, maxPx:400 }] });
+    root.querySelector('#adTribSave').addEventListener('click', ()=> doSave(root,'adTrib', async f=>{
+      const data = items.filter(x=>x.name.trim()).map(x=>({ id:x.id, name:x.name.trim(), color:x.color, img:x.img, date:(x.date||'').trim(), link:(x.link||'').trim(), lines:(x.lines||[]).filter(l=>l.value.trim()).map(l=>({ label:l.label.trim(), value:l.value.trim() })) }));
+      await f.saveDoc('tributo','datos', { fallen:data });
+      fallen = clone(data); refreshTribute();
+    }));
+    return root;
+  }
+
+  /* ---------- Tienda ---------- */
+  const RAR_OPTS = [['comun','Común'],['azul','Infrecuente'],['morado','Raro'],['amarillo','Muy raro'],['blanco','Legendario']];
+  function shopEditorTabs(){
+    const root = document.createElement('div'); root.className = 'ad-pane-inner';
+    const cat = catalogSnapshot();
+    root.innerHTML = `<p class="be-hint">El dibujo se elige solo según el tipo (daga, espada, escudo, ballesta, hacha, pica, martillo, arco, bastón, guantes, armadura, botas, casco, diadema, amuleto, capa, anillo). Si subes una imagen, se usa esa.</p>
+      <div class="ad-subtabs">${CAT_KEYS.map(([k,l],i)=>`<button type="button" class="be-tab ${i===0?'active':''}" data-sub="${k}">${l}</button>`).join('')}</div>
+      ${CAT_KEYS.map(([k],i)=>`<div class="ad-subpane" data-subpane="${k}" ${i?'hidden':''}></div>`).join('')}
+      ${saveBar('adShop', 'Guardar tienda')}`;
+    root.querySelectorAll('[data-sub]').forEach(t=> t.addEventListener('click', ()=>{ root.querySelectorAll('[data-sub]').forEach(x=>x.classList.toggle('active', x===t)); root.querySelectorAll('[data-subpane]').forEach(p=> p.hidden = p.dataset.subpane !== t.dataset.sub); }));
+    const artOf = (k)=> it => itemArt({ name:it.name || 'x', type:k==='armors' ? '' : it.kind, slot:k==='armors' ? it.kind : '', weight:it.weight, rarity:it.rarity, img:it.img });
+    CAT_KEYS.forEach(([k])=>{
+      const fields = [{ key:'name', label:'Nombre', max:80 },
+        { key:'kind', label: k==='armors' ? 'Hueco (Armadura, Casco, Guantes, Botas…)' : k==='weapons' ? 'Tipo de arma' : 'Tipo (Amuleto, Capa, Anillo…)', max:60 },
+        { key:'rarity', label:'Rareza', type:'select', options:RAR_OPTS }, { key:'price', label:'Precio (PO)', type:'number', min:0, step:10 },
+        k==='armors' ? { key:'baseAC', label:'CA base (si es armadura)', max:40 } : { key:'dice', label: k==='weapons' ? 'Daño / CA' : 'Daño / CA (opcional)', max:40 },
+        k==='armors' ? { key:'weight', label:'Peso (Ligera, Intermedia, Pesada)', type:'select', options:[['',''],['Ligera','Ligera'],['Intermedia','Intermedia'],['Pesada','Pesada']] } : { key:'sold', label:'Vendido', type:'check' },
+        { key:'desc', label:'Descripción', type:'textarea', rows:3, wide:true, max:800 },
+        k==='armors' ? { key:'sold', label:'Vendido', type:'check' } : null,
+        { key:'img', label:'Imagen propia (opcional)', type:'image', wide:true, maxPx:320 }].filter(Boolean);
+      listEditor(root.querySelector(`[data-subpane="${k}"]`), { items:cat[k], addLabel:'+ Añadir objeto', title:it=>`${it.name}${it.sold ? ' · vendido' : ''} · ${it.price || 0} PO`, onDirty:()=>markDirty(root,'adShop'),
+        newItem:()=>({ id:uid(), name:'', kind: k==='weapons' ? 'Espada' : k==='armors' ? 'Armadura' : 'Anillo', dice:'', baseAC:'', weight: k==='armors' ? 'Ligera' : '', rarity:'azul', price:500, desc:'', img:'', sold:false }),
+        art:artOf(k), refreshOn:['kind','rarity','weight','img','sold','price'], fields });
+    });
+    root.querySelector('#adShopSave').addEventListener('click', ()=> doSave(root,'adShop', async f=>{
+      const clean = {};
+      CAT_KEYS.forEach(([k])=>{ clean[k] = cat[k].filter(it=>it.name.trim()).map(it=>({ id:it.id, name:it.name.trim(), kind:(it.kind||'').trim(), dice:(it.dice||'').trim(), baseAC:(it.baseAC||'').trim(), weight:it.weight||'', rarity:it.rarity, price:Number(it.price)||0, desc:(it.desc||'').trim(), img:it.img||'', sold:!!it.sold })); });
+      await f.saveDoc('tienda','catalogo', clean);
+      applyCatalog(clean);
+    }));
+    return root;
+  }
+
+  /* ---------- Bestiario ---------- */
+  function bestiaryEditor(){
+    const root = document.createElement('div'); root.className = 'ad-pane-inner';
+    const items = window.ctTome ? window.ctTome.getEntries().map(e=>Object.assign({ id:uid() }, e)) : [];
+    root.innerHTML = `<p class="be-hint">Cada entrada es una página del libro. Si el nombre es "????", sale como "Sin documentar".</p><div id="adBest"></div>${saveBar('adBest')}`;
+    listEditor(root.querySelector('#adBest'), { items, addLabel:'+ Añadir criatura', title:e=>`${e.group === 'Colosos' ? 'Coloso' : 'Criatura'} · ${e.name}`, onDirty:()=>markDirty(root,'adBest'), refreshOn:['group'],
+      newItem:()=>({ id:uid(), group:'Criaturas', name:'', type:'', biome:'', desc:'' }),
+      fields:[{ key:'name', label:'Nombre', max:80 }, { key:'group', label:'Sección', type:'select', options:[['Colosos','Colosos'],['Criaturas','Criaturas']] }, { key:'type', label:'Tipo', max:80 }, { key:'biome', label:'Dónde', max:120 },
+        { key:'desc', label:'Descripción', type:'textarea', rows:4, wide:true, max:2000 }] });
+    root.querySelector('#adBestSave').addEventListener('click', ()=> doSave(root,'adBest', async f=>{
+      const entries = items.filter(e=>e.name.trim()).map(e=>({ group:e.group, name:e.name.trim(), type:(e.type||'').trim(), biome:(e.biome||'').trim(), desc:(e.desc||'').trim() }));
+      await f.saveDoc('bestiario','datos', { entries });
+      applyBestiary({ entries });
+    }));
+    return root;
+  }
+
+  /* ============================================================
+     PANEL DEL DM POR PESTAÑAS
+     ============================================================ */
+  function buildTabs(container){
+    if(!container || container.querySelector('.dm-tabs')) return;
+    const boxes = Array.from(container.querySelectorAll(':scope > .dm-dashboard, :scope > .dm-notes-box'));
+    const notes = boxes.find(b=>b.querySelector('#dmNotesText'));
+    const board = container.querySelector('#boardEditor');
+    const sales = boxes.find(b=>b.querySelector('#dmSalesList'));
+    const oldShop = container.querySelector('#shopEditor'); if(oldShop) oldShop.remove();
+    const tabs = [
+      ['notas','Notas', notes, null],
+      ['tablon','Tablón', board, null],
+      ['portal','Portal', null, portalEditor],
+      ['personajes','Personajes', null, charactersEditor],
+      ['caidos','Caídos', null, tributeEditor],
+      ['tienda','Tienda', null, shopEditorTabs],
+      ['ventas','Ventas', sales, null],
+      ['bestiario','Bestiario', null, bestiaryEditor]
+    ];
+    const wrap = document.createElement('div');
+    wrap.className = 'dm-tabs';
+    wrap.innerHTML = `<div class="dm-tabbar" role="tablist">${tabs.map(([k,l],i)=>`<button type="button" role="tab" class="dm-tab ${i===0?'active':''}" data-tab="${k}" aria-selected="${i===0}">${l}</button>`).join('')}</div><div class="dm-tabpanes"></div>`;
+    const panes = wrap.querySelector('.dm-tabpanes');
+    const built = {};
+    tabs.forEach(([k,l,el,fn],i)=>{
+      const pane = document.createElement('div');
+      pane.className = 'dm-tabpane'; pane.dataset.pane = k; pane.hidden = i !== 0;
+      if(el){ pane.appendChild(el); built[k] = true; }
+      else { const box = document.createElement('div'); box.className = 'dm-notes-box dm-dashboard ad-box'; box.innerHTML = `<h3>${l}</h3>`; pane.appendChild(box); }
+      panes.appendChild(pane);
+    });
+    const backBtn = container.querySelector('#dmBackBtn');
+    if(backBtn && backBtn.parentNode === container) backBtn.after(wrap); else container.prepend(wrap);
+    const last = localStorage.getItem('ctt_dm_tab');
+    const open = (k)=>{
+      wrap.querySelectorAll('.dm-tab').forEach(t=>{ const on = t.dataset.tab === k; t.classList.toggle('active', on); t.setAttribute('aria-selected', String(on)); });
+      wrap.querySelectorAll('.dm-tabpane').forEach(p=> p.hidden = p.dataset.pane !== k);
+      if(!built[k]){
+        const def = tabs.find(t=>t[0]===k);
+        const box = wrap.querySelector(`[data-pane="${k}"] .ad-box`);
+        try{ box.appendChild(def[3]()); }catch(err){ console.error(err); box.insertAdjacentHTML('beforeend', '<p class="be-empty">No se pudo cargar este editor.</p>'); }
+        built[k] = true;
+      }
+      try{ localStorage.setItem('ctt_dm_tab', k); }catch(e){}
+    };
+    wrap.querySelectorAll('.dm-tab').forEach(t=> t.addEventListener('click', ()=> open(t.dataset.tab)));
+    if(last && tabs.some(t=>t[0]===last)) open(last);
+  }
+  if(typeof window.renderDMNotes === 'function'){
+    const prev = window.renderDMNotes;
+    window.renderDMNotes = function(container){ const out = prev.apply(this, arguments); try{ buildTabs(container); }catch(err){ console.error(err); } return out; };
+  }
+})();
+
 })();
 
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBHTkrUBLgGa5IhAv5Mn-9QTR9x5W_bKrU",
@@ -5081,7 +5670,23 @@ async function saveTienda(data){
   await setDoc(ref, { sold: data.sold, updatedAt: Date.now() });
 }
 
-window.ctFirebase = { loadChar, saveMochila, saveEquipo, saveCharData, loadDMNotes, saveDMNotes, watchForja, saveForjaSlot, watchWeaponSales, saveWeaponSaleRequests, watchTablon, saveTablon, watchTienda, saveTienda };
+function watchDoc(col, id, callback){
+  return onSnapshot(doc(db, col, id), snap=>callback(snap.exists() ? snap.data() : null), ()=>callback(null));
+}
+
+async function saveDoc(col, id, data){
+  await setDoc(doc(db, col, id), { ...data, updatedAt: Date.now() });
+}
+
+function watchCollection(col, callback){
+  return onSnapshot(collection(db, col), snap=>{
+    const out = {};
+    snap.forEach(d=>{ out[d.id] = d.data(); });
+    callback(out);
+  }, ()=>callback(null));
+}
+
+window.ctFirebase = { loadChar, saveMochila, saveEquipo, saveCharData, loadDMNotes, saveDMNotes, watchForja, saveForjaSlot, watchWeaponSales, saveWeaponSaleRequests, watchTablon, saveTablon, watchTienda, saveTienda, watchDoc, saveDoc, watchCollection };
 window.dispatchEvent(new Event('ct-firebase-ready'));
 
 if(document.getElementById('view-mi')?.classList.contains('active')){
